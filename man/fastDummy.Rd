@@ -11,8 +11,8 @@ fastDummy(dataset, select_columns = NULL, ignore_columns = NULL,
 \arguments{
 \item{dataset}{data.table or data.frame}
 
-\item{select_columns}{Vector of column names that you want to create dummy variables from. Default uses
-all character or factor columns.}
+\item{select_columns}{Vector of column names that you want to create dummy variables from.
+Default uses all character or factor columns.}
 
 \item{ignore_columns}{Vector of column names to ignore. Default already ignores numeric columns.}
 
@@ -30,4 +30,20 @@ data.table is default.
 }
 \description{
 Fast creation of dummy variables
+}
+\examples{
+data(dummies.example)
+fastDummy(dummies.example)
+
+# Return data.frame
+fastDummy(dummies.example, return_type = "data.frame")
+
+# Only keep created dummy columns
+fastDummy(dummies.example, dummy_columns_only = TRUE)
+
+# Only keep SEX and RACE columns
+fastDummy(dummies.example, select_columns = c("Sex", "RACE"))
+
+# Keep all except SEX column
+fastDummy(dummies.example, ignore_columns = "SEX")
 }
