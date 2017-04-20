@@ -25,7 +25,7 @@
   \item{MOVEDIN}{When the respondent moved into their home}
 }}
 \source{
-\url{https://usa.ipums.org/usa/index.shtml/}
+\url{https://usa.ipums.org/usa-action/variables/group}
 }
 \usage{
 dummies.example

@@ -33,17 +33,17 @@ Fast creation of dummy variables
 }
 \examples{
 data(dummies.example)
-fastDummy(dummies.example)
+example <- fastDummy(dummies.example)
 
 # Return data.frame
-fastDummy(dummies.example, return_type = "data.frame")
+example <- fastDummy(dummies.example, return_type = "data.frame")
 
 # Only keep created dummy columns
-fastDummy(dummies.example, dummy_columns_only = TRUE)
+example <- fastDummy(dummies.example, dummy_columns_only = TRUE)
 
 # Only keep SEX and RACE columns
-fastDummy(dummies.example, select_columns = c("Sex", "RACE"))
+example <- fastDummy(dummies.example, select_columns = c("Sex", "RACE"))
 
 # Keep all except SEX column
-fastDummy(dummies.example, ignore_columns = "SEX")
+example <- fastDummy(dummies.example, ignore_columns = "SEX")
 }
