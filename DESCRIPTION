@@ -1,0 +1,14 @@
+Package: fastDummies
+Type: Package
+Title: Fast Creation of Dummy (Binary) Columns From Categorical Variables
+Version: 0.1.0
+Authors@R: person("Jacob", "Kaplan", email = "jacobkap@sas.upenn.edu", role = c("aut", "cre"))
+Description: Creates dummy columns from columns that have categorical variables (character or factor types). 
+Depends: 
+    R (>= 2.10)
+Imports:
+    data.table
+License: UTF-8
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
