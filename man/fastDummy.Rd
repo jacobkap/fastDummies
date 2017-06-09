@@ -6,7 +6,7 @@
 \usage{
 fastDummy(dataset, select_columns = NULL, ignore_columns = NULL,
   remove_original = TRUE, dummy_columns_only = FALSE,
-  return_type = "data.table")
+  remove_first_dummy = FALSE, return_type = "data.table")
 }
 \arguments{
 \item{dataset}{data.table or data.frame}
@@ -14,15 +14,17 @@ fastDummy(dataset, select_columns = NULL, ignore_columns = NULL,
 \item{select_columns}{Vector of column names that you want to create dummy variables from.
 Default uses all character or factor columns.}
 
-\item{ignore_columns}{Vector of column names to ignore. Default already ignores numeric columns.}
+\item{ignore_columns}{Vector of column names to ignore_ Default ignores all numeric columns.}
 
 \item{remove_original}{Removes the columns used to make dummy variables.
 Columns that are not used to make dummy variables are not affected.}
 
-\item{dummy_columns_only}{Removes all columns not to create dummy columns (i.e. numeric columns).}
+\item{dummy_columns_only}{Removes all columns that didn't create dummy columns (i_e_ numeric columns).}
 
-\item{return_type}{Type of data you want back. Default is data.table (better for use
-with large data). Other options are data.frame or matrix.}
+\item{remove_first_dummy}{Removes the first dummy of every variable that only n-1 Dummies remain}
+
+\item{return_type}{Type of data you want back_ Default is data.table (better for use
+with large data)_ Other options are data.frame or matrix.}
 }
 \value{
 data.table, data.frame, or matrix depending on input for return_type.
@@ -32,18 +34,22 @@ data.table is default.
 Fast creation of dummy variables
 }
 \examples{
-data(dummies.example)
-example <- fastDummy(dummies.example)
+data(dummies_example)
+example <- fastDummy(dummies_example)
 
 # Return data.frame
-example <- fastDummy(dummies.example, return_type = "data.frame")
+example <- fastDummy(dummies_example, return_type = "data.frame")
 
 # Only keep created dummy columns
-example <- fastDummy(dummies.example, dummy_columns_only = TRUE)
+example <- fastDummy(dummies_example, dummy_columns_only = TRUE)
 
 # Only keep SEX and RACE columns
-example <- fastDummy(dummies.example, select_columns = c("Sex", "RACE"))
+example <- fastDummy(dummies_example, select_columns = c("Sex", "RACE"))
 
 # Keep all except SEX column
-example <- fastDummy(dummies.example, ignore_columns = "SEX")
+example <- fastDummy(dummies_example, ignore_columns = "SEX")
+
+# Removes the first dummy from every category. Avoids perfect
+# multicollinearity issues in models.
+example <- fastDummy(dummies_example, remove_first_dummy = TRUE)
 }
