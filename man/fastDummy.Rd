@@ -6,7 +6,8 @@
 \usage{
 fastDummy(dataset, select_columns = NULL, ignore_columns = NULL,
   remove_original = TRUE, dummy_columns_only = FALSE,
-  remove_first_dummy = FALSE, return_type = "data.table")
+  remove_first_dummy = FALSE, conditional_columns = NULL,
+  return_type = "data.table")
 }
 \arguments{
 \item{dataset}{data.table or data.frame}
@@ -22,6 +23,11 @@ Columns that are not used to make dummy variables are not affected.}
 \item{dummy_columns_only}{Removes all columns that didn't create dummy columns (i_e_ numeric columns).}
 
 \item{remove_first_dummy}{Removes the first dummy of every variable that only n-1 Dummies remain}
+
+\item{conditional_columns}{Select column(s) to multiple other dummy columns created by. Useful to get
+subcategories of data. e.g. conditional column is gender and other columns
+are crimes. This will create columns showing the number of each crime for
+each gender.}
 
 \item{return_type}{Type of data you want back_ Default is data.table (better for use
 with large data)_ Other options are data.frame or matrix.}

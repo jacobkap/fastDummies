@@ -126,7 +126,7 @@ fastDummy <- function(dataset,
     dataset[, (char_cols) := NULL]
   }
 
-  if (!is.null(conditional_columns) {
+  if (!is.null(conditional_columns)) {
     for (conditional_cols in conditional_names) {
       for (nonconditional_columns in nonconditional_names) {
         dataset[, paste0(conditional_cols, "X", nonconditional_columns) :=
