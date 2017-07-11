@@ -31,24 +31,24 @@
 #'
 #' @examples
 #' data(dummies_example)
-#' example <- fastDummy(dummies_example)
+#' example <- dummy_cols(dummies_example)
 #'
 #' # Return data.frame
-#' example <- fastDummy(dummies_example, return_type = "data.frame")
+#' example <- dummy_cols(dummies_example, return_type = "data.frame")
 #'
 #' # Only keep created dummy columns
-#' example <- fastDummy(dummies_example, dummy_columns_only = TRUE)
+#' example <- dummy_cols(dummies_example, dummy_columns_only = TRUE)
 #'
 #' # Only keep SEX and RACE columns
-#' example <- fastDummy(dummies_example, select_columns = c("Sex", "RACE"))
+#' example <- dummy_cols(dummies_example, select_columns = c("Sex", "RACE"))
 #'
 #' # Keep all except SEX column
-#' example <- fastDummy(dummies_example, ignore_columns = "SEX")
+#' example <- dummy_cols(dummies_example, ignore_columns = "SEX")
 #'
 #' # Removes the first dummy from every category. Avoids perfect
 #' # multicollinearity issues in models.
-#' example <- fastDummy(dummies_example, remove_first_dummy = TRUE)
-fastDummy <- function(dataset,
+#' example <- dummy_cols(dummies_example, remove_first_dummy = TRUE)
+dummy_cols <- function(dataset,
                     select_columns = NULL,
                     ignore_columns = NULL,
                     remove_original = TRUE,
@@ -81,7 +81,7 @@ fastDummy <- function(dataset,
     char_cols <- select_columns
     char_cols <- char_cols[char_cols %in% names(dataset)]
     if (length(char_cols) == 0) {
-      stop("No remaining columns_ Please use correct column names_")
+      stop("No remaining columns. Please use correct column names.")
     }
   }
 
@@ -144,9 +144,152 @@ fastDummy <- function(dataset,
   }
 }
 
+#' Fast creation of dummy rows
+#'
+#' @param dataset
+#' data.table or data.frame
+#' @param select_columns
+#' If NULL, uses character, factor, and Date columns to produce categories
+#' to make the dummy rows by. If not NULL, you manually enter a string or vector
+#' of columns name(s).
+#' @param add_columns
+#' String or vector of column name(s) to add to the selected coumns. This is only
+#' if you want to use all character, factor, and Date columns (selected by
+#' default) and are adding additional columns of different data types.
+#' @param ignore_columns
+#' String or vector of column name(s) to exclude from the selected columns.
+#' These excluded columns will get the same dummy value of all non-selected
+#' columns
+#' @param dummy_value
+#' Value of the row for columns that are not selected. Default is a value of 0.
+#' @param year
+#' TRUE to include a column called year (capitalization is ignored)
+#' as one of the selected columns.
+#' @param return_type
+#' Type of data you want back_ Default is data.table (better for use
+#' with large data)_ Other option is data.frame.
+#'
+#' @return
+#' data.table or data.frame depending on input for return_type.
+#' data.table is default.
+#' @export
+#'
+#' @examples
+#' data(dummy_rows_example)
+#'
+#' dummy_rows(dummy_rows_example, year = TRUE)
+dummy_rows <- function(dataset,
+                       select_columns = NULL,
+                       add_columns = NULL,
+                       ignore_columns = NULL,
+                       dummy_value = NULL,
+                       year = FALSE,
+                       return_type = "data.table") {
+
+if (!return_type %in% c("data.table", "data.frame")) {
+    stop("Return type must be 'data.table' or 'data.frame'")
+}
+
+if (!is.null(select_columns) && !all(select_columns) %in% names(dataset)) {
+  stop("Columns inputted in 'select_columns' are wrong. Please check spelling.")
+}
+
+
+if (!is.null(add_columns) && !add_columns %in% names(dataset)) {
+  stop("Columns inputted in 'add_columns' are wrong. Please check spelling.")
+}
+
+if (!is.null(select_columns) && !is.null(add_columns)) {
+    stop(paste("select_columns and add_columns cannot both have inputs.",
+               " Please select one."))
+}
+
+if (year == TRUE && !"year" %in% tolower(names(dataset))) {
+  stop("year input cannot be TRUE. Column called year (ignoring casing) not found")
+}
+
+# If user doesn't specify a dummy value, that value is 0
+if (is.null(dummy_value)) { dummy_value <- 0 }
+
+dataset <- as.data.table(dataset)
+
+# Find the class of every column. Character columns are default used
+# to make dummy categories. If not otherwise specified, ither
+# columns are given a value of 0.
+column_classes <- sapply(dataset, class)
+char_cols <- names(dataset)[column_classes %in%
+                              c("character", "factor", "Date")]
+
+
+if (!is.null(select_columns)) {
+  char_cols <- select_columns
+}
+
+other_cols <- names(dataset)[!column_classes %in%
+                                 c("character", "factor", "Date")]
+
+
+if (year) {
+  char_cols <- c(char_cols, grep("^year$", names(dataset),
+                                 ignore.case = TRUE, value = TRUE))
+  other_cols <- other_cols[!tolower(other_cols) %in% "year"]
+}
+
+# Function to find how many unique variables are in each column
+length_unique <- function(column) { return(length(unique(column))) }
+
+# Finds how many possible combinations of the variables there are.
+# This will be the number of rows in the new dataset
+total_length <- prod(sapply(dataset[, char_cols, with = FALSE],
+                            length_unique))
+# Makes that new dataset
+temp_table <- data.table(var1 = sort(rep(
+                 as.data.frame(unique(dataset[,
+                         char_cols[1], with = FALSE]))[,1],
+              total_length/length(as.data.frame(unique(dataset[,
+                   char_cols[1], with = FALSE]))[,1]))))
+names(temp_table) <- char_cols[1]
+for (i in 2:length(char_cols)) {
+  temp_table[,char_cols[i] := rep(as.data.frame(unique(dataset[,
+                            char_cols[i], with = FALSE]))[,1],
+                            total_length/length(
+                           as.data.frame(unique(dataset[,
+                           char_cols[i], with = FALSE]))[,1]))]
+  temp_table <- setorderv(temp_table, char_cols[i])[]
+}
+
+# Make the dummy column values (all non- character, factor or Date variables)
+for (i in 1:length(other_cols)) {
+  temp_table[,other_cols[i] := dummy_value]
+}
+
+# Pasted together all columns to determine which are in original
+# dataset and removed these ones.
+dataset[, temporary_pasting := do.call(paste, .SD),
+        .SDcols = char_cols]
+temp_table[, temporary_pasting := do.call(paste, .SD),
+           .SDcols = char_cols]
+
+# Removes rows that were in original dataset
+temp_table <- temp_table[!temp_table$temporary_pasting %in%
+                         dataset$temporary_pasting,]
+
+# Stacks new dataset on old dataset
+dataset <- rbind(dataset, temp_table)
+dataset[, temporary_pasting := NULL]
+
+if (return_type == "data.table") {
+  return(dataset)
+} else if (return_type == "data.frame") {
+  return(as.data.frame(dataset))
+}
+
+}
+
 #' United States Census data for 2015
 #'
-#' A dataset containing Census results from the American Community Survey 2015
+#' A dataset containing Census results from the American
+#' Community Survey 2015
 #'
 #' @format A data frame with 100,000 rows and 17 variables:
 #' \describe{
@@ -170,3 +313,20 @@ fastDummy <- function(dataset,
 #' }
 #' @source \url{https://usa.ipums.org/usa-action/variables/group}
 "dummies_example"
+
+
+#' National Incident-Based Reporting System crime data
+#'
+#' A dataset crime information from the 2000 NIBRS
+#'
+#' @format A data frame with 4,139 rows and 6 variables:
+#' \describe{
+#'   \item{state}{State}
+#'   \item{year}{Year}
+#'   \item{sexofoffender}{Sex of the offender}
+#'   \item{offender_age}{Age of the offender}
+#'   \item{raceofoffender}{Race of the offender}
+#'   \item{total_assault}{Number of assault crimes}
+#' }
+#' @source \url{http://www.icpsr.umich.edu/icpsrweb/NACJD/studies/3449}
+"dummy_rows_example"

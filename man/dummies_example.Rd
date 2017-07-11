@@ -31,6 +31,7 @@
 dummies_example
 }
 \description{
-A dataset containing Census results from the American Community Survey 2015
+A dataset containing Census results from the American
+Community Survey 2015
 }
 \keyword{datasets}
