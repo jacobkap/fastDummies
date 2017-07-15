@@ -168,6 +168,9 @@ dummy_cols <- function(dataset,
 #' @param return_type
 #' Type of data you want back_ Default is data.table (better for use
 #' with large data)_ Other option is data.frame.
+#' @param dummy_indicator
+#' Adds binary column to say if row is dummy or not (i.e. included in
+#' original data or not)
 #'
 #' @return
 #' data.table or data.frame depending on input for return_type.
@@ -177,14 +180,21 @@ dummy_cols <- function(dataset,
 #' @examples
 #' data(dummy_rows_example)
 #'
-#' dummy_rows(dummy_rows_example, year = TRUE)
+#'# Makes dummy rows using default column selection and year
+#'# to make categories
+#' example <- dummy_rows(dummy_rows_example, year = TRUE)
+#'
+#' # Same as above but adds binary column indicating if the row
+#' # is dummy or not
+#' example <- dummy_rows(dummy_rows_example, year = TRUE, dummy_indicator = TRUE)
 dummy_rows <- function(dataset,
                        select_columns = NULL,
                        add_columns = NULL,
                        ignore_columns = NULL,
-                       dummy_value = NULL,
+                       dummy_value = 0,
                        year = FALSE,
-                       return_type = "data.table") {
+                       return_type = "data.table",
+                       dummy_indicator = FALSE) {
 
 if (!return_type %in% c("data.table", "data.frame")) {
     stop("Return type must be 'data.table' or 'data.frame'")
@@ -208,10 +218,10 @@ if (year == TRUE && !"year" %in% tolower(names(dataset))) {
   stop("year input cannot be TRUE. Column called year (ignoring casing) not found")
 }
 
-# If user doesn't specify a dummy value, that value is 0
-if (is.null(dummy_value)) { dummy_value <- 0 }
 
 dataset <- as.data.table(dataset)
+
+if (dummy_indicator) {dataset[, "dummy_indicator" := 0] }
 
 # Find the class of every column. Character columns are default used
 # to make dummy categories. If not otherwise specified, ither
@@ -265,18 +275,20 @@ for (i in 1:length(other_cols)) {
 
 # Pasted together all columns to determine which are in original
 # dataset and removed these ones.
-dataset[, temporary_pasting := do.call(paste, .SD),
+dataset[, "temporary_pasting" := do.call(paste, .SD),
         .SDcols = char_cols]
-temp_table[, temporary_pasting := do.call(paste, .SD),
+temp_table[, "temporary_pasting" := do.call(paste, .SD),
            .SDcols = char_cols]
 
 # Removes rows that were in original dataset
 temp_table <- temp_table[!temp_table$temporary_pasting %in%
                          dataset$temporary_pasting,]
 
+if (dummy_indicator) { temp_table[, "dummy_indicator" := 1] }
+
 # Stacks new dataset on old dataset
 dataset <- rbind(dataset, temp_table)
-dataset[, temporary_pasting := NULL]
+dataset[, "temporary_pasting" := NULL]
 
 if (return_type == "data.table") {
   return(dataset)
@@ -317,16 +329,19 @@ if (return_type == "data.table") {
 
 #' National Incident-Based Reporting System crime data
 #'
-#' A dataset crime information from the 2000 NIBRS
+#' A dataset crime information from the 2005-2015 NIBRS
 #'
-#' @format A data frame with 4,139 rows and 6 variables:
+#' @format A data frame with 10,000 rows and 9 variables:
 #' \describe{
 #'   \item{state}{State}
 #'   \item{year}{Year}
+#'   \item{simple_location}{Whether the crime happened at home or not}
+#'   \item{offender_used}{Drugs or alcohol offender suspected of using}
+#'   \item{victim_injury}{Severity of victim's injury}
 #'   \item{sexofoffender}{Sex of the offender}
 #'   \item{offender_age}{Age of the offender}
 #'   \item{raceofoffender}{Race of the offender}
-#'   \item{total_assault}{Number of assault crimes}
+#'   \item{spouse_assault}{Number of spousal assault crimes}
 #' }
 #' @source \url{http://www.icpsr.umich.edu/icpsrweb/NACJD/studies/3449}
 "dummy_rows_example"

@@ -4,14 +4,17 @@
 \name{dummy_rows_example}
 \alias{dummy_rows_example}
 \title{National Incident-Based Reporting System crime data}
-\format{A data frame with 4,139 rows and 6 variables:
+\format{A data frame with 10,000 rows and 9 variables:
 \describe{
   \item{state}{State}
   \item{year}{Year}
+  \item{simple_location}{Whether the crime happened at home or not}
+  \item{offender_used}{Drugs or alcohol offender suspected of using}
+  \item{victim_injury}{Severity of victim's injury}
   \item{sexofoffender}{Sex of the offender}
   \item{offender_age}{Age of the offender}
   \item{raceofoffender}{Race of the offender}
-  \item{total_assault}{Number of assault crimes}
+  \item{spouse_assault}{Number of spousal assault crimes}
 }}
 \source{
 \url{http://www.icpsr.umich.edu/icpsrweb/NACJD/studies/3449}
@@ -20,6 +23,6 @@
 dummy_rows_example
 }
 \description{
-A dataset crime information from the 2000 NIBRS
+A dataset crime information from the 2005-2015 NIBRS
 }
 \keyword{datasets}

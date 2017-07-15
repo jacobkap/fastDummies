@@ -5,8 +5,8 @@
 \title{Fast creation of dummy rows}
 \usage{
 dummy_rows(dataset, select_columns = NULL, add_columns = NULL,
-  ignore_columns = NULL, dummy_value = NULL, year = FALSE,
-  return_type = "data.table")
+  ignore_columns = NULL, dummy_value = 0, year = FALSE,
+  return_type = "data.table", dummy_indicator = FALSE)
 }
 \arguments{
 \item{dataset}{data.table or data.frame}
@@ -30,6 +30,9 @@ as one of the selected columns.}
 
 \item{return_type}{Type of data you want back_ Default is data.table (better for use
 with large data)_ Other option is data.frame.}
+
+\item{dummy_indicator}{Adds binary column to say if row is dummy or not (i.e. included in
+original data or not)}
 }
 \value{
 data.table or data.frame depending on input for return_type.
@@ -41,5 +44,11 @@ Fast creation of dummy rows
 \examples{
 data(dummy_rows_example)
 
-dummy_rows(dummy_rows_example, year = TRUE)
+# Makes dummy rows using default column selection and year
+# to make categories
+example <- dummy_rows(dummy_rows_example, year = TRUE)
+
+# Same as above but adds binary column indicating if the row
+# is dummy or not
+example <- dummy_rows(dummy_rows_example, year = TRUE, dummy_indicator = TRUE)
 }
