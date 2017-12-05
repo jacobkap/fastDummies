@@ -1,7 +1,7 @@
 Package: fastDummies
 Type: Package
 Title: Fast Creation of Dummy (Binary) Columns from Categorical Variables
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
     person("Jacob", "Kaplan", email = "jacobkap@sas.upenn.edu", role = c("aut", "cre")), 
     person("Benjamin", "Schlegel", email = "kontakt@benjaminschlegl.ch", role =  "ctb"))

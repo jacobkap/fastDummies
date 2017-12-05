@@ -200,16 +200,16 @@ if (!return_type %in% c("data.table", "data.frame")) {
     stop("Return type must be 'data.table' or 'data.frame'")
 }
 
-if (!is.null(select_columns) && !all(select_columns) %in% names(dataset)) {
+if (!is.null(select_columns) & !all(select_columns) %in% names(dataset)) {
   stop("Columns inputted in 'select_columns' are wrong. Please check spelling.")
 }
 
 
-if (!is.null(add_columns) && !add_columns %in% names(dataset)) {
+if (!is.null(add_columns) & !add_columns %in% names(dataset)) {
   stop("Columns inputted in 'add_columns' are wrong. Please check spelling.")
 }
 
-if (!is.null(select_columns) && !is.null(add_columns)) {
+if (!is.null(select_columns) & !is.null(add_columns)) {
     stop(paste("select_columns and add_columns cannot both have inputs.",
                " Please select one."))
 }
