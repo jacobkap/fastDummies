@@ -196,27 +196,27 @@ dummy_rows <- function(dataset,
                        return_type = "data.table",
                        dummy_indicator = FALSE) {
 
-if (!return_type %in% c("data.table", "data.frame")) {
-    stop("Return type must be 'data.table' or 'data.frame'")
-}
-
-if (!is.null(select_columns) & !all(select_columns %in% names(dataset))) {
-  stop("Columns inputted in 'select_columns' are wrong. Please check spelling.")
-}
-
-
-if (!is.null(add_columns) & !add_columns %in% names(dataset)) {
-  stop("Columns inputted in 'add_columns' are wrong. Please check spelling.")
-}
-
-if (!is.null(select_columns) & !is.null(add_columns)) {
-    stop(paste("select_columns and add_columns cannot both have inputs.",
-               " Please select one."))
-}
-
-if (year == TRUE & !"year" %in% tolower(names(dataset))) {
-  stop("year input cannot be TRUE. Column called year (ignoring casing) not found")
-}
+# if (!return_type %in% c("data.table", "data.frame")) {
+#     stop("Return type must be 'data.table' or 'data.frame'")
+# }
+#
+# if (!is.null(select_columns) & !all(select_columns %in% names(dataset))) {
+#   stop("Columns inputted in 'select_columns' are wrong. Please check spelling.")
+# }
+#
+#
+# if (!is.null(add_columns) & !add_columns %in% names(dataset)) {
+#   stop("Columns inputted in 'add_columns' are wrong. Please check spelling.")
+# }
+#
+# if (!is.null(select_columns) & !is.null(add_columns)) {
+#     stop(paste("select_columns and add_columns cannot both have inputs.",
+#                " Please select one."))
+# }
+#
+# if (year == TRUE & !"year" %in% tolower(names(dataset))) {
+#   stop("year input cannot be TRUE. Column called year (ignoring casing) not found")
+# }
 
 
 dataset <- as.data.table(dataset)
