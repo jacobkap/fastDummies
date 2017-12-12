@@ -58,9 +58,9 @@ dummy_cols <- function(dataset_,
                        inplace = FALSE,
                        return_type = "data.table") {
   if(inplace){
-    dataset = copy(dataset_) # create new copy without changing the raw dataset
+    dataset = dataset_ 
   }else{
-    dataset = dataset_
+    dataset = copy(dataset_) # create new copy without changing the raw dataset
   }
   if (!return_type %in% c("data.table", "data.frame", "matrix")) {
     stop("Return type must be 'data.table', 'data.frame', or 'matrix'")
