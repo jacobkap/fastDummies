@@ -4,31 +4,24 @@
 \alias{dummy_rows}
 \title{Fast creation of dummy rows}
 \usage{
-dummy_rows(dataset, select_columns = NULL, add_columns = NULL,
-  ignore_columns = NULL, dummy_value = NA)
+dummy_rows(data, select_columns = NULL, dummy_value = NA,
+  dummy_indicator = FALSE)
 }
 \arguments{
-\item{dataset}{data.table or data.frame}
+\item{data}{An object with the data set you want to make dummy columns from.}
 
-\item{select_columns}{If NULL, uses character, factor, and Date columns to produce categories
-to make the dummy rows by. If not NULL, you manually enter a string or vector
-of columns name(s).}
+\item{select_columns}{If NULL (default), uses all character, factor, and Date columns to produce categories
+to make the dummy rows by. If not NULL, you manually enter a string or vector of strings of columns name(s).}
 
-\item{add_columns}{String or vector of column name(s) to add to the selected coumns. This is only
-if you want to use all character, factor, and Date columns (selected by
-default) and are adding additional columns of different data types.}
-
-\item{ignore_columns}{String or vector of column name(s) to exclude from the selected columns.
-These excluded columns will get the same dummy value of all non-selected
-columns}
-
-\item{dummy_value}{Value of the row for columns that are not selected. Default is a value of 0.}
+\item{dummy_value}{Value of the row for columns that are not selected.
+Default is a value of 0.}
 
 \item{dummy_indicator}{Adds binary column to say if row is dummy or not (i.e. included in
 original data or not)}
 }
 \value{
-data.frame
+A data.frame with same number of columns as inputted data and original
+rows plus the newly created dummy rows
 }
 \description{
 Fast creation of dummy rows
