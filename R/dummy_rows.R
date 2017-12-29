@@ -57,10 +57,14 @@ dummy_rows <- function(data,
 
   # Fills in all possible combination rows ----------------------------------
     for (i in char_cols) {
+      # temp_table[,      `:=`(col = list(rep(unique(data[[col]]),
+      #                                   total_length /
+      #                                     data.table::uniqueN(data[[col]]))))]
       data.table::set(temp_table, j = i,
-                      value = rep(sort(unique(data[[i]])),
+                      value = rep(unique(data[[i]]),
                                   total_length /
                                     data.table::uniqueN(data[[i]])))
+
       temp_table <- data.table::setorderv(temp_table, i)
     }
 
@@ -77,15 +81,21 @@ dummy_rows <- function(data,
   }
 
 
-  # Stacks new data on old data
-  data <- data.table::rbindlist(list(data, temp_table), use.names = TRUE)
+
 
   # Removes rows that were in original data. --------------------------------
   data.table::set(data, j = "temporary_pasting",
                   value = do.call(paste0, data[, char_cols, with = FALSE]))
-  data <- data[!duplicated(data, by = "temporary_pasting"),]
-  data.table::set(data, j = "temporary_pasting", value = NULL)
+  data.table::alloc.col(temp_table, ncol(temp_table) + 1) # Adding extra column
+  data.table::set(temp_table, j = "temporary_pasting",
+                  value = do.call(paste0, temp_table[, char_cols, with = FALSE]))
+  temp_table <- subset(temp_table, !temporary_pasting %in% data$temporary_pasting)
+  data <- unique(data, by = "temporary_pasting")
 
+
+  # Stacks new data on old data
+  data <- data.table::rbindlist(list(data, temp_table), use.names = TRUE)
+  data.table::set(data, j = "temporary_pasting", value = NULL)
 
   data <- as.data.frame(data)
   return(data)
