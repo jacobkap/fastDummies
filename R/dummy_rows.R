@@ -39,39 +39,36 @@ dummy_rows <- function(data,
     char_cols <- select_columns
   }
 
-
   other_cols <- names(data)[!names(data) %in% char_cols]
+
 
   # Finds how many possible combinations of the variables there are.
   # This will be the number of rows in the new data
-  total_length <- prod(sapply(data[, char_cols, with = FALSE],
+ # return(data[, char_cols, with = FALSE])
+  # total_length <- 1
+  # for (i in char_cols) {
+  #   total_length <- total_length * data.table::uniqueN(data[[i]])
+  # }
+  total_length <- prod(sapply(data[, char_cols, with = FALSE, drop = FALSE],
                               data.table::uniqueN))
-
-
+  message(total_length)
   # Makes an empty data.table with right # of rows and columns. -------------
-
   temp_table <- data.table::data.table(matrix(nrow = total_length,
-                                              ncol = length(data)))
+                                              ncol = ncol(data)))
   names(temp_table) <- names(data)
-
 
   # Fills in all possible combination rows ----------------------------------
     for (i in char_cols) {
-      # temp_table[,      `:=`(col = list(rep(unique(data[[col]]),
-      #                                   total_length /
-      #                                     data.table::uniqueN(data[[col]]))))]
-      data.table::set(temp_table, j = i,
-                      value = rep(unique(data[[i]]),
+        data.table::set(temp_table, j = i,
+                      value = rep(unique(data[[i]]), times =
                                   total_length /
-                                    data.table::uniqueN(data[[i]])))
-
-      temp_table <- data.table::setorderv(temp_table, i)
+                                  data.table::uniqueN(data[[i]])))
+     temp_table <- data.table::setorderv(temp_table, i)
     }
 
   # Adds the dummy variable columns (and indicator) -------------------------
-
   for (i in other_cols) {
-    data.table::set(temp_table, j = i, value = rep(dummy_value, nrow(temp_table)))
+    data.table::set(temp_table, j = other_cols, value = rep(dummy_value, nrow(temp_table)))
   }
 
   if (dummy_indicator) {
@@ -80,18 +77,15 @@ dummy_rows <- function(data,
     data.table::set(temp_table, j = "dummy_indicator", value = rep(1, nrow(temp_table)))
   }
 
-
-
-
   # Removes rows that were in original data. --------------------------------
   data.table::set(data, j = "temporary_pasting",
-                  value = do.call(paste0, data[, char_cols, with = FALSE]))
+                  value = do.call(paste0, data[, char_cols, with = FALSE,
+                                               drop = FALSE]))
   data.table::alloc.col(temp_table, ncol(temp_table) + 1) # Adding extra column
   data.table::set(temp_table, j = "temporary_pasting",
-                  value = do.call(paste0, temp_table[, char_cols, with = FALSE]))
+                  value = do.call(paste0, temp_table[, char_cols, with = FALSE,
+                                                     drop = FALSE]))
   temp_table <- subset(temp_table, !temporary_pasting %in% data$temporary_pasting)
-  data <- unique(data, by = "temporary_pasting")
-
 
   # Stacks new data on old data
   data <- data.table::rbindlist(list(data, temp_table), use.names = TRUE)
