@@ -45,13 +45,8 @@ dummy_rows <- function(data,
   # Finds how many possible combinations of the variables there are.
   # This will be the number of rows in the new data
  # return(data[, char_cols, with = FALSE])
-  # total_length <- 1
-  # for (i in char_cols) {
-  #   total_length <- total_length * data.table::uniqueN(data[[i]])
-  # }
   total_length <- prod(sapply(data[, char_cols, with = FALSE, drop = FALSE],
                               data.table::uniqueN))
-  message(total_length)
   # Makes an empty data.table with right # of rows and columns. -------------
   temp_table <- data.table::data.table(matrix(nrow = total_length,
                                               ncol = ncol(data)))
@@ -85,10 +80,12 @@ dummy_rows <- function(data,
   data.table::set(temp_table, j = "temporary_pasting",
                   value = do.call(paste0, temp_table[, char_cols, with = FALSE,
                                                      drop = FALSE]))
-  temp_table <- subset(temp_table, !temporary_pasting %in% data$temporary_pasting)
+  temp_table <- subset(temp_table, !temp_table$temporary_pasting %in% data$temporary_pasting)
 
   # Stacks new data on old data
+  if (nrow(temp_table) > 0) {
   data <- data.table::rbindlist(list(data, temp_table), use.names = TRUE)
+  }
   data.table::set(data, j = "temporary_pasting", value = NULL)
 
   data <- as.data.frame(data)
