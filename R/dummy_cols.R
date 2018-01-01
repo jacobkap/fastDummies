@@ -1,5 +1,13 @@
 #' Fast creation of dummy variables
 #'
+#' dummy_cols() quickly creates dummy (binary) columns from character and
+#' factor type columns in the inputted data. This function is useful for
+#' statistical analysis when you want binary columns rather than
+#' character columns.
+#'
+#' @family dummy functions
+#' @seealso \code{\link{dummy_rows}} For creating dummy rows
+#'
 #' @param data
 #' An object with the data set you want to make dummy columns from.
 #' @param select_columns
@@ -16,8 +24,15 @@ dummy_cols <- function(data,
                        select_columns = NULL,
                        remove_first_dummy = FALSE) {
 
+  stopifnot(is.null(select_columns) || is.character(select_columns),
+            is.logical(remove_first_dummy), length(remove_first_dummy) == 1)
+
   if (!is.null(select_columns) && !is.character(select_columns)) {
     stop("select_columns input must be a string or vector of strings")
+  }
+
+  if (!data.table::is.data.table(data)) {
+    data <- data.table::as.data.table(data)
   }
 
 
@@ -44,11 +59,6 @@ dummy_cols <- function(data,
 
   if (!is.null(select_columns) && length(cols_not_in_data) > 0) {
     warning("NOTE: The following select_columns input(s) is not a column in data.\n", paste0(names(cols_not_in_data), "\t"))
-  }
-
-
-  if (!data.table::is.data.table(data)) {
-    data <- data.table::as.data.table(data)
   }
 
   char_cols <- names(char_cols)

@@ -24,5 +24,15 @@ A data.frame with same number of columns as inputted data and original
 rows plus the newly created dummy rows
 }
 \description{
-Fast creation of dummy rows
+dummy_rows() quickly creates dummy rows to fill in missing rows
+based on all combinations of available character, factor, and
+date columns (if not otherwise specified). This is useful for
+creating balanced panel data. Columns that are not character,
+factor, or dates are filled in with NA (or whatever value you
+specify).
+}
+\seealso{
+\code{\link{dummy_cols}} For creating dummy columns
+
+Other dummy functions: \code{\link{dummy_cols}}
 }

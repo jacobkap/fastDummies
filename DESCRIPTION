@@ -5,7 +5,7 @@ Version: 1.0.0
 Authors@R: c(
     person("Jacob", "Kaplan", email = "jacobkap@sas.upenn.edu", role = c("aut", "cre")), 
     person("Benjamin", "Schlegel", email = "kontakt@benjaminschlegl.ch", role =  "ctb"))
-Description: Creates dummy columns from columns that have categorical variables (character or factor types). You can also specify which columns to make dummies out of, or which columns to ignore. This package provides a significant speed increase from creating dummy variables through model.matrix().
+Description: Creates dummy columns from columns that have categorical variables (character or factor types). You can also specify which columns to make dummies out of, or which columns to ignore. Also creates dummy rows from character, factor, and date columns. This package provides a significant speed increase from creating dummy variables through model.matrix().
 Depends:
     R (>= 2.10)
 Imports: 

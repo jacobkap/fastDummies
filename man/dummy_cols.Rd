@@ -20,5 +20,13 @@ A data.frame with same number of rows as inputted data and original
 columns plus the newly created dummy columns.
 }
 \description{
-Fast creation of dummy variables
+dummy_cols() quickly creates dummy (binary) columns from character and
+factor type columns in the inputted data. This function is useful for
+statistical analysis when you want binary columns rather than
+character columns.
+}
+\seealso{
+\code{\link{dummy_rows}} For creating dummy rows
+
+Other dummy functions: \code{\link{dummy_rows}}
 }

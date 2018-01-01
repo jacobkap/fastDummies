@@ -1,5 +1,15 @@
 #' Fast creation of dummy rows
 #'
+#' dummy_rows() quickly creates dummy rows to fill in missing rows
+#' based on all combinations of available character, factor, and
+#' date columns (if not otherwise specified). This is useful for
+#' creating balanced panel data. Columns that are not character,
+#' factor, or dates are filled in with NA (or whatever value you
+#' specify).
+#'
+#' @family dummy functions
+#' @seealso \code{\link{dummy_cols}} For creating dummy columns
+#'
 #' @param data
 #' An object with the data set you want to make dummy columns from.
 #' @param select_columns
@@ -21,6 +31,14 @@ dummy_rows <- function(data,
                        select_columns = NULL,
                        dummy_value = NA,
                        dummy_indicator = FALSE) {
+
+  stopifnot(is.null(select_columns) || is.character(select_columns),
+            is.logical(dummy_indicator), length(dummy_indicator) == 1,
+            length(dummy_value) == 1)
+
+  if (is.atomic(data) || ncol(data) == 1) {
+    stop("Cannot make dummy rows of a vector of one column data.frame/table.")
+  }
 
   if (!data.table::is.data.table(data)) {
     data <- data.table::as.data.table(data)
@@ -73,21 +91,17 @@ dummy_rows <- function(data,
   }
 
   # Removes rows that were in original data. --------------------------------
-  data.table::set(data, j = "temporary_pasting",
-                  value = do.call(paste0, data[, char_cols, with = FALSE,
-                                               drop = FALSE]))
-  data.table::alloc.col(temp_table, ncol(temp_table) + 1) # Adding extra column
-  data.table::set(temp_table, j = "temporary_pasting",
-                  value = do.call(paste0, temp_table[, char_cols, with = FALSE,
-                                                     drop = FALSE]))
-  temp_table <- subset(temp_table, !temp_table$temporary_pasting %in% data$temporary_pasting)
+  data_temp_pasting <- do.call(paste0, data[, char_cols, with = FALSE,
+                                            drop = FALSE])
+  temp_temp_pasting <- do.call(paste0, temp_table[, char_cols, with = FALSE,
+                                            drop = FALSE])
+  temp_table <- subset(temp_table, !temp_temp_pasting %in% data_temp_pasting)
 
   # Stacks new data on old data
   if (nrow(temp_table) > 0) {
-  data <- data.table::rbindlist(list(data, temp_table), use.names = TRUE)
+  data <- data.table::rbindlist(list(data, temp_table), use.names = TRUE,
+                                fill = TRUE)
   }
-  data.table::set(data, j = "temporary_pasting", value = NULL)
-
   data <- as.data.frame(data)
   return(data)
 
