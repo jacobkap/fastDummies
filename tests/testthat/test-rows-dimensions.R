@@ -5,9 +5,9 @@ load(system.file("testdata", "fastDummies_data.rda",
 
 
 test_that("dummy_rows returns same number of columns as inputted", {
-  expect_equal(ncol(dummy_rows(no_dummies_needed)),       ncol(no_dummies_needed))
-  expect_equal(ncol(dummy_rows(fastDummies_example)),       ncol(fastDummies_example))
-  expect_equal(ncol(dummy_rows(crime)),       ncol(crime))
+  expect_equal(ncol(dummy_rows(no_dummies_needed)), ncol(no_dummies_needed))
+  expect_equal(ncol(dummy_rows(fastDummies_example)), ncol(fastDummies_example))
+  expect_equal(ncol(dummy_rows(crime)), ncol(crime))
 
   # With dummy_indicator TRUE
   expect_equal(ncol(dummy_rows(no_dummies_needed, dummy_indicator = TRUE)),

@@ -26,13 +26,27 @@
 #' A data.frame with same number of columns as inputted data and original
 #' rows plus the newly created dummy rows
 #' @export
+#' @examples
+#' crime <- data.frame(city = c("SF", "SF", "NYC"),
+#'     year = c(1990, 2000, 1990),
+#'     crime = 1:3)
 #'
+#' dummy_rows(crime)
+#' # Include year column
+#' dummy_rows(crime, select_columns = c("city", "year"))
+#' # m=Make dummy value 0
+#' dummy_rows(crime, select_columns = c("city", "year"),
+#'     dummy_value = 0)
+#' # Add a dummy indicator
+#' dummy_rows(crime, select_columns = c("city", "year"),
+#'     dummy_indicator = TRUE)
 dummy_rows <- function(data,
                        select_columns = NULL,
                        dummy_value = NA,
                        dummy_indicator = FALSE) {
 
   stopifnot(is.null(select_columns) || is.character(select_columns),
+            select_columns != "",
             is.logical(dummy_indicator), length(dummy_indicator) == 1,
             length(dummy_value) == 1)
 
@@ -86,8 +100,8 @@ dummy_rows <- function(data,
 
   if (dummy_indicator) {
     data.table::alloc.col(temp_table, ncol(temp_table) + 1) # Adding extra column
-    data.table::set(data, j = "dummy_indicator", value = 0)
-    data.table::set(temp_table, j = "dummy_indicator", value = rep(1, nrow(temp_table)))
+    data.table::set(data, j = "dummy_indicator", value = 0L)
+    data.table::set(temp_table, j = "dummy_indicator", value = rep(1L, nrow(temp_table)))
   }
 
   # Removes rows that were in original data. --------------------------------

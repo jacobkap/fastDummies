@@ -31,8 +31,24 @@ creating balanced panel data. Columns that are not character,
 factor, or dates are filled in with NA (or whatever value you
 specify).
 }
+\examples{
+crime <- data.frame(city = c("SF", "SF", "NYC"),
+    year = c(1990, 2000, 1990),
+    crime = 1:3)
+
+dummy_rows(crime)
+# Include year column
+dummy_rows(crime, select_columns = c("city", "year"))
+# m=Make dummy value 0
+dummy_rows(crime, select_columns = c("city", "year"),
+    dummy_value = 0)
+# Add a dummy indicator
+dummy_rows(crime, select_columns = c("city", "year"),
+    dummy_indicator = TRUE)
+}
 \seealso{
 \code{\link{dummy_cols}} For creating dummy columns
 
-Other dummy functions: \code{\link{dummy_cols}}
+Other dummy functions: \code{\link{dummy_cols}},
+  \code{\link{dummy_columns}}
 }
