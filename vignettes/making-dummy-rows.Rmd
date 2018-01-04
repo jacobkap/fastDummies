@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-When dealing with data, there are often missing rows. While truly handling missing data is far beyond the scope of this package, the function dummy_rows() lets you add those missing rows back into the data. 
+When dealing with data, there are often missing rows. While truly handling missing data is far beyond the scope of this package, the function `dummy_rows()` lets you add those missing rows back into the data. 
 
 The function takes all character, factor, and Date columns, finds all possible combinations of their values, and adds the rows that are not in the original data set. Any columns not used in creating the combinations (e.g. numeric) are given a value of NA (unless otherwise specified with *dummy_value*).
 
@@ -59,7 +59,7 @@ crime <- data.frame(city = c("SF", "SF", "NYC"),
 knitr::kable(crime)
 ```
 
-Using the default parameters for dummy_rows() doesn't give us what we want since it only selects the city column. We need to select both city and year to get all the combinations we want. 
+Using the default parameters for `dummy_rows()` doesn't give us what we want since it only selects the city column. We need to select both city and year to get all the combinations we want. 
 
 ```{r echo=TRUE}
 results <- fastDummies::dummy_rows(crime, select_columns = c("city", "year"))

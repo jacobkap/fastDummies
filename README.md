@@ -1,2 +1,29 @@
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/fastDummies)](https://cran.r-project.org/package=fastDummies) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/jacobkap/fastDummies?branch=master&svg=true)](https://ci.appveyor.com/project/jacobkap/fastDummies)
+
+Overview
+--------
+
+The goal of fastDummies is to quickly create dummy variables (columns) and dummy rows. Creating dummy variables is possible through base R or other packages, but this package is much faster than those methods.
+
+Installation
+------------
+
+``` r
+To install this package, use the code
+install.packages("fastDummies")
+
+
+# The development version is available on Github.
+# install.packages("devtools")
+devtools::install_github("jacobkap/fastDummies")
+```
+
+Usage
+-----
+
+``` r
+library(fastDummies)
+```
+
+There are two functions in this package `dummy_cols()` lets you make dummy variables (`dummy_columns()` is a clone of `dummy_cols()`) and `dummy_rows()` which lets you make dummy rows.
