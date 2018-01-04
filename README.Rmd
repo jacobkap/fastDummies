@@ -1,0 +1,5 @@
+---
+output: github_document
+---
+
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/fastDummies)](https://cran.r-project.org/package=fastDummies) [![Coverage Status](https://img.shields.io/codecov/c/github/jacobkap/fastDummies/master.svg)](https://codecov.io/github/jacobkap/fastDummies?branch=master)
