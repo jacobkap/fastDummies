@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jacob Kaplan" />
 
-<meta name="date" content="2018-01-03" />
+<meta name="date" content="2018-01-04" />
 
 <title>Making dummy rows with dummy_rows()</title>
 
@@ -70,11 +70,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Making dummy rows with dummy_rows()</h1>
 <h4 class="author"><em>Jacob Kaplan</em></h4>
-<h4 class="date"><em>2018-01-03</em></h4>
+<h4 class="date"><em>2018-01-04</em></h4>
 
 
 
-<p>When dealing with data, there are often missing rows. While truly handling missing data is far beyond the scope of this package, the function dummy_rows() lets you add those missing rows back into the data.</p>
+<p>When dealing with data, there are often missing rows. While truly handling missing data is far beyond the scope of this package, the function <code>dummy_rows()</code> lets you add those missing rows back into the data.</p>
 <p>The function takes all character, factor, and Date columns, finds all possible combinations of their values, and adds the rows that are not in the original data set. Any columns not used in creating the combinations (e.g. numeric) are given a value of NA (unless otherwise specified with <em>dummy_value</em>).</p>
 <p>Lets start with a simple example.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fastDummies_example &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,
@@ -406,7 +406,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(crime)</code></pre>
 </tr>
 </tbody>
 </table>
-<p>Using the default parameters for dummy_rows() doesn’t give us what we want since it only selects the city column. We need to select both city and year to get all the combinations we want.</p>
+<p>Using the default parameters for <code>dummy_rows()</code> doesn’t give us what we want since it only selects the city column. We need to select both city and year to get all the combinations we want.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw">dummy_rows</span>(crime, <span class="dt">select_columns =</span> <span class="kw">c</span>(<span class="st">&quot;city&quot;</span>, <span class="st">&quot;year&quot;</span>))
 knitr<span class="op">::</span><span class="kw">kable</span>(results)</code></pre></div>
 <table>

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jacob Kaplan" />
 
-<meta name="date" content="2018-01-03" />
+<meta name="date" content="2018-01-04" />
 
 <title>Making dummy variables with dummy_cols()</title>
 
@@ -70,12 +70,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Making dummy variables with dummy_cols()</h1>
 <h4 class="author"><em>Jacob Kaplan</em></h4>
-<h4 class="date"><em>2018-01-03</em></h4>
+<h4 class="date"><em>2018-01-04</em></h4>
 
 
 
 <p>Dummy variables (or binary variables) are commonly used in statistical analyses and in more simple descriptive statistics. A dummy column is one which has a value of one when a categorical event occurs and a zero when it doesn’t occur. In most cases this is a feature of the event/person/object being described. For example, if the dummy variable was for occupation being an R programmer, you can ask, “is this person an R programmer?” When the answer is yes, they get a value of 1, when it is no, they get a value of 0.</p>
-<p>We’ll start with a simple example and then go into using the function dummy_cols(). You can also use the function dummy_columns() which is identical to dummy_cols().</p>
+<p>We’ll start with a simple example and then go into using the function <code>dummy_cols()</code>. You can also use the function <code>dummy_columns()</code> which is identical to <code>dummy_cols()</code>.</p>
 <p>Imagine you have a data set about animals in a local shelter. One of the columns in your data is what animal it is: dog or cat.</p>
 <table>
 <thead>
@@ -149,7 +149,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 </tbody>
 </table>
-<p>With an example like this, it is fairly easy to make the dummy columns yourself. dummy_cols() automates the process, and is useful when you have many columns to general dummy variables from or with many categories within the column.</p>
+<p>With an example like this, it is fairly easy to make the dummy columns yourself. <code>dummy_cols()</code> automates the process, and is useful when you have many columns to general dummy variables from or with many categories within the column.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fastDummies_example &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,
                     <span class="dt">gender  =</span> <span class="kw">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>),
                     <span class="dt">animals =</span> <span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>),
@@ -187,7 +187,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(fastDummies_example
 </tr>
 </tbody>
 </table>
-<p>The object <strong>fastDummies_example</strong> has two character type columns, one integer column, and a Date column. By default, dummy_cols() will make dummy variables from factor or character columns only. This is because in most cases those are the only types of data you want dummy variables from. If those are the only columns you want, then the function takes your data set as the first parameter and returns a data.frame with the newly created variables appended to the end of the original data.</p>
+<p>The object <strong>fastDummies_example</strong> has two character type columns, one integer column, and a Date column. By default, <code>dummy_cols()</code> will make dummy variables from factor or character columns only. This is because in most cases those are the only types of data you want dummy variables from. If those are the only columns you want, then the function takes your data set as the first parameter and returns a data.frame with the newly created variables appended to the end of the original data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw">dummy_cols</span>(fastDummies_example)
 knitr<span class="op">::</span><span class="kw">kable</span>(results)</code></pre></div>
 <table>
@@ -281,7 +281,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(results)</code></pr
 </tr>
 </tbody>
 </table>
-<p>The final option for dummy_cols() is <em>remove_first_dummy</em> which by default is FALSE. If TRUE, it removes the first dummy variable created from each column. This is done to avoid multicollinearity in a multiple regression model caused by included all dummy variables. The “first” dummy variable is the one at the top of the rows (i.e. the first value that is not NA).</p>
+<p>The final option for <code>dummy_cols()</code> is <em>remove_first_dummy</em> which by default is FALSE. If TRUE, it removes the first dummy variable created from each column. This is done to avoid multicollinearity in a multiple regression model caused by included all dummy variables. The “first” dummy variable is the one at the top of the rows (i.e. the first value that is not NA).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw">dummy_cols</span>(fastDummies_example, <span class="dt">remove_first_dummy =</span> <span class="ot">TRUE</span>)
 knitr<span class="op">::</span><span class="kw">kable</span>(results)</code></pre></div>
 <table>
