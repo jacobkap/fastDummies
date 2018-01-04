@@ -1,6 +1,6 @@
 ## Test environments
 * local Windows install, R 3.4.3
-
+* ubuntu 14.04 (on travis-ci), R 3.4.2
 * win-builder (devel and release)
 
 
@@ -20,4 +20,7 @@ Old maintainer(s):
 I changed my email from my work email to my personal email. 
 
 ## Downstream dependencies
-There are currently no downstream dependencies for this package.
+
+No ERRORs or WARNINGs found :)
+
+Above is the results from running revdep_check() followed by revdep_check_print_problems()
