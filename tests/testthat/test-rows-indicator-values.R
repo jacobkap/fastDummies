@@ -6,9 +6,9 @@ load(system.file("testdata", "fastDummies_data.rda",
 test_that("dummy_indicator is binary column", {
 
   # With dummy_indicator TRUE
-  expect_true((unique(dummy_rows(no_dummies_needed,
+  expect_true( (unique(dummy_rows(no_dummies_needed,
                                  dummy_indicator = TRUE)$dummy_indicator) %in%
-               c(0)))
+               c(0)) )
   expect_true(all(unique(dummy_rows(fastDummies_example,
                                  dummy_indicator = TRUE)$dummy_indicator) %in%
                0:1))
@@ -34,7 +34,7 @@ test_that("dummy_indicator is binary column", {
   # With columns selected TRUE
   expect_true(all(unique(dummy_rows(no_dummies_needed,
                                 dummy_indicator = TRUE,
-                                select_columns = "animals")$dummy_indicator) %in%
+                              select_columns = "animals")$dummy_indicator) %in%
                 0))
   expect_true(all(unique(dummy_rows(fastDummies_example,
                                 dummy_indicator = TRUE,
@@ -42,7 +42,8 @@ test_that("dummy_indicator is binary column", {
                 0))
   expect_true(all(unique(dummy_rows(fastDummies_example,
                                     dummy_indicator = TRUE,
-                                    select_columns = "animals")$dummy_indicator) %in% 0))
+                                  select_columns = "animals")$dummy_indicator)
+                  %in% 0))
   expect_true(all(unique(dummy_rows(crime,
                                 dummy_indicator = TRUE,
                                 select_columns = "crime")$dummy_indicator) %in%

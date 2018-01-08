@@ -76,7 +76,6 @@ dummy_rows <- function(data,
 
   # Finds how many possible combinations of the variables there are.
   # This will be the number of rows in the new data
- # return(data[, char_cols, with = FALSE])
   total_length <- prod(sapply(data[, char_cols, with = FALSE, drop = FALSE],
                               data.table::uniqueN))
   # Makes an empty data.table with right # of rows and columns. -------------
@@ -95,13 +94,16 @@ dummy_rows <- function(data,
 
   # Adds the dummy variable columns (and indicator) -------------------------
   for (i in other_cols) {
-    data.table::set(temp_table, j = other_cols, value = rep(dummy_value, nrow(temp_table)))
+    data.table::set(temp_table, j = other_cols,
+                    value = rep(dummy_value, nrow(temp_table)))
   }
 
   if (dummy_indicator) {
-    data.table::alloc.col(temp_table, ncol(temp_table) + 1) # Adding extra column
+    # Adding extra column
+    data.table::alloc.col(temp_table, ncol(temp_table) + 1)
     data.table::set(data, j = "dummy_indicator", value = 0L)
-    data.table::set(temp_table, j = "dummy_indicator", value = rep(1L, nrow(temp_table)))
+    data.table::set(temp_table, j = "dummy_indicator",
+                    value = rep(1L, nrow(temp_table)))
   }
 
   # Removes rows that were in original data. --------------------------------

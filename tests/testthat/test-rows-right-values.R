@@ -36,10 +36,12 @@ test_that("dummy_rows return expected data.frame", {
                           select_columns = c("gender", "animals", "dates")),
                fastDummies_full)
   expect_equal(dummy_rows(fastDummies_example, dummy_indicator = TRUE),
-               cbind(fastDummies_full, dummy_indicator = c(0,0,0,1,1,1,1,1)))
+               cbind(fastDummies_full, dummy_indicator = c(0, 0, 0, 1,
+                                                           1, 1, 1, 1)))
   expect_equal(dummy_rows(fastDummies_example, dummy_indicator = TRUE,
                           select_columns = c("gender", "animals", "dates")),
-               cbind(fastDummies_full, dummy_indicator = c(0,0,0,1,1,1,1,1)))
+               cbind(fastDummies_full, dummy_indicator = c(0, 0, 0, 1,
+                                                           1, 1, 1, 1)))
 
   # fastDummies_example data - not full
   expect_equal(dummy_rows(fastDummies_example, select_columns = "animals"),
