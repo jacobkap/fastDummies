@@ -4,11 +4,11 @@
 \alias{dummy_rows}
 \title{Fast creation of dummy rows}
 \usage{
-dummy_rows(data, select_columns = NULL, dummy_value = NA,
+dummy_rows(.data, select_columns = NULL, dummy_value = NA,
   dummy_indicator = FALSE)
 }
 \arguments{
-\item{data}{An object with the data set you want to make dummy columns from.}
+\item{.data}{An object with the data set you want to make dummy columns from.}
 
 \item{select_columns}{If NULL (default), uses all character, factor, and Date columns to produce categories
 to make the dummy rows by. If not NULL, you manually enter a string or vector of strings of columns name(s).}
