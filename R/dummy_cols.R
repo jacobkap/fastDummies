@@ -8,7 +8,7 @@
 #' @family dummy functions
 #' @seealso \code{\link{dummy_rows}} For creating dummy rows
 #'
-#' @param data
+#' @param .data
 #' An object with the data set you want to make dummy columns from.
 #' @param select_columns
 #' Vector of column names that you want to create dummy variables from.
@@ -30,7 +30,7 @@
 #' # Remove first dummy for each pair of dummy columns made
 #' dummy_cols(crime, select_columns = c("city", "year"),
 #'     remove_first_dummy = TRUE)
-dummy_cols <- function(data,
+dummy_cols <- function(.data,
                        select_columns = NULL,
                        remove_first_dummy = FALSE) {
 
@@ -39,22 +39,22 @@ dummy_cols <- function(data,
             is.logical(remove_first_dummy), length(remove_first_dummy) == 1)
 
 
-  if (!data.table::is.data.table(data)) {
-    data <- data.table::as.data.table(data)
+  if (!data.table::is.data.table(.data)) {
+    .data <- data.table::as.data.table(.data)
   }
 
   # Grabs column names that are character or factor class -------------------
   if (!is.null(select_columns)) {
     char_cols <- select_columns
-    cols_not_in_data <- char_cols[!char_cols %in% names(data)]
+    cols_not_in_data <- char_cols[!char_cols %in% names(.data)]
     char_cols <- char_cols[!char_cols %in% cols_not_in_data]
     if (length(char_cols) == 0) {
       stop("select_columns is/are not in data. Please check data and spelling.")
     }
-  } else if (ncol(data) == 1) {
-    char_cols <- names(data)
+  } else if (ncol(.data) == 1) {
+    char_cols <- names(.data)
   } else {
-    char_cols <- sapply(data, class)
+    char_cols <- sapply(.data, class)
     char_cols <- char_cols[char_cols %in% c("factor", "character")]
     char_cols <- names(char_cols)
   }
@@ -72,22 +72,22 @@ dummy_cols <- function(data,
 
 
   for (col_name in char_cols) {
-    unique_vals <- as.character(unique(data[[col_name]]))
+    unique_vals <- as.character(unique(.data[[col_name]]))
 
     if (remove_first_dummy) {
       unique_vals <- unique_vals[-1]
     }
 
-    data.table::set(data, j = paste0(col_name, "_", unique_vals), value = 0L)
+    data.table::set(.data, j = paste0(col_name, "_", unique_vals), value = 0L)
     for (unique_value in unique_vals) {
-      data.table::set(data, i = which(as.character(data[[col_name]])
+      data.table::set(.data, i = which(as.character(.data[[col_name]])
                                       %in% unique_value),
                       j = paste0(col_name, "_", unique_value), value = 1L)
     }
   }
 
-  data <- as.data.frame(data, stringsAsFactors = FALSE)
-  return(data)
+  .data <- as.data.frame(.data, stringsAsFactors = FALSE)
+  return(.data)
 
 }
 

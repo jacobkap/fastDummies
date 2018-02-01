@@ -4,10 +4,10 @@
 \alias{dummy_columns}
 \title{Fast creation of dummy variables}
 \usage{
-dummy_columns(data, select_columns = NULL, remove_first_dummy = FALSE)
+dummy_columns(.data, select_columns = NULL, remove_first_dummy = FALSE)
 }
 \arguments{
-\item{data}{An object with the data set you want to make dummy columns from.}
+\item{.data}{An object with the data set you want to make dummy columns from.}
 
 \item{select_columns}{Vector of column names that you want to create dummy variables from.
 If NULL (default), uses all character and factor columns.}
