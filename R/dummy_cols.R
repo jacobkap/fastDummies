@@ -67,7 +67,7 @@ dummy_cols <- function(.data,
   if (!is.null(select_columns) && length(cols_not_in_data) > 0) {
     warning(paste0("NOTE: The following select_columns input(s) ",
                    "is not a column in data.\n"),
-                   paste0(names(cols_not_in_data), "\t"))
+            paste0(names(cols_not_in_data), "\t"))
   }
 
 
@@ -80,13 +80,12 @@ dummy_cols <- function(.data,
 
     data.table::set(.data, j = paste0(col_name, "_", unique_vals), value = 0L)
     for (unique_value in unique_vals) {
-      data.table::set(.data, i = which(as.character(.data[[col_name]])
-                                      %in% unique_value),
+      data.table::set(.data, i = which(chmatch(as.character(.data[[col_name]]), unique_value)==1L),
                       j = paste0(col_name, "_", unique_value), value = 1L)
     }
   }
 
-  .data <- as.data.frame(.data, stringsAsFactors = FALSE)
+  #.data <- as.data.frame(.data, stringsAsFactors = FALSE)
   return(.data)
 
 }
