@@ -17,8 +17,9 @@
 #' Removes the first dummy of every variable that only n-1 Dummies remain.
 #' This avoids multicollinearity issues in models.
 #' @return
-#' A data.frame with same number of rows as inputted data and original
-#' columns plus the newly created dummy columns.
+#' A data.frame (or tibble or data.table, depending on input data type) with
+#' same number of rows as inputted data and original columns plus the newly
+#' created dummy columns.
 #' @export
 #' @examples
 #' crime <- data.frame(city = c("SF", "SF", "NYC"),
@@ -38,6 +39,7 @@ dummy_cols <- function(.data,
             select_columns != "",
             is.logical(remove_first_dummy), length(remove_first_dummy) == 1)
 
+  data_type <- check_type(.data)
 
   if (!data.table::is.data.table(.data)) {
     .data <- data.table::as.data.table(.data)
@@ -86,7 +88,7 @@ dummy_cols <- function(.data,
     }
   }
 
-  .data <- as.data.frame(.data, stringsAsFactors = FALSE)
+  .data <- fix_data_type(.data, data_type)
   return(.data)
 
 }

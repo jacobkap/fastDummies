@@ -17,14 +17,15 @@
 #' to make the dummy rows by. If not NULL, you manually enter a string or vector of strings of columns name(s).
 #' @param dummy_value
 #' Value of the row for columns that are not selected.
-#' Default is a value of 0.
+#' Default is a value of NA.
 #' @param dummy_indicator
 #' Adds binary column to say if row is dummy or not (i.e. included in
 #' original data or not)
 #'
 #' @return
-#' A data.frame with same number of columns as inputted data and original
-#' rows plus the newly created dummy rows
+#' A data.frame (or tibble or data.table, depending on input data type) with
+#' same number of columns as inputted data and original rows plus the newly
+#' created dummy rows
 #' @export
 #' @examples
 #' crime <- data.frame(city = c("SF", "SF", "NYC"),
@@ -53,6 +54,8 @@ dummy_rows <- function(.data,
   if (is.atomic(.data) || ncol(.data) == 1) {
     stop("Cannot make dummy rows of a vector of one column data.frame/table.")
   }
+
+  data_type <- check_type(.data)
 
   if (!data.table::is.data.table(.data)) {
     .data <- data.table::as.data.table(.data)
@@ -101,6 +104,8 @@ dummy_rows <- function(.data,
   if (dummy_indicator) {
     # Adding extra column
     data.table::alloc.col(temp_table, ncol(temp_table) + 1)
+    data.table::alloc.col(.data, ncol(.data) + 1)
+
     data.table::set(.data, j = "dummy_indicator", value = 0L)
     data.table::set(temp_table, j = "dummy_indicator",
                     value = rep(1L, nrow(temp_table)))
@@ -118,7 +123,8 @@ dummy_rows <- function(.data,
   .data <- data.table::rbindlist(list(.data, temp_table), use.names = TRUE,
                                 fill = TRUE)
   }
-  .data <- as.data.frame(.data)
+
+  .data <- fix_data_type(.data, data_type)
   return(.data)
 
 }
