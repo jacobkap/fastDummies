@@ -30,19 +30,19 @@
 #' # Remove first dummy for each pair of dummy columns made
 #' dummy_cols(crime, select_columns = c("city", "year"),
 #'     remove_first_dummy = TRUE)
-dummy_cols <- function(.data,
-                       select_columns = NULL,
-                       remove_first_dummy = FALSE) {
-
+dummy_cols_V2 <- function(.data,
+                          select_columns = NULL,
+                          remove_first_dummy = FALSE) {
+  
   stopifnot(is.null(select_columns) || is.character(select_columns),
             select_columns != "",
             is.logical(remove_first_dummy), length(remove_first_dummy) == 1)
-
-
+  
+  
   if (!data.table::is.data.table(.data)) {
     .data <- data.table::as.data.table(.data)
   }
-
+  
   # Grabs column names that are character or factor class -------------------
   if (!is.null(select_columns)) {
     char_cols <- select_columns
@@ -58,37 +58,46 @@ dummy_cols <- function(.data,
     char_cols <- char_cols[char_cols %in% c("factor", "character")]
     char_cols <- names(char_cols)
   }
-
+  
   if (length(char_cols) == 0 && is.null(select_columns)) {
     stop(paste0("No character or factor columns found. ",
                 "Please use select_columns to choose columns."))
   }
-
+  
   if (!is.null(select_columns) && length(cols_not_in_data) > 0) {
     warning(paste0("NOTE: The following select_columns input(s) ",
                    "is not a column in data.\n"),
-                   paste0(names(cols_not_in_data), "\t"))
+            paste0(names(cols_not_in_data), "\t"))
   }
-
-
+  
+  # get unique values for each column
+  unique_vals = .data[,.(lapply(.SD, function(x)as.character(unique(x)))), .SDcols = char_cols]$V1
+  names(unique_vals) = char_cols
+  
+  if(remove_first_dummy){
+    unique_vals = lapply(unique_vals, function(x)x[-1])
+  }
+  
+  # create onehot dummy columns
+  new_col_names = mapply(paste0, char_cols, "_", unique_vals )
+  data.table::set(.data, j = unlist(new_col_names), value = 0L)
+  
   for (col_name in char_cols) {
-    unique_vals <- as.character(unique(.data[[col_name]]))
-
-    if (remove_first_dummy) {
-      unique_vals <- unique_vals[-1]
-    }
-
-    data.table::set(.data, j = paste0(col_name, "_", unique_vals), value = 0L)
-    for (unique_value in unique_vals) {
-      data.table::set(.data, i = which(as.character(.data[[col_name]])
-                                      %in% unique_value),
-                      j = paste0(col_name, "_", unique_value), value = 1L)
-    }
+    col_dummies = new_col_names[[col_name]]
+    col_unique_values = unique_vals[[col_name]]
+    
+    for (n in 1:length(col_unique_values)) {
+      # match a unique value, then replace it
+      index = which( chmatch(as.character(.data[[col_name]]), col_unique_values[n]) ==1L )
+      data.table::set(.data, i =index ,j = col_dummies[n], value = 1L)
+      }
+    
   }
-
-  .data <- as.data.frame(.data, stringsAsFactors = FALSE)
+  # why need this step ? 
+  # .data <- as.data.frame(.data, stringsAsFactors = FALSE)
+  
   return(.data)
-
+  
 }
 
 #' Fast creation of dummy variables
@@ -114,4 +123,4 @@ dummy_cols <- function(.data,
 #' # Remove first dummy for each pair of dummy columns made
 #' dummy_cols(crime, select_columns = c("city", "year"),
 #'     remove_first_dummy = TRUE)
-dummy_columns <- dummy_cols
+dummy_columns <- dummy_cols_V2
