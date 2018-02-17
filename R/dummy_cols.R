@@ -30,7 +30,7 @@
 #' # Remove first dummy for each pair of dummy columns made
 #' dummy_cols(crime, select_columns = c("city", "year"),
 #'     remove_first_dummy = TRUE)
-dummy_cols_V2 <- function(.data,
+dummy_cols <- function(.data,
                           select_columns = NULL,
                           remove_first_dummy = FALSE) {
   
@@ -123,4 +123,4 @@ dummy_cols_V2 <- function(.data,
 #' # Remove first dummy for each pair of dummy columns made
 #' dummy_cols(crime, select_columns = c("city", "year"),
 #'     remove_first_dummy = TRUE)
-dummy_columns <- dummy_cols_V2
+dummy_columns <- dummy_cols
