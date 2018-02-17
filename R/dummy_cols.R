@@ -79,19 +79,21 @@ dummy_cols <- function(.data,
     if (remove_first_dummy) {
       unique_vals <- unique_vals[-1]
     }
-
+    data.table::alloc.col(.data, ncol(.data) + length(unique_vals))
     data.table::set(.data, j = paste0(col_name, "_", unique_vals), value = 0L)
     for (unique_value in unique_vals) {
-      data.table::set(.data, i = which(as.character(.data[[col_name]])
-                                      %in% unique_value),
-                      j = paste0(col_name, "_", unique_value), value = 1L)
-    }
+       data.table::set(.data, i = which(data.table::chmatch(as.character(.data[[col_name]]),
+                                                            unique_value) == 1L),
+                       j = paste0(col_name, "_", unique_value), value = 1L)
+
+     }
   }
 
   .data <- fix_data_type(.data, data_type)
   return(.data)
 
 }
+
 
 #' Fast creation of dummy variables
 #'
