@@ -16,8 +16,9 @@ If NULL (default), uses all character and factor columns.}
 This avoids multicollinearity issues in models.}
 }
 \value{
-A data.frame with same number of rows as inputted data and original
-columns plus the newly created dummy columns.
+A data.frame (or tibble or data.table, depending on input data type) with
+same number of rows as inputted data and original columns plus the newly
+created dummy columns.
 }
 \description{
 dummy_cols() quickly creates dummy (binary) columns from character and

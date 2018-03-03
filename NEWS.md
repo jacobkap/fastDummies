@@ -5,6 +5,9 @@
 
 * Both dummy_cols() and dummy_rows() now return the same data type inputted
    + e.g. data.frame input returns data.frame, tibble returns tibble.
+   
+* Fix documentation that incorrectly said default value for new dummy rows
+is 0. It is in fact a value of NA.
 
 # fastDummies 1.0.0
 

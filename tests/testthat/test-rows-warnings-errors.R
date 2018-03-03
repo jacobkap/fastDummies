@@ -1,4 +1,4 @@
-context("Checks dummy_rows for warnings and errors")
+context("Checks dummy_rows for warnings, errors, and silent")
 
 load(system.file("testdata", "fastDummies_data.rda",
                  package = "fastDummies"))
@@ -27,4 +27,48 @@ test_that("There are warnings or errors", {
   expect_error(dummy_rows(fastDummies_example_DT[, "numbers", drop = FALSE]))
 
 
+})
+
+test_that("There are no warnings or errors", {
+  expect_silent(dummy_cols(crime))
+  expect_silent(dummy_cols(crime$city))
+  expect_silent(dummy_cols(crime$year))
+  expect_silent(dummy_cols(crime_full))
+  expect_silent(dummy_cols(fastDummies_example))
+  expect_silent(dummy_cols(fastDummies_full))
+  expect_silent(dummy_cols(no_dummies_needed))
+
+  expect_silent(dummy_cols(crime_DT))
+  expect_silent(dummy_cols(crime_DT$city))
+  expect_silent(dummy_cols(crime_DT$year))
+  expect_silent(dummy_cols(crime_full_DT))
+  expect_silent(dummy_cols(fastDummies_example_DT))
+  expect_silent(dummy_cols(fastDummies_full_DT))
+  expect_silent(dummy_cols(no_dummies_needed_DT))
+
+  expect_silent(dummy_cols(crime_tibble))
+  expect_silent(dummy_cols(crime_tibble$city))
+  expect_silent(dummy_cols(crime_tibble$year))
+  expect_silent(dummy_cols(crime_full_tibble))
+  expect_silent(dummy_cols(fastDummies_example_tibble))
+  expect_silent(dummy_cols(fastDummies_full_tibble))
+  expect_silent(dummy_cols(no_dummies_needed_tibble))
+
+  expect_silent(dummy_rows(crime))
+  expect_silent(dummy_rows(crime_full))
+  expect_silent(dummy_rows(fastDummies_example))
+  expect_silent(dummy_rows(fastDummies_full))
+  expect_silent(dummy_rows(no_dummies_needed))
+
+  expect_silent(dummy_rows(crime_DT))
+  expect_silent(dummy_rows(crime_full_DT))
+  expect_silent(dummy_rows(fastDummies_example_DT))
+  expect_silent(dummy_rows(fastDummies_full_DT))
+  expect_silent(dummy_rows(no_dummies_needed_DT))
+
+  expect_silent(dummy_rows(crime_tibble))
+  expect_silent(dummy_rows(crime_full_tibble))
+  expect_silent(dummy_rows(fastDummies_example_tibble))
+  expect_silent(dummy_rows(fastDummies_full_tibble))
+  expect_silent(dummy_rows(no_dummies_needed_tibble))
 })
