@@ -16,7 +16,7 @@ If NULL (default), uses all character and factor columns.}
 \item{remove_first_dummy}{Removes the first dummy of every variable such that only n-1 dummies remain.
 This avoids multicollinearity issues in models.}
 
-\item{remove_most_frequent_dummy}{Removes the most frequently obeserved category such that only n-1 dummies
+\item{remove_most_frequent_dummy}{Removes the most frequently observed category such that only n-1 dummies
 remain. If there is a tie for most frequent, will remove the first
 (by alphabetical order) category that is tied for most frequent.}
 }
