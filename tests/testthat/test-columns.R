@@ -2,6 +2,13 @@ context("Makes correct dummy columns")
 
 load(system.file("testdata", "fastDummies_data.rda",
                  package = "fastDummies"))
+most_frequent <- data.frame(animal = c("dog", "cat", "cat",
+                                       "gorilla", "gorilla",
+                                       "gorilla"),
+                            day    = c("monday", "tuesday",
+                                       "wednesday", "wednesday",
+                                       "friday", "saturday"),
+                            hour = 1:6)
 
 
 test_that("The correct dummy columns are made - default", {
@@ -18,6 +25,7 @@ test_that("The correct dummy columns are made - default", {
 
   expect_named(dummy_cols(fastDummies_example[, "numbers", drop = FALSE]),
                c("numbers", "numbers_1", "numbers_2", "numbers_3"))
+
 
 })
 
@@ -105,4 +113,37 @@ test_that("Remove first dummy leads to proper dummy columns being made", {
                           remove_first_dummy = TRUE),
                c("numbers", "gender", "animals", "dates",
                  "animals_cat", "numbers_2", "numbers_3"))
+})
+
+test_that("remove_most_frequent_dummy works", {
+expect_named(dummy_cols(most_frequent, remove_most_frequent_dummy = TRUE),
+             c("animal", "day", "hour", "animal_dog",
+               "animal_cat",
+               "day_monday", "day_tuesday",
+                "day_friday",
+               "day_saturday"))
+expect_named(dummy_cols(most_frequent, select_columns = c("animal", "day"),
+                        remove_most_frequent_dummy = TRUE),
+             c("animal", "day", "hour", "animal_dog",
+               "animal_cat",
+               "day_monday", "day_tuesday",
+                "day_friday",
+               "day_saturday"))
+expect_named(dummy_cols(most_frequent, select_columns = "animal",
+                        remove_most_frequent_dummy = TRUE),
+             c("animal", "day", "hour", "animal_dog",
+               "animal_cat"))
+expect_named(dummy_cols(most_frequent, select_columns = "day",
+                        remove_most_frequent_dummy = TRUE),
+             c("animal", "day", "hour",
+               "day_monday", "day_tuesday",
+               "day_friday",
+               "day_saturday"))
+expect_named(dummy_cols(most_frequent, select_columns = "hour",
+                        remove_most_frequent_dummy = TRUE),
+             c("animal", "day", "hour",
+               "hour_2", "hour_3",
+               "hour_4", "hour_5",
+               "hour_6"))
+
 })

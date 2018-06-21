@@ -14,8 +14,12 @@
 #' Vector of column names that you want to create dummy variables from.
 #' If NULL (default), uses all character and factor columns.
 #' @param remove_first_dummy
-#' Removes the first dummy of every variable that only n-1 Dummies remain.
+#' Removes the first dummy of every variable such that only n-1 dummies remain.
 #' This avoids multicollinearity issues in models.
+#' @param remove_most_frequent_dummy
+#' Removes the most frequently obeserved category such that only n-1 dummies
+#' remain. If there is a tie for most frequent, will remove the first
+#' (by alphabetical order) category that is tied for most frequent.
 #' @return
 #' A data.frame (or tibble or data.table, depending on input data type) with
 #' same number of rows as inputted data and original columns plus the newly
@@ -33,11 +37,17 @@
 #'     remove_first_dummy = TRUE)
 dummy_cols <- function(.data,
                        select_columns = NULL,
-                       remove_first_dummy = FALSE) {
+                       remove_first_dummy = FALSE,
+                       remove_most_frequent_dummy = FALSE) {
 
   stopifnot(is.null(select_columns) || is.character(select_columns),
             select_columns != "",
             is.logical(remove_first_dummy), length(remove_first_dummy) == 1)
+
+  if (remove_first_dummy == TRUE & remove_most_frequent_dummy == TRUE) {
+    stop("Select only one of 'remove_first_dummy' or 'remove_most_frequent_dummy'
+         to proceed.")
+  }
 
   data_type <- check_type(.data)
 
@@ -75,6 +85,20 @@ dummy_cols <- function(.data,
 
   for (col_name in char_cols) {
     unique_vals <- as.character(unique(.data[[col_name]]))
+
+    if (remove_most_frequent_dummy) {
+    vals <- as.character(.data[[col_name]])
+    vals <- data.frame(sort(table(vals), decreasing = TRUE),
+                       stringsAsFactors = FALSE)
+    if (vals$Freq[1] > vals$Freq[2]) {
+    vals <- as.character(vals$vals[2:nrow(vals)])
+    unique_vals <- unique_vals[which(unique_vals %in% vals)]
+    unique_vals <- vals[order(match(vals, unique_vals))]
+    } else {
+      remove_first_dummy <- TRUE
+    }
+
+    }
 
     if (remove_first_dummy) {
       unique_vals <- unique_vals[-1]

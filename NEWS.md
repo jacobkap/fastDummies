@@ -1,3 +1,8 @@
+# fastDummies 1.2.0
+
+* Adds option to exclude the most frequently observed category rather than the first
+    category as is default. Thanks to GitHub user S-UP for the suggestion!
+
 # fastDummies 1.1.0
 
 * Thanks to GitHub user yu45020 dummy_cols() is now about >20% faster

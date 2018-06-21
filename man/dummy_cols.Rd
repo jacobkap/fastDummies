@@ -4,7 +4,8 @@
 \alias{dummy_cols}
 \title{Fast creation of dummy variables}
 \usage{
-dummy_cols(.data, select_columns = NULL, remove_first_dummy = FALSE)
+dummy_cols(.data, select_columns = NULL, remove_first_dummy = FALSE,
+  remove_most_frequent_dummy = FALSE)
 }
 \arguments{
 \item{.data}{An object with the data set you want to make dummy columns from.}
@@ -12,8 +13,12 @@ dummy_cols(.data, select_columns = NULL, remove_first_dummy = FALSE)
 \item{select_columns}{Vector of column names that you want to create dummy variables from.
 If NULL (default), uses all character and factor columns.}
 
-\item{remove_first_dummy}{Removes the first dummy of every variable that only n-1 Dummies remain.
+\item{remove_first_dummy}{Removes the first dummy of every variable such that only n-1 dummies remain.
 This avoids multicollinearity issues in models.}
+
+\item{remove_most_frequent_dummy}{Removes the most frequently obeserved category such that only n-1 dummies
+remain. If there is a tie for most frequent, will remove the first
+(by alphabetical order) category that is tied for most frequent.}
 }
 \value{
 A data.frame (or tibble or data.table, depending on input data type) with

@@ -113,6 +113,40 @@ test_that("dummy_cols returns expected number of columns", {
 
 })
 
+test_that("dummy_cols returns expected number of columns - remove most common", {
+  expect_equal(ncol(dummy_cols(no_dummies_needed,
+                               remove_most_frequent_dummy = TRUE)), 4)
+  expect_equal(ncol(dummy_cols(no_dummies_needed,
+                               select_columns = "animals",
+                               remove_most_frequent_dummy = TRUE)), 3)
+
+  expect_equal(ncol(dummy_cols(crime,
+                               remove_most_frequent_dummy = TRUE)), 4)
+  expect_equal(ncol(dummy_cols(crime,
+                               select_columns = "city",
+                               remove_most_frequent_dummy = TRUE)), 4)
+  expect_equal(ncol(dummy_cols(crime,
+                               select_columns = "year",
+                               remove_most_frequent_dummy = TRUE)), 4)
+  expect_equal(ncol(dummy_cols(crime,
+                               select_columns = c("city", "year"),
+                               remove_most_frequent_dummy = TRUE)), 5)
+
+  expect_equal(ncol(dummy_cols(fastDummies_example,
+                               remove_most_frequent_dummy = TRUE)), 6)
+  expect_equal(ncol(dummy_cols(fastDummies_example,
+                               select_columns = "gender",
+                               remove_most_frequent_dummy = TRUE)), 5)
+  expect_equal(ncol(dummy_cols(fastDummies_example,
+                               select_columns = "dates",
+                               remove_most_frequent_dummy = TRUE)), 5)
+  expect_equal(ncol(dummy_cols(fastDummies_example,
+                               select_columns =
+                                 c("dates", "gender", "numbers"),
+                               remove_most_frequent_dummy = TRUE)), 8)
+
+})
+
 test_that("dummy_cols returns expected number of columns - vector ", {
   expect_equal(ncol(dummy_cols(fastDummies_example$numbers)), 4)
   expect_equal(ncol(dummy_cols(fastDummies_example$animals)), 3)
