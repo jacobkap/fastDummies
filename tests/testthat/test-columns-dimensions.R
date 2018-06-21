@@ -113,7 +113,7 @@ test_that("dummy_cols returns expected number of columns", {
 
 })
 
-test_that("dummy_cols returns expected number of columns - remove most common", {
+test_that("returns expected number of columns - remove most common", {
   expect_equal(ncol(dummy_cols(no_dummies_needed,
                                remove_most_frequent_dummy = TRUE)), 4)
   expect_equal(ncol(dummy_cols(no_dummies_needed,

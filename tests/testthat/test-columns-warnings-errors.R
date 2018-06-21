@@ -21,7 +21,8 @@ test_that("Including non-existing in
 test_that("Only having non-existing column in select_columns returns error", {
 
   expect_error(dummy_cols(fastDummies_example, select_columns = "number"))
-  expect_error(dummy_cols(fastDummies_example[, "numbers", drop = FALSE], select_columns = "number"))
+  expect_error(dummy_cols(fastDummies_example[, "numbers", drop = FALSE],
+                          select_columns = "number"))
   expect_error(dummy_cols(fastDummies_example[, "gender", drop = FALSE],
                           select_columns = "gen"))
   expect_error(dummy_cols(fastDummies_example, select_columns = ""))

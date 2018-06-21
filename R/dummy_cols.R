@@ -45,7 +45,7 @@ dummy_cols <- function(.data,
             is.logical(remove_first_dummy), length(remove_first_dummy) == 1)
 
   if (remove_first_dummy == TRUE & remove_most_frequent_dummy == TRUE) {
-    stop("Select only one of 'remove_first_dummy' or 'remove_most_frequent_dummy'
+    stop("Select either 'remove_first_dummy' or 'remove_most_frequent_dummy'
          to proceed.")
   }
 
@@ -106,8 +106,10 @@ dummy_cols <- function(.data,
     data.table::alloc.col(.data, ncol(.data) + length(unique_vals))
     data.table::set(.data, j = paste0(col_name, "_", unique_vals), value = 0L)
     for (unique_value in unique_vals) {
-       data.table::set(.data, i = which(data.table::chmatch(as.character(.data[[col_name]]),
-                                                            unique_value) == 1L),
+       data.table::set(.data, i =
+                         which(data.table::chmatch(
+                           as.character(.data[[col_name]]),
+                           unique_value) == 1L),
                        j = paste0(col_name, "_", unique_value), value = 1L)
 
      }
