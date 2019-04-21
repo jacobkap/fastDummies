@@ -20,6 +20,8 @@
 #' Removes the most frequently observed category such that only n-1 dummies
 #' remain. If there is a tie for most frequent, will remove the first
 #' (by alphabetical order) category that is tied for most frequent.
+#' @param sort_colums
+#' Sorts columns following factor order.
 #' @return
 #' A data.frame (or tibble or data.table, depending on input data type) with
 #' same number of rows as inputted data and original columns plus the newly
@@ -38,7 +40,8 @@
 dummy_cols <- function(.data,
                        select_columns = NULL,
                        remove_first_dummy = FALSE,
-                       remove_most_frequent_dummy = FALSE) {
+                       remove_most_frequent_dummy = FALSE,
+                       sort_columns = FALSE) {
 
   stopifnot(is.null(select_columns) || is.character(select_columns),
             select_columns != "",
@@ -103,6 +106,12 @@ dummy_cols <- function(.data,
     if (remove_first_dummy) {
       unique_vals <- unique_vals[-1]
     }
+
+    if (sort_columns) {
+      idx <- na.exclude(match(levels(.data[[col_name]]), unique_vals))
+      unique_vals <- unique_vals[idx]
+    }
+
     data.table::alloc.col(.data, ncol(.data) + length(unique_vals))
     data.table::set(.data, j = paste0(col_name, "_", unique_vals), value = 0L)
     for (unique_value in unique_vals) {
