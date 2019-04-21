@@ -20,8 +20,9 @@
 #' Removes the most frequently observed category such that only n-1 dummies
 #' remain. If there is a tie for most frequent, will remove the first
 #' (by alphabetical order) category that is tied for most frequent.
-#' @param sort_colums
+#' @param sort_columns
 #' Sorts columns following factor order.
+#'
 #' @return
 #' A data.frame (or tibble or data.table, depending on input data type) with
 #' same number of rows as inputted data and original columns plus the newly
@@ -82,7 +83,7 @@ dummy_cols <- function(.data,
   if (!is.null(select_columns) && length(cols_not_in_data) > 0) {
     warning(paste0("NOTE: The following select_columns input(s) ",
                    "is not a column in data.\n"),
-                   paste0(names(cols_not_in_data), "\t"))
+            paste0(names(cols_not_in_data), "\t"))
   }
 
 
@@ -90,17 +91,16 @@ dummy_cols <- function(.data,
     unique_vals <- as.character(unique(.data[[col_name]]))
 
     if (remove_most_frequent_dummy) {
-    vals <- as.character(.data[[col_name]])
-    vals <- data.frame(sort(table(vals), decreasing = TRUE),
-                       stringsAsFactors = FALSE)
-    if (vals$Freq[1] > vals$Freq[2]) {
-    vals <- as.character(vals$vals[2:nrow(vals)])
-    unique_vals <- unique_vals[which(unique_vals %in% vals)]
-    unique_vals <- vals[order(match(vals, unique_vals))]
-    } else {
-      remove_first_dummy <- TRUE
-    }
-
+      vals <- as.character(.data[[col_name]])
+      vals <- data.frame(sort(table(vals), decreasing = TRUE),
+                         stringsAsFactors = FALSE)
+      if (vals$Freq[1] > vals$Freq[2]) {
+        vals <- as.character(vals$vals[2:nrow(vals)])
+        unique_vals <- unique_vals[which(unique_vals %in% vals)]
+        unique_vals <- vals[order(match(vals, unique_vals))]
+      } else {
+        remove_first_dummy <- TRUE
+      }
     }
 
     if (remove_first_dummy) {
@@ -108,26 +108,29 @@ dummy_cols <- function(.data,
     }
 
     if (sort_columns) {
-      idx <- na.exclude(match(levels(.data[[col_name]]), unique_vals))
+      idx <- stats::na.exclude(match(levels(.data[[col_name]]), unique_vals))
       unique_vals <- unique_vals[idx]
     }
 
     data.table::alloc.col(.data, ncol(.data) + length(unique_vals))
     data.table::set(.data, j = paste0(col_name, "_", unique_vals), value = 0L)
     for (unique_value in unique_vals) {
-       data.table::set(.data, i =
-                         which(data.table::chmatch(
-                           as.character(.data[[col_name]]),
-                           unique_value) == 1L),
-                       j = paste0(col_name, "_", unique_value), value = 1L)
+      data.table::set(.data, i =
+                        which(data.table::chmatch(
+                          as.character(.data[[col_name]]),
+                          unique_value) == 1L),
+                      j = paste0(col_name, "_", unique_value), value = 1L)
 
-     }
+    }
   }
 
   .data <- fix_data_type(.data, data_type)
   return(.data)
 
 }
+
+test <- data.frame(act = c("research", "research", "teaching", "research teaching", "teaching, research"),
+                   stringsAsFactors = FALSE)
 
 
 #' Fast creation of dummy variables

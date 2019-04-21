@@ -5,7 +5,7 @@
 \title{Fast creation of dummy variables}
 \usage{
 dummy_cols(.data, select_columns = NULL, remove_first_dummy = FALSE,
-  remove_most_frequent_dummy = FALSE)
+  remove_most_frequent_dummy = FALSE, sort_columns = FALSE)
 }
 \arguments{
 \item{.data}{An object with the data set you want to make dummy columns from.}
@@ -19,6 +19,8 @@ This avoids multicollinearity issues in models.}
 \item{remove_most_frequent_dummy}{Removes the most frequently observed category such that only n-1 dummies
 remain. If there is a tie for most frequent, will remove the first
 (by alphabetical order) category that is tied for most frequent.}
+
+\item{sort_columns}{Sorts columns following factor order.}
 }
 \value{
 A data.frame (or tibble or data.table, depending on input data type) with
@@ -48,3 +50,4 @@ dummy_cols(crime, select_columns = c("city", "year"),
 Other dummy functions: \code{\link{dummy_columns}},
   \code{\link{dummy_rows}}
 }
+\concept{dummy functions}

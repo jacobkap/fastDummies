@@ -53,3 +53,4 @@ dummy_rows(crime, select_columns = c("city", "year"),
 Other dummy functions: \code{\link{dummy_cols}},
   \code{\link{dummy_columns}}
 }
+\concept{dummy functions}
