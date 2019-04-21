@@ -66,7 +66,7 @@ character columns." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fastDummies</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@ character columns.</p>
     </div>
 
     <pre class="usage"><span class='fu'>dummy_columns</span>(<span class='no'>.data</span>, <span class='kw'>select_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>remove_first_dummy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>remove_most_frequent_dummy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>remove_most_frequent_dummy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sort_columns</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,6 +159,10 @@ This avoids multicollinearity issues in models.</p></td>
       <td><p>Removes the most frequently observed category such that only n-1 dummies
 remain. If there is a tie for most frequent, will remove the first
 (by alphabetical order) category that is tied for most frequent.</p></td>
+    </tr>
+    <tr>
+      <th>sort_columns</th>
+      <td><p>Sorts columns following factor order.</p></td>
     </tr>
     </table>
     
