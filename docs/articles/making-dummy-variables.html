@@ -86,7 +86,7 @@
       <h1>Making dummy variables with dummy_cols()</h1>
                         <h4 class="author">Jacob Kaplan</h4>
             
-            <h4 class="date">2019-04-21</h4>
+            <h4 class="date">2019-05-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jacobkap/fastDummies/blob/master/vignettes/making-dummy-variables.Rmd"><code>vignettes/making-dummy-variables.Rmd</code></a></small>
       <div class="hidden name"><code>making-dummy-variables.Rmd</code></div>
@@ -165,13 +165,13 @@
 </tbody>
 </table>
 <p>With an example like this, it is fairly easy to make the dummy columns yourself. <code><a href="../reference/dummy_cols.html">dummy_cols()</a></code> automates the process, and is useful when you have many columns to general dummy variables from or with many categories within the column.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fastDummies_example &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,
-                    <span class="dt">gender  =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),
-                    <span class="dt">animals =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),
-                    <span class="dt">dates   =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,
-                                          <span class="st">"2012-01-01"</span>)),
-                    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
-knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(fastDummies_example)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">fastDummies_example &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb1-2" title="2">                    <span class="dt">gender  =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),</a>
+<a class="sourceLine" id="cb1-3" title="3">                    <span class="dt">animals =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),</a>
+<a class="sourceLine" id="cb1-4" title="4">                    <span class="dt">dates   =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,</a>
+<a class="sourceLine" id="cb1-5" title="5">                                          <span class="st">"2012-01-01"</span>)),</a>
+<a class="sourceLine" id="cb1-6" title="6">                    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb1-7" title="7">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(fastDummies_example)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -201,8 +201,8 @@ knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentat
 </tbody>
 </table>
 <p>The object <strong>fastDummies_example</strong> has two character type columns, one integer column, and a Date column. By default, <code><a href="../reference/dummy_cols.html">dummy_cols()</a></code> will make dummy variables from factor or character columns only. This is because in most cases those are the only types of data you want dummy variables from. If those are the only columns you want, then the function takes your data set as the first parameter and returns a data.frame with the newly created variables appended to the end of the original data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fastDummies/topics/dummy_cols">dummy_cols</a></span>(fastDummies_example)
-knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(results)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fastDummies/topics/dummy_cols">dummy_cols</a></span>(fastDummies_example)</a>
+<a class="sourceLine" id="cb2-2" title="2">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(results)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -248,8 +248,8 @@ knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentat
 </tbody>
 </table>
 <p>In some situations, you would want columns with types other than factor and character to generate dummy variables. For example, a column of years would be numeric but could be well-suited for making into dummy variables depending on your analysis. Use the <em>select_columns</em> parameter to select specific columns to make dummy variables from.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fastDummies/topics/dummy_cols">dummy_cols</a></span>(fastDummies_example, <span class="dt">select_columns =</span> <span class="st">"numbers"</span>)
-knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(results)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fastDummies/topics/dummy_cols">dummy_cols</a></span>(fastDummies_example, <span class="dt">select_columns =</span> <span class="st">"numbers"</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(results)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -291,8 +291,8 @@ knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentat
 </tbody>
 </table>
 <p>The final option for <code><a href="../reference/dummy_cols.html">dummy_cols()</a></code> is <em>remove_first_dummy</em> which by default is FALSE. If TRUE, it removes the first dummy variable created from each column. This is done to avoid multicollinearity in a multiple regression model caused by included all dummy variables. The “first” dummy variable is the one at the top of the rows (i.e. the first value that is not NA).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fastDummies/topics/dummy_cols">dummy_cols</a></span>(fastDummies_example, <span class="dt">remove_first_dummy =</span> <span class="ot">TRUE</span>)
-knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(results)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fastDummies/topics/dummy_cols">dummy_cols</a></span>(fastDummies_example, <span class="dt">remove_first_dummy =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(results)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>

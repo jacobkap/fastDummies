@@ -95,18 +95,18 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">To install this package, use the code
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"fastDummies"</span>)
-
-
-<span class="co"># The development version is available on Github.</span>
-<span class="co"># install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"jacobkap/fastDummies"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">To install this package, use the code</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"fastDummies"</span>)</a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="co"># The development version is available on Github.</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co"># install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb1-7" title="7">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"jacobkap/fastDummies"</span>)</a></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(fastDummies)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(fastDummies)</a></code></pre></div>
 <p>There are two functions in this package:</p>
 <ul>
 <li>
@@ -189,13 +189,13 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 </tbody>
 </table>
 <p>With an example like this, it is fairly easy to make the dummy columns yourself. <code><a href="reference/dummy_cols.html">dummy_cols()</a></code> automates the process, and is useful when you have many columns to general dummy variables from or with many categories within the column.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fastDummies_example &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,
-                    <span class="dt">gender  =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),
-                    <span class="dt">animals =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),
-                    <span class="dt">dates   =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,
-                                          <span class="st">"2012-01-01"</span>)),
-                    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
-knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(fastDummies_example)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">fastDummies_example &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb3-2" title="2">                    <span class="dt">gender  =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),</a>
+<a class="sourceLine" id="cb3-3" title="3">                    <span class="dt">animals =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),</a>
+<a class="sourceLine" id="cb3-4" title="4">                    <span class="dt">dates   =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,</a>
+<a class="sourceLine" id="cb3-5" title="5">                                          <span class="st">"2012-01-01"</span>)),</a>
+<a class="sourceLine" id="cb3-6" title="6">                    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-7" title="7">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(fastDummies_example)</a></code></pre></div>
 <table class="table table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -225,8 +225,8 @@ knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentat
 </tbody>
 </table>
 <p>The object <strong>fastDummies_example</strong> has two character type columns, one integer column, and a Date column. By default, <code><a href="reference/dummy_cols.html">dummy_cols()</a></code> will make dummy variables from factor or character columns only. This is because in most cases those are the only types of data you want dummy variables from. If those are the only columns you want, then the function takes your data set as the first parameter and returns a data.frame with the newly created variables appended to the end of the original data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fastDummies/topics/dummy_cols">dummy_cols</a></span>(fastDummies_example)
-knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(results)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fastDummies/topics/dummy_cols">dummy_cols</a></span>(fastDummies_example)</a>
+<a class="sourceLine" id="cb4-2" title="2">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(results)</a></code></pre></div>
 <table class="table table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -278,13 +278,13 @@ knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentat
 <p>When dealing with data, there are often missing rows. While truly handling missing data is far beyond the scope of this package, the function <code><a href="reference/dummy_rows.html">dummy_rows()</a></code> lets you add those missing rows back into the data.</p>
 <p>The function takes all character, factor, and Date columns, finds all possible combinations of their values, and adds the rows that are not in the original data set. Any columns not used in creating the combinations (e.g. numeric) are given a value of NA (unless otherwise specified with <em>dummy_value</em>).</p>
 <p>Lets start with a simple example.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fastDummies_example &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,
-                    <span class="dt">gender  =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),
-                    <span class="dt">animals =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),
-                    <span class="dt">dates   =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,
-                                          <span class="st">"2012-01-01"</span>)),
-                    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
-knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(fastDummies_example)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">fastDummies_example &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb5-2" title="2">                    <span class="dt">gender  =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),</a>
+<a class="sourceLine" id="cb5-3" title="3">                    <span class="dt">animals =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),</a>
+<a class="sourceLine" id="cb5-4" title="4">                    <span class="dt">dates   =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,</a>
+<a class="sourceLine" id="cb5-5" title="5">                                          <span class="st">"2012-01-01"</span>)),</a>
+<a class="sourceLine" id="cb5-6" title="6">                    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb5-7" title="7">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(fastDummies_example)</a></code></pre></div>
 <table class="table table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -314,8 +314,8 @@ knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentat
 </tbody>
 </table>
 <p>This data set has four columns: two character, one Date, and one numeric. The function by default will use the character and Date columns in creating the combinations. First, a small amount of math to explain the combinations. Each column has two distinct values - gender: male &amp; female; animals: dog &amp; cat; dates: 2011-12-31 &amp; 2011-12-31. To find the number of possible combinations, multiple the number of unique values in each column together. 2 * 2 * 2 = 8.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fastDummies/topics/dummy_rows">dummy_rows</a></span>(fastDummies_example)
-knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(results)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fastDummies/topics/dummy_rows">dummy_rows</a></span>(fastDummies_example)</a>
+<a class="sourceLine" id="cb6-2" title="2">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(results)</a></code></pre></div>
 <table class="table table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -410,7 +410,7 @@ knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentat
 <li><a href="https://ci.appveyor.com/project/jacobkap/fastDummies"><img src="https://ci.appveyor.com/api/projects/status/github/jacobkap/fastDummies?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
 <li><a href="https://travis-ci.org/jacobkap/fastDummies"><img src="https://travis-ci.org/jacobkap/fastDummies.svg?branch=master" alt="Build Status"></a></li>
 <li><a href="https://codecov.io/github/jacobkap/fastDummies?branch=master"><img src="https://codecov.io/gh/jacobkap/fastDummies/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
-<li><a href="https://cran.r-project.com/web/packages/fastDummies/index.html"><img src="https://cranlogs.r-pkg.org/badges/fastDummies"></a></li>
+<li><a href="https://cran.r-project.org/web/packages/fastDummies/index.html"><img src="https://cranlogs.r-pkg.org/badges/fastDummies"></a></li>
 </ul>
 </div>
 </div>
