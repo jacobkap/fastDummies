@@ -3,6 +3,17 @@ context("Checks dummy_cols for warnings and errors")
 load(system.file("testdata", "fastDummies_data.rda",
                  package = "fastDummies"))
 
+error_data <- data.frame(numbers = 1:10,
+                         number2 = 11:20,
+                         stringsAsFactors = FALSE)
+
+test_that("Error on stop conditions", {
+
+  expect_error(dummy_cols(error_data))
+  expect_error(dummy_cols(error_data), paste0("No character or factor columns found. ",
+               "Please use select_columns to choose columns."))
+})
+
 test_that("Including non-existing in
           select_columns leads to warning", {
 
@@ -16,7 +27,7 @@ test_that("Including non-existing in
                                                           drop = FALSE],
                                       select_columns = c("fake", "gender",
                                                          "fake")))
-})
+          })
 
 test_that("Only having non-existing column in select_columns returns error", {
 

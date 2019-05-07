@@ -1,3 +1,8 @@
+# fastDummies 1.3.1
+
+* Adds option to ignore NA values in dummy_cols (doesn't make a variable_NA) 
+  column is selected. Thanks to juribep5 for the GitHub suggestion.
+
 # fastDummies 1.3.0
 
 * Adds option to sort dummy columns following the order of the original factor 

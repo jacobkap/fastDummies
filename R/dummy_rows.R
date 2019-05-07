@@ -67,7 +67,7 @@ dummy_rows <- function(.data,
     char_cols <- names(.data)[char_cols %in%
                                c("character", "factor", "Date")]
     if (length(char_cols) == 0) {
-      stop("No character, factor, or Date columns found.")
+      stop("No character, factor, or Date columns found. Please use select_columns")
     }
 
   } else {

@@ -3,6 +3,19 @@ context("Checks dummy_rows for warnings, errors, and silent")
 load(system.file("testdata", "fastDummies_data.rda",
                  package = "fastDummies"))
 
+
+error_data <- data.frame(numbers = 1:10,
+                         number2 = 11:20,
+                         stringsAsFactors = FALSE)
+
+test_that("Error on stop conditions", {
+
+  expect_error(dummy_rows(error_data))
+  expect_error(dummy_rows(error_data),
+               paste0("No character, factor, or Date columns found.",
+                      " Please use select_columns"))
+})
+
 test_that("There are warnings or errors", {
   # One column data.frame or vector
   expect_error(dummy_rows(fastDummies_example$gender))

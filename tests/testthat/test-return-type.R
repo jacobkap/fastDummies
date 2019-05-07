@@ -4,19 +4,19 @@ load(system.file("testdata", "fastDummies_data.rda",
                  package = "fastDummies"))
 
 test_that("tibble input returns tibble", {
-  expect_is(dummy_cols(tibble::as.tibble(crime)), "tbl_df")
-  expect_is(dummy_cols(tibble::as.tibble(crime$city)), "tbl_df")
-  expect_is(dummy_cols(tibble::as.tibble(crime$year)), "tbl_df")
-  expect_is(dummy_cols(tibble::as.tibble(crime_full)), "tbl_df")
-  expect_is(dummy_cols(tibble::as.tibble(fastDummies_example)), "tbl_df")
-  expect_is(dummy_cols(tibble::as.tibble(fastDummies_full)), "tbl_df")
-  expect_is(dummy_cols(tibble::as.tibble(no_dummies_needed)), "tbl_df")
+  expect_is(dummy_cols(tibble::as_tibble(crime)), "tbl_df")
+  expect_is(dummy_cols(tibble::as_tibble(crime[, "city", drop = FALSE])), "tbl_df")
+  expect_is(dummy_cols(tibble::as_tibble(crime[, "year", drop = FALSE])), "tbl_df")
+  expect_is(dummy_cols(tibble::as_tibble(crime_full)), "tbl_df")
+  expect_is(dummy_cols(tibble::as_tibble(fastDummies_example)), "tbl_df")
+  expect_is(dummy_cols(tibble::as_tibble(fastDummies_full)), "tbl_df")
+  expect_is(dummy_cols(tibble::as_tibble(no_dummies_needed)), "tbl_df")
 
-  expect_is(dummy_rows(tibble::as.tibble(crime)), "tbl_df")
-  expect_is(dummy_rows(tibble::as.tibble(crime_full)), "tbl_df")
-  expect_is(dummy_rows(tibble::as.tibble(fastDummies_example)), "tbl_df")
-  expect_is(dummy_rows(tibble::as.tibble(fastDummies_full)), "tbl_df")
-  expect_is(dummy_rows(tibble::as.tibble(no_dummies_needed)), "tbl_df")
+  expect_is(dummy_rows(tibble::as_tibble(crime)), "tbl_df")
+  expect_is(dummy_rows(tibble::as_tibble(crime_full)), "tbl_df")
+  expect_is(dummy_rows(tibble::as_tibble(fastDummies_example)), "tbl_df")
+  expect_is(dummy_rows(tibble::as_tibble(fastDummies_full)), "tbl_df")
+  expect_is(dummy_rows(tibble::as_tibble(no_dummies_needed)), "tbl_df")
 
 })
 

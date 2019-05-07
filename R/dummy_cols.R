@@ -1,9 +1,9 @@
 #' Fast creation of dummy variables
 #'
 #' dummy_cols() quickly creates dummy (binary) columns from character and
-#' factor type columns in the inputted data. This function is useful for
-#' statistical analysis when you want binary columns rather than
-#' character columns.
+#' factor type columns in the inputted data (and numeric columns if specified.)
+#' This function is useful for statistical analysis when you want binary
+#' columns rather than character columns.
 #'
 #' @family dummy functions
 #' @seealso \code{\link{dummy_rows}} For creating dummy rows
@@ -22,6 +22,11 @@
 #' (by alphabetical order) category that is tied for most frequent.
 #' @param sort_columns
 #' Sorts columns following factor order.
+#'
+#' @param ignore_na
+#' If TRUE, ignores any NA values in the column. If FALSE (default), then it
+#' will make a dummy column for value_NA and give a 1 in any row which has a
+#' NA value.
 #'
 #' @return
 #' A data.frame (or tibble or data.table, depending on input data type) with
@@ -42,7 +47,8 @@ dummy_cols <- function(.data,
                        select_columns = NULL,
                        remove_first_dummy = FALSE,
                        remove_most_frequent_dummy = FALSE,
-                       sort_columns = FALSE) {
+                       sort_columns = FALSE,
+                       ignore_na = FALSE) {
 
   stopifnot(is.null(select_columns) || is.character(select_columns),
             select_columns != "",
@@ -89,6 +95,9 @@ dummy_cols <- function(.data,
 
   for (col_name in char_cols) {
     unique_vals <- as.character(unique(.data[[col_name]]))
+    if (ignore_na) {
+      unique_vals <- unique_vals[!is.na(unique_vals)]
+    }
 
     if (remove_most_frequent_dummy) {
       vals <- as.character(.data[[col_name]])

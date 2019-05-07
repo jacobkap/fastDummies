@@ -5,7 +5,8 @@
 \title{Fast creation of dummy variables}
 \usage{
 dummy_columns(.data, select_columns = NULL, remove_first_dummy = FALSE,
-  remove_most_frequent_dummy = FALSE, sort_columns = FALSE)
+  remove_most_frequent_dummy = FALSE, sort_columns = FALSE,
+  ignore_na = FALSE)
 }
 \arguments{
 \item{.data}{An object with the data set you want to make dummy columns from.}
@@ -21,6 +22,10 @@ remain. If there is a tie for most frequent, will remove the first
 (by alphabetical order) category that is tied for most frequent.}
 
 \item{sort_columns}{Sorts columns following factor order.}
+
+\item{ignore_na}{If TRUE, ignores any NA values in the column. If FALSE (default), then it
+will make a dummy column for value_NA and give a 1 in any row which has a
+NA value.}
 }
 \description{
 dummy_columns() quickly creates dummy (binary) columns from character and
