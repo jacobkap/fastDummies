@@ -6,7 +6,7 @@ Status](https://ci.appveyor.com/api/projects/status/github/jacobkap/fastDummies?
 Status](https://travis-ci.org/jacobkap/fastDummies.svg?branch=master)](https://travis-ci.org/jacobkap/fastDummies)
 [![Coverage
 status](https://codecov.io/gh/jacobkap/fastDummies/branch/master/graph/badge.svg)](https://codecov.io/github/jacobkap/fastDummies?branch=master)
-“[![](http://cranlogs.r-pkg.org/badges/grand-total/fastDummies?color=blue)](https://cran.r-project.org/package=fastDummies)”
+[![](http://cranlogs.r-pkg.org/badges/grand-total/fastDummies?color=blue)](https://cran.r-project.org/package=fastDummies)
 
 ## Overview
 
