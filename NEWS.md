@@ -8,7 +8,7 @@
 * Adds option to sort dummy columns following the order of the original factor 
 variable. Thanks to Patrick Baylis for the pull request with the code
 for this feature!
-
+ 
 # fastDummies 1.2.0
 
 * Adds option to exclude the most frequently observed category rather than the first
