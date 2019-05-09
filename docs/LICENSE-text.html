@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • fastDummies</title>
+<title>License • fastDummies</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -25,12 +25,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script>
+<link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script>
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="License" />
 
 
 
@@ -47,7 +47,7 @@
   </head>
 
   <body>
-    <div class="container template-news">
+    <div class="container template-title-body">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -59,7 +59,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">fastDummies</a>
+        <a class="navbar-link" href="index.html">fastDummies</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
       </span>
     </div>
@@ -67,13 +67,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
+  <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -83,15 +83,15 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/making-dummy-rows.html">Making dummy rows with dummy_rows()</a>
+      <a href="articles/making-dummy-rows.html">Making dummy rows with dummy_rows()</a>
     </li>
     <li>
-      <a href="../articles/making-dummy-variables.html">Making dummy variables with dummy_cols()</a>
+      <a href="articles/making-dummy-variables.html">Making dummy variables with dummy_cols()</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -112,73 +112,19 @@
       </header>
 
 <div class="row">
-  <div class="col-md-9 contents">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/jacobkap/fastDummies/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      <h1>License</h1>
     </div>
 
-    <div id="fastdummies-140" class="section level1">
-<h1 class="page-header">
-<a href="#fastdummies-140" class="anchor"></a>fastDummies 1.4.0<small> Unreleased </small>
-</h1>
-<ul>
-<li>Adds option to ignore NA values in dummy_cols (doesn’t make a variable_NA) column is selected. Thanks to juribep5 for the GitHub suggestion.</li>
-</ul>
-</div>
-    <div id="fastdummies-130" class="section level1">
-<h1 class="page-header">
-<a href="#fastdummies-130" class="anchor"></a>fastDummies 1.3.0<small> 2019-04-22 </small>
-</h1>
-<ul>
-<li>Adds option to sort dummy columns following the order of the original factor variable. Thanks to Patrick Baylis for the pull request with the code for this feature!</li>
-</ul>
-</div>
-    <div id="fastdummies-120" class="section level1">
-<h1 class="page-header">
-<a href="#fastdummies-120" class="anchor"></a>fastDummies 1.2.0<small> 2018-06-21 </small>
-</h1>
-<ul>
-<li>Adds option to exclude the most frequently observed category rather than the first category as is default. Thanks to GitHub user S-UP for the suggestion!</li>
-</ul>
-</div>
-    <div id="fastdummies-110" class="section level1">
-<h1 class="page-header">
-<a href="#fastdummies-110" class="anchor"></a>fastDummies 1.1.0<small> 2018-03-03 </small>
-</h1>
-<ul>
-<li><p>Thanks to GitHub user yu45020 dummy_cols() is now about &gt;20% faster and much more memory efficient.</p></li>
-<li>Both dummy_cols() and dummy_rows() now return the same data type inputted</li>
-<li><p>e.g. data.frame input returns data.frame, tibble returns tibble.</p></li>
-<li><p>Fix documentation that incorrectly said default value for new dummy rows is 0. It is in fact a value of NA.</p></li>
-</ul>
-</div>
-    <div id="fastdummies-100" class="section level1">
-<h1 class="page-header">
-<a href="#fastdummies-100" class="anchor"></a>fastDummies 1.0.0<small> 2018-01-08 </small>
-</h1>
-<ul>
-<li><p>Reduces number of parameter that were in previous version.</p></li>
-<li><p>Significant speed increases for both dummy_cols() and dummy_rows() functions.</p></li>
-<li><p>dummy_cols() now accepts numeric columns.</p></li>
-</ul>
-</div>
-  </div>
+<pre>YEAR: 2019
+COPYRIGHT HOLDER: Jacob Kaplan
+</pre>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#fastdummies-140">1.4.0</a></li>
-        <li><a href="#fastdummies-130">1.3.0</a></li>
-        <li><a href="#fastdummies-120">1.2.0</a></li>
-        <li><a href="#fastdummies-110">1.1.0</a></li>
-        <li><a href="#fastdummies-100">1.0.0</a></li>
-      </ul>
-    </div>
   </div>
 
 </div>
+
 
       <footer>
       <div class="copyright">

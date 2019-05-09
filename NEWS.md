@@ -1,4 +1,4 @@
-# fastDummies 1.3.1
+# fastDummies 1.4.0
 
 * Adds option to ignore NA values in dummy_cols (doesn't make a variable_NA) 
   column is selected. Thanks to juribep5 for the GitHub suggestion.
