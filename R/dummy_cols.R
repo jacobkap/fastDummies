@@ -22,11 +22,11 @@
 #' (by alphabetical order) category that is tied for most frequent.
 #' @param sort_columns
 #' Sorts columns following factor order.
-#'
 #' @param ignore_na
 #' If TRUE, ignores any NA values in the column. If FALSE (default), then it
 #' will make a dummy column for value_NA and give a 1 in any row which has a
 #' NA value.
+#' @param split
 #'
 #' @return
 #' A data.frame (or tibble or data.table, depending on input data type) with
@@ -48,7 +48,8 @@ dummy_cols <- function(.data,
                        remove_first_dummy = FALSE,
                        remove_most_frequent_dummy = FALSE,
                        sort_columns = FALSE,
-                       ignore_na = FALSE) {
+                       ignore_na = FALSE,
+                       split = NULL) {
 
   stopifnot(is.null(select_columns) || is.character(select_columns),
             select_columns != "",
@@ -129,6 +130,20 @@ dummy_cols <- function(.data,
                           as.character(.data[[col_name]]),
                           unique_value) == 1L),
                       j = paste0(col_name, "_", unique_value), value = 1L)
+
+      if (!is.null(split)) {
+        max_split_length <- max(sapply(strsplit(.data[[col_name]], split), length))
+        for (split_length in 1:max_split_length) {
+          data.table::set(.data, i =
+                            which(data.table::chmatch(
+                              as.character(trimws(sapply(strsplit(.data[[col_name]], split),
+                                                  `[`, split_length))),
+                              unique_value) == 1L),
+                          j = paste0(col_name, "_", unique_value), value = 1L)
+        }
+
+
+      }
 
     }
   }

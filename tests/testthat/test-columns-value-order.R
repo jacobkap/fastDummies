@@ -3,6 +3,10 @@ context("Order of dummy column values are right")
 load(system.file("testdata", "fastDummies_data.rda",
                  package = "fastDummies"))
 
+split_example <- data.frame(owner = 1:4,
+                            pets = c("dog", "dog, cat, hamster", "cat",
+                                     "hamster"), stringsAsFactors = FALSE)
+
 test_that("Order of dummy columns (e.g. 0,0,1,0) is right", {
 
   expect_equal(dummy_cols(fastDummies_example)$gender_male, c(1, 1, 0))
@@ -22,7 +26,10 @@ test_that("Order of dummy columns (e.g. 0,0,1,0) is right", {
                           remove_first_dummy = TRUE)$animals_cat, c(0, 0, 1))
 
 
-
+  # Splitter test
+  expect_equal(dummy_cols(split_example)$pets_dog, c(1, 1, 0, 0))
+  expect_equal(dummy_cols(split_example)$pets_cat, c(0, 1, 1, 0))
+  expect_equal(dummy_cols(split_example)$pets_hamster, c(0, 1, 0, 1))
 
 
   expect_equal(dummy_cols(fastDummies_example_DT)$gender_male, c(1, 1, 0))
