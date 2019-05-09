@@ -27,9 +27,9 @@ test_that("Order of dummy columns (e.g. 0,0,1,0) is right", {
 
 
   # Splitter test
-  expect_equal(dummy_cols(split_example)$pets_dog, c(1, 1, 0, 0))
-  expect_equal(dummy_cols(split_example)$pets_cat, c(0, 1, 1, 0))
-  expect_equal(dummy_cols(split_example)$pets_hamster, c(0, 1, 0, 1))
+  expect_equal(dummy_cols(split_example, split = ",")$pets_dog, c(1, 1, 0, 0))
+  expect_equal(dummy_cols(split_example, split = ",")$pets_cat, c(0, 1, 1, 0))
+  expect_equal(dummy_cols(split_example, split = ",")$pets_hamster, c(0, 1, 0, 1))
 
 
   expect_equal(dummy_cols(fastDummies_example_DT)$gender_male, c(1, 1, 0))

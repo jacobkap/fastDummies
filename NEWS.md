@@ -2,6 +2,8 @@
 
 * Adds option to ignore NA values in dummy_cols (doesn't make a variable_NA) 
   column is selected. Thanks to juribep5 for the GitHub suggestion.
+* Adds `split` parameter in dummy_cols to handle if a row has multiple categories.
+  Thanks to Matthew Sigal and Andrew Fernandes for the GitHub suggestion.
 
 # fastDummies 1.3.0
 

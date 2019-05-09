@@ -136,7 +136,7 @@ columns rather than character columns.</p>
 
     <pre class="usage"><span class='fu'>dummy_cols</span>(<span class='no'>.data</span>, <span class='kw'>select_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>remove_first_dummy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>remove_most_frequent_dummy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sort_columns</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>ignore_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>ignore_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,6 +170,14 @@ remain. If there is a tie for most frequent, will remove the first
       <td><p>If TRUE, ignores any NA values in the column. If FALSE (default), then it
 will make a dummy column for value_NA and give a 1 in any row which has a
 NA value.</p></td>
+    </tr>
+    <tr>
+      <th>split</th>
+      <td><p>A string to split a column when multiple categories are in the cell. For
+example, if a variable is Pets and the rows are "cat", "dog", and "turtle",
+each of these pets would become its own dummy column. If one row is "cat, dog",
+then a split value of "," this row would have a value of 1 for both the cat
+and dog dummy columns.</p></td>
     </tr>
     </table>
     

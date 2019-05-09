@@ -27,7 +27,11 @@ remain. If there is a tie for most frequent, will remove the first
 will make a dummy column for value_NA and give a 1 in any row which has a
 NA value.}
 
-\item{split}{}
+\item{split}{A string to split a column when multiple categories are in the cell. For
+example, if a variable is Pets and the rows are "cat", "dog", and "turtle",
+each of these pets would become its own dummy column. If one row is "cat, dog",
+then a split value of "," this row would have a value of 1 for both the cat
+and dog dummy columns.}
 }
 \value{
 A data.frame (or tibble or data.table, depending on input data type) with
