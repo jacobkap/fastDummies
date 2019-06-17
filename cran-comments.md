@@ -11,7 +11,3 @@
 There were no ERRORs or WARNINGs or NOTES.
    
 
-## Downstream dependencies
-
-There is 1 reverse dependency and revdep_check() 
-s
