@@ -1,3 +1,7 @@
+# fastDummies 1.4.1
+
+* Fix bug when column is factor type when using `split` paramter. Thanks to Matthew Sigal for submitting issue on GitHub.
+
 # fastDummies 1.4.0 
 
 * Adds option to ignore NA values in dummy_cols (doesn't make a variable_NA) 

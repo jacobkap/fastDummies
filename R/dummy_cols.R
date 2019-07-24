@@ -133,23 +133,26 @@ dummy_cols <- function(.data,
       data.table::set(.data, i =
                         which(data.table::chmatch(
                           as.character(.data[[col_name]]),
-                          unique_value) == 1L),
+                          unique_value, nomatch = 0) == 1L),
                       j = paste0(col_name, "_", unique_value), value = 1L)
 
       if (!is.null(split)) {
-        max_split_length <- max(sapply(strsplit(.data[[col_name]], split), length))
+        max_split_length <- max(sapply(strsplit(as.character(.data[[col_name]]),
+                                                split = split), length))
         for (split_length in 1:max_split_length) {
           data.table::set(.data, i =
                             which(data.table::chmatch(
-                              as.character(trimws(sapply(strsplit(.data[[col_name]], split),
-                                                  `[`, split_length))),
-                              unique_value) == 1L),
+                              as.character(trimws(sapply(strsplit(as.character(.data[[col_name]]),
+                                                                  split = split),
+                                                         `[`, split_length))),
+                              unique_value, nomatch = 0) == 1L),
                           j = paste0(col_name, "_", unique_value), value = 1L)
+
         }
-
-
+        if (is.na(unique_value)) {
+          .data[[paste0(col_name, "_", unique_value)]][which(!is.na(.data[[col_name]]))] <- 0
+        }
       }
-
     }
   }
 
@@ -157,9 +160,6 @@ dummy_cols <- function(.data,
   return(.data)
 
 }
-
-test <- data.frame(act = c("research", "research", "teaching", "research teaching", "teaching, research"),
-                   stringsAsFactors = FALSE)
 
 
 #' Fast creation of dummy variables
