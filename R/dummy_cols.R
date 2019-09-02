@@ -109,6 +109,12 @@ dummy_cols <- function(.data,
     }
     unique_vals <- as.character(unique_vals)
 
+    # If there is a split value, splits up the unique_vals by that value
+    # and keeps only the unique ones.
+    if (!is.null(split)) {
+      unique_vals <- unique(trimws(unlist(strsplit(unique_vals, split = split))))
+    }
+
     if (ignore_na) {
       unique_vals <- unique_vals[!is.na(unique_vals)]
     }

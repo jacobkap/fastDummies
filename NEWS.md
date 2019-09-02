@@ -2,11 +2,12 @@
 
 * Removes `sort_columns` parameter. Now by default will order by level if the variable is a 
   factor type.
+* Fix bug where `split` parameter didn't work properly. 
 
 # fastDummies 1.4.1
 
 * Fix bug when column is factor type when using `split` paramter. 
-  Thanks to Matthew Sigal for submitting issue on GitHub.
+  Thanks to Matthew Sigal for submitting issue on GitHub. 
 
 # fastDummies 1.4.0 
 
