@@ -66,7 +66,7 @@ character columns." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fastDummies</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -135,8 +135,8 @@ character columns.</p>
     </div>
 
     <pre class="usage"><span class='fu'>dummy_columns</span>(<span class='no'>.data</span>, <span class='kw'>select_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>remove_first_dummy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>remove_most_frequent_dummy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sort_columns</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>ignore_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>remove_most_frequent_dummy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ignore_na</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>split</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,10 +160,6 @@ This avoids multicollinearity issues in models.</p></td>
       <td><p>Removes the most frequently observed category such that only n-1 dummies
 remain. If there is a tie for most frequent, will remove the first
 (by alphabetical order) category that is tied for most frequent.</p></td>
-    </tr>
-    <tr>
-      <th>sort_columns</th>
-      <td><p>Sorts columns following factor order.</p></td>
     </tr>
     <tr>
       <th>ignore_na</th>
@@ -192,19 +188,19 @@ and dog dummy columns.</p></td>
     <pre class="examples"><div class='input'><span class='no'>crime</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>city</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"SF"</span>, <span class='st'>"SF"</span>, <span class='st'>"NYC"</span>),
     <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1990</span>, <span class='fl'>2000</span>, <span class='fl'>1990</span>),
     <span class='kw'>crime</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>)
-<span class='fu'><a href='dummy_cols.html'>dummy_cols</a></span>(<span class='no'>crime</span>)</div><div class='output co'>#&gt;   city year crime city_SF city_NYC
-#&gt; 1   SF 1990     1       1        0
-#&gt; 2   SF 2000     2       1        0
-#&gt; 3  NYC 1990     3       0        1</div><div class='input'><span class='co'># Include year column</span>
-<span class='fu'><a href='dummy_cols.html'>dummy_cols</a></span>(<span class='no'>crime</span>, <span class='kw'>select_columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"city"</span>, <span class='st'>"year"</span>))</div><div class='output co'>#&gt;   city year crime city_SF city_NYC year_1990 year_2000
-#&gt; 1   SF 1990     1       1        0         1         0
-#&gt; 2   SF 2000     2       1        0         0         1
-#&gt; 3  NYC 1990     3       0        1         1         0</div><div class='input'><span class='co'># Remove first dummy for each pair of dummy columns made</span>
+<span class='fu'><a href='dummy_cols.html'>dummy_cols</a></span>(<span class='no'>crime</span>)</div><div class='output co'>#&gt;   city year crime city_NYC city_SF
+#&gt; 1   SF 1990     1        0       1
+#&gt; 2   SF 2000     2        0       1
+#&gt; 3  NYC 1990     3        1       0</div><div class='input'><span class='co'># Include year column</span>
+<span class='fu'><a href='dummy_cols.html'>dummy_cols</a></span>(<span class='no'>crime</span>, <span class='kw'>select_columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"city"</span>, <span class='st'>"year"</span>))</div><div class='output co'>#&gt;   city year crime city_NYC city_SF year_1990 year_2000
+#&gt; 1   SF 1990     1        0       1         1         0
+#&gt; 2   SF 2000     2        0       1         0         1
+#&gt; 3  NYC 1990     3        1       0         1         0</div><div class='input'><span class='co'># Remove first dummy for each pair of dummy columns made</span>
 <span class='fu'><a href='dummy_cols.html'>dummy_cols</a></span>(<span class='no'>crime</span>, <span class='kw'>select_columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"city"</span>, <span class='st'>"year"</span>),
-    <span class='kw'>remove_first_dummy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   city year crime city_NYC year_2000
-#&gt; 1   SF 1990     1        0         0
-#&gt; 2   SF 2000     2        0         1
-#&gt; 3  NYC 1990     3        1         0</div></pre>
+    <span class='kw'>remove_first_dummy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   city year crime city_SF year_2000
+#&gt; 1   SF 1990     1       1         0
+#&gt; 2   SF 2000     2       1         1
+#&gt; 3  NYC 1990     3       0         0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
