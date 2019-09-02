@@ -1,0 +1,112 @@
+
+R version 3.6.0 (2019-04-26) -- "Planting of a Tree"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "NeuralSens"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> library('NeuralSens')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("SensAnalysisMLP")
+> ### * SensAnalysisMLP
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: SensAnalysisMLP
+> ### Title: Sensitivity of NNET models
+> ### Aliases: SensAnalysisMLP SensAnalysisMLP.default SensAnalysisMLP.train
+> ###   SensAnalysisMLP.H2OMultinomialModel
+> ###   SensAnalysisMLP.H2ORegressionModel SensAnalysisMLP.list
+> ###   SensAnalysisMLP.mlp SensAnalysisMLP.nn SensAnalysisMLP.nnet
+> 
+> ### ** Examples
+> 
+> ## Load data -------------------------------------------------------------------
+> data("DAILY_DEMAND_TR")
+> fdata <- DAILY_DEMAND_TR
+> 
+> ## Parameters of the NNET ------------------------------------------------------
+> hidden_neurons <- 5
+> iters <- 250
+> decay <- 0.1
+> 
+> ################################################################################
+> #########################  REGRESSION NNET #####################################
+> ################################################################################
+> ## Regression dataframe --------------------------------------------------------
+> # Scale the data
+> fdata.Reg.tr <- fdata[,2:ncol(fdata)]
+> fdata.Reg.tr[,2:3] <- fdata.Reg.tr[,2:3]/10
+> fdata.Reg.tr[,1] <- fdata.Reg.tr[,1]/1000
+> 
+> # Normalize the data for some models
+> preProc <- caret::preProcess(fdata.Reg.tr, method = c("center","scale"))
+> nntrData <- predict(preProc, fdata.Reg.tr)
+> 
+> #' ## TRAIN nnet NNET --------------------------------------------------------
+> # Create a formula to train NNET
+> form <- paste(names(fdata.Reg.tr)[2:ncol(fdata.Reg.tr)], collapse = " + ")
+> form <- formula(paste(names(fdata.Reg.tr)[1], form, sep = " ~ "))
+> 
+> set.seed(150)
+> nnetmod <- nnet::nnet(form,
++                            data = nntrData,
++                            linear.output = TRUE,
++                            size = hidden_neurons,
++                            decay = decay,
++                            maxit = iters)
+# weights:  21
+initial  value 2487.870002 
+iter  10 value 1587.516208
+iter  20 value 1349.706741
+iter  30 value 1333.940734
+iter  40 value 1329.097060
+iter  50 value 1326.518168
+iter  60 value 1323.148577
+iter  70 value 1322.378772
+iter  80 value 1322.018088
+final  value 1321.996301 
+converged
+> # Try SensAnalysisMLP
+> NeuralSens::SensAnalysisMLP(nnetmod, trData = nntrData)
+  varNames      mean      std meanSensSQ
+1       WD  2.709325 1.182701   8.738521
+2     TEMP -1.520089 4.172400  19.710797
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  2.75 0.47 4.45 NA NA 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

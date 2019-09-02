@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Fast creation of dummy rows</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for dummy_rows {fastDummies}"><tr><td>dummy_rows {fastDummies}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Fast creation of dummy rows</h2>
+
+<h3>Description</h3>
+
+<p>dummy_rows() quickly creates dummy rows to fill in missing rows
+based on all combinations of available character, factor, and
+date columns (if not otherwise specified). This is useful for
+creating balanced panel data. Columns that are not character,
+factor, or dates are filled in with NA (or whatever value you
+specify).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+dummy_rows(.data, select_columns = NULL, dummy_value = NA,
+  dummy_indicator = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>.data</code></td>
+<td>
+<p>An object with the data set you want to make dummy columns from.</p>
+</td></tr>
+<tr valign="top"><td><code>select_columns</code></td>
+<td>
+<p>If NULL (default), uses all character, factor, and Date columns to produce categories
+to make the dummy rows by. If not NULL, you manually enter a string or vector of strings of columns name(s).</p>
+</td></tr>
+<tr valign="top"><td><code>dummy_value</code></td>
+<td>
+<p>Value of the row for columns that are not selected.
+Default is a value of NA.</p>
+</td></tr>
+<tr valign="top"><td><code>dummy_indicator</code></td>
+<td>
+<p>Adds binary column to say if row is dummy or not (i.e. included in
+original data or not)</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A data.frame (or tibble or data.table, depending on input data type) with
+same number of columns as inputted data and original rows plus the newly
+created dummy rows
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="dummy_cols.html">dummy_cols</a></code> For creating dummy columns
+</p>
+<p>Other dummy functions: <code><a href="dummy_cols.html">dummy_cols</a></code>,
+<code><a href="dummy_columns.html">dummy_columns</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+crime &lt;- data.frame(city = c("SF", "SF", "NYC"),
+    year = c(1990, 2000, 1990),
+    crime = 1:3)
+
+dummy_rows(crime)
+# Include year column
+dummy_rows(crime, select_columns = c("city", "year"))
+# m=Make dummy value 0
+dummy_rows(crime, select_columns = c("city", "year"),
+    dummy_value = 0)
+# Add a dummy indicator
+dummy_rows(crime, select_columns = c("city", "year"),
+    dummy_indicator = TRUE)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>fastDummies</em> version 1.5.0 <a href="00Index.html">Index</a>]</div>
+</body></html>
