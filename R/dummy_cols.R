@@ -20,8 +20,6 @@
 #' Removes the most frequently observed category such that only n-1 dummies
 #' remain. If there is a tie for most frequent, will remove the first
 #' (by alphabetical order) category that is tied for most frequent.
-#' @param sort_columns
-#' Sorts columns following factor order.
 #' @param ignore_na
 #' If TRUE, ignores any NA values in the column. If FALSE (default), then it
 #' will make a dummy column for value_NA and give a 1 in any row which has a
@@ -52,7 +50,6 @@ dummy_cols <- function(.data,
                        select_columns = NULL,
                        remove_first_dummy = FALSE,
                        remove_most_frequent_dummy = FALSE,
-                       sort_columns = FALSE,
                        ignore_na = FALSE,
                        split = NULL) {
 
@@ -100,7 +97,18 @@ dummy_cols <- function(.data,
 
 
   for (col_name in char_cols) {
-    unique_vals <- as.character(unique(.data[[col_name]]))
+    # If factor type, order by assigned levels
+    if (is.factor(.data[[col_name]])) {
+      unique_vals <- levels(.data[[col_name]])
+      if (any(is.na(.data[[col_name]]))) {
+        unique_vals <- c(unique_vals, NA)
+      }
+      # Else by order values appear.
+    } else {
+      unique_vals <- unique(.data[[col_name]])
+    }
+    unique_vals <- as.character(unique_vals)
+
     if (ignore_na) {
       unique_vals <- unique_vals[!is.na(unique_vals)]
     }
@@ -120,11 +128,6 @@ dummy_cols <- function(.data,
 
     if (remove_first_dummy) {
       unique_vals <- unique_vals[-1]
-    }
-
-    if (sort_columns) {
-      idx <- stats::na.exclude(match(levels(.data[[col_name]]), unique_vals))
-      unique_vals <- unique_vals[idx]
     }
 
     data.table::alloc.col(.data, ncol(.data) + length(unique_vals))

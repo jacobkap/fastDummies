@@ -14,16 +14,16 @@ test_that("Order of dummy columns (e.g. 0,0,1,0) is right", {
   expect_equal(dummy_cols(fastDummies_example,
                           select_columns = "gender")$gender_male, c(1, 1, 0))
   expect_equal(dummy_cols(fastDummies_example,
-                          remove_first_dummy = TRUE)$gender_female, c(0, 0, 1))
+                          remove_first_dummy = TRUE)$gender_male, c(1, 1, 0))
   expect_equal(dummy_cols(fastDummies_example, select_columns = "gender",
-                          remove_first_dummy = TRUE)$gender_female, c(0, 0, 1))
+                          remove_first_dummy = TRUE)$gender_male, c(1, 1, 0))
 
   expect_equal(dummy_cols(fastDummies_example)$animals_dog, c(1, 1, 0))
   expect_equal(dummy_cols(fastDummies_example)$animals_cat, c(0, 0, 1))
   expect_equal(dummy_cols(fastDummies_example,
-                          remove_first_dummy = TRUE)$animals_cat, c(0, 0, 1))
+                          remove_first_dummy = TRUE)$animals_dog, c(1, 1, 0))
   expect_equal(dummy_cols(fastDummies_example, select_columns = "animals",
-                          remove_first_dummy = TRUE)$animals_cat, c(0, 0, 1))
+                          remove_first_dummy = TRUE)$animals_dog, c(1, 1, 0))
 
 
   # Splitter test
@@ -37,16 +37,16 @@ test_that("Order of dummy columns (e.g. 0,0,1,0) is right", {
   expect_equal(dummy_cols(fastDummies_example_DT,
                           select_columns = "gender")$gender_male, c(1, 1, 0))
   expect_equal(dummy_cols(fastDummies_example_DT,
-                          remove_first_dummy = TRUE)$gender_female, c(0, 0, 1))
+                          remove_first_dummy = TRUE)$gender_male, c(1, 1, 0))
   expect_equal(dummy_cols(fastDummies_example_DT, select_columns = "gender",
-                          remove_first_dummy = TRUE)$gender_female, c(0, 0, 1))
+                          remove_first_dummy = TRUE)$gender_male, c(1, 1, 0))
 
   expect_equal(dummy_cols(fastDummies_example_DT)$animals_dog, c(1, 1, 0))
   expect_equal(dummy_cols(fastDummies_example_DT)$animals_cat, c(0, 0, 1))
   expect_equal(dummy_cols(fastDummies_example_DT,
-                          remove_first_dummy = TRUE)$animals_cat, c(0, 0, 1))
+                          remove_first_dummy = TRUE)$animals_dog, c(1, 1, 0))
   expect_equal(dummy_cols(fastDummies_example_DT, select_columns = "animals",
-                          remove_first_dummy = TRUE)$animals_cat, c(0, 0, 1))
+                          remove_first_dummy = TRUE)$animals_dog, c(1, 1, 0))
 
 
 
@@ -57,17 +57,17 @@ test_that("Order of dummy columns (e.g. 0,0,1,0) is right", {
   expect_equal(dummy_cols(fastDummies_example_tibble,
                           select_columns = "gender")$gender_male, c(1, 1, 0))
   expect_equal(dummy_cols(fastDummies_example_tibble,
-                          remove_first_dummy = TRUE)$gender_female, c(0, 0, 1))
+                          remove_first_dummy = TRUE)$gender_male, c(1, 1, 0))
   expect_equal(dummy_cols(fastDummies_example_tibble, select_columns = "gender",
-                          remove_first_dummy = TRUE)$gender_female, c(0, 0, 1))
+                          remove_first_dummy = TRUE)$gender_male, c(1, 1, 0))
 
   expect_equal(dummy_cols(fastDummies_example_tibble)$animals_dog, c(1, 1, 0))
   expect_equal(dummy_cols(fastDummies_example_tibble)$animals_cat, c(0, 0, 1))
   expect_equal(dummy_cols(fastDummies_example_tibble,
-                          remove_first_dummy = TRUE)$animals_cat, c(0, 0, 1))
+                          remove_first_dummy = TRUE)$animals_dog, c(1, 1, 0))
   expect_equal(dummy_cols(fastDummies_example_tibble,
                           select_columns = "animals",
-                          remove_first_dummy = TRUE)$animals_cat, c(0, 0, 1))
+                          remove_first_dummy = TRUE)$animals_dog, c(1, 1, 0))
 
 })
 

@@ -1,21 +1,36 @@
 context("test-ignore_na")
 
-most_frequent <- data.frame(animal = c("dog", NA, "cat",
-                                       NA, "gorilla",
+most_frequent <- data.frame(animal = c("dog",
+                                       NA,
+                                       "cat",
+                                       NA,
+                                       "gorilla",
                                        "gorilla"),
-                            day    = c("monday", "tuesday",
-                                       "wednesday", "wednesday",
-                                       "friday", "saturday"),
+                            day    = c("monday",
+                                       "tuesday",
+                                       "wednesday",
+                                       "wednesday",
+                                       "friday",
+                                       "saturday"),
                             hour = 1:6)
 
 test_that("ignore-na parameter works", {
   expect_named(dummy_cols(most_frequent, select_columns = "animal"),
-               c("animal", "day", "hour", "animal_dog",
-                 "animal_NA", "animal_cat", "animal_gorilla"))
+               c("animal",
+                 "day",
+                 "hour",
+                 "animal_cat",
+                 "animal_dog",
+                 "animal_gorilla",
+                 "animal_NA"))
   expect_named(dummy_cols(most_frequent, select_columns = "animal",
                           ignore_na = TRUE),
-               c("animal", "day", "hour", "animal_dog",
-                 "animal_cat", "animal_gorilla"))
+               c("animal",
+                 "day",
+                 "hour",
+                 "animal_cat",
+                 "animal_dog",
+                 "animal_gorilla"))
 
 
   expect_equal(dummy_cols(most_frequent,
