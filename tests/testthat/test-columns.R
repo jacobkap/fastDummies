@@ -32,6 +32,7 @@ sort_order_example <- data.frame(numbers = 1:12,
 sort_order_example$month <- factor(sort_order_example$month,
                                    levels = month.name)
 
+
 sort_order_example2       <- sort_order_example
 sort_order_example2$month <- as.character(sort_order_example2$month)
 

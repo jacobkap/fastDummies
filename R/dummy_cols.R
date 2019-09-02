@@ -145,6 +145,14 @@ dummy_cols <- function(.data,
                           unique_value, nomatch = 0) == 1L),
                       j = paste0(col_name, "_", unique_value), value = 1L)
 
+
+      # Sets NA values to NA, only for columns that are not the NA columns
+      if (!is.na(unique_value)) {
+      data.table::set(.data, i =
+                        which(is.na(.data[[col_name]])),
+                      j = paste0(col_name, "_", unique_value), value = NA)
+      }
+
       if (!is.null(split)) {
         max_split_length <- max(sapply(strsplit(as.character(.data[[col_name]]),
                                                 split = split), length))

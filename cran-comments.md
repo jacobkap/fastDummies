@@ -1,8 +1,8 @@
 ## Test environments
 
 * local Windows install, R 3.6.0
-* Ubuntu 14.04.5 (on travis-ci), R 3.6.0
-* AppVeyor, R 3.6.0
+* Ubuntu 14.04.6 (on travis-ci), R 3.6.1
+* AppVeyor, R 3.6.1
 * win-builder (devel and release)
 
 
