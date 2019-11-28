@@ -6,7 +6,7 @@
 \usage{
 dummy_columns(.data, select_columns = NULL, remove_first_dummy = FALSE,
   remove_most_frequent_dummy = FALSE, ignore_na = FALSE,
-  split = NULL)
+  split = NULL, remove_selected_columns = FALSE)
 }
 \arguments{
 \item{.data}{An object with the data set you want to make dummy columns from.}
@@ -30,6 +30,8 @@ example, if a variable is Pets and the rows are "cat", "dog", and "turtle",
 each of these pets would become its own dummy column. If one row is "cat, dog",
 then a split value of "," this row would have a value of 1 for both the cat
 and dog dummy columns.}
+
+\item{remove_selected_columns}{If TRUE (not default), removes the columns used to generate the dummy columns.}
 }
 \description{
 dummy_columns() quickly creates dummy (binary) columns from character and

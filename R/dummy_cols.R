@@ -1,6 +1,6 @@
 #' Fast creation of dummy variables
 #'
-#' dummy_cols() quickly creates dummy (binary) columns from character and
+#' Quickly create dummy (binary) columns from character and
 #' factor type columns in the inputted data (and numeric columns if specified.)
 #' This function is useful for statistical analysis when you want binary
 #' columns rather than character columns.
@@ -30,6 +30,8 @@
 #' each of these pets would become its own dummy column. If one row is "cat, dog",
 #' then a split value of "," this row would have a value of 1 for both the cat
 #' and dog dummy columns.
+#' @param remove_selected_columns
+#' If TRUE (not default), removes the columns used to generate the dummy columns.
 #'
 #' @return
 #' A data.frame (or tibble or data.table, depending on input data type) with
@@ -51,11 +53,13 @@ dummy_cols <- function(.data,
                        remove_first_dummy = FALSE,
                        remove_most_frequent_dummy = FALSE,
                        ignore_na = FALSE,
-                       split = NULL) {
+                       split = NULL,
+                       remove_selected_columns = FALSE) {
 
   stopifnot(is.null(select_columns) || is.character(select_columns),
             select_columns != "",
-            is.logical(remove_first_dummy), length(remove_first_dummy) == 1)
+            is.logical(remove_first_dummy), length(remove_first_dummy) == 1,
+            is.logical(remove_selected_columns))
 
   if (remove_first_dummy == TRUE & remove_most_frequent_dummy == TRUE) {
     stop("Select either 'remove_first_dummy' or 'remove_most_frequent_dummy'
@@ -171,6 +175,10 @@ dummy_cols <- function(.data,
         }
       }
     }
+  }
+
+  if (remove_selected_columns) {
+    .data <- .data[-which(names(.data) %in% char_cols)]
   }
 
   .data <- fix_data_type(.data, data_type)

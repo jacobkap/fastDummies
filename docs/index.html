@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fast Creation of Dummy (Binary) Columns and Rows from Categorical Variables • fastDummies</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Fast Creation of Dummy (Binary) Columns and Rows from Categorical Variables">
 <meta property="og:description" content="Creates dummy columns from columns that have categorical variables (character or factor types). You can also specify which columns to make dummies out of, or which columns to ignore. Also creates dummy rows from character, factor, and Date columns. This package provides a significant speed increase from creating dummy variables through model.matrix().">
 <meta name="twitter:card" content="summary">
@@ -18,7 +19,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">fastDummies</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -67,7 +68,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/jacobkap/fastDummies">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -80,12 +81,10 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    
 
-    
-    
+      </header><div class="row">
+  <div class="contents col-md-9">
+
 
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
@@ -96,17 +95,17 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">To install this package, use the code</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"fastDummies"</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"fastDummies"</span>)</a>
 <a class="sourceLine" id="cb1-3" title="3"></a>
 <a class="sourceLine" id="cb1-4" title="4"></a>
 <a class="sourceLine" id="cb1-5" title="5"><span class="co"># The development version is available on Github.</span></a>
 <a class="sourceLine" id="cb1-6" title="6"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-7" title="7">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"jacobkap/fastDummies"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-7" title="7">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"jacobkap/fastDummies"</span>)</a></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(fastDummies)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(fastDummies)</a></code></pre></div>
 <p>There are two functions in this package:</p>
 <ul>
 <li>
@@ -122,7 +121,7 @@
 <p>Dummy variables (or binary variables) are commonly used in statistical analyses and in more simple descriptive statistics. A dummy column is one which has a value of one when a categorical event occurs and a zero when it doesn’t occur. In most cases this is a feature of the event/person/object being described. For example, if the dummy variable was for occupation being an R programmer, you can ask, “is this person an R programmer?” When the answer is yes, they get a value of 1, when it is no, they get a value of 0.</p>
 <p>We’ll start with a simple example and then go into using the function <code><a href="reference/dummy_cols.html">dummy_cols()</a></code>. You can also use the function <code><a href="reference/dummy_columns.html">dummy_columns()</a></code> which is identical to <code><a href="reference/dummy_cols.html">dummy_cols()</a></code>.</p>
 <p>Imagine you have a data set about animals in a local shelter. One of the columns in your data is what animal it is: dog or cat.</p>
-<table class="table table">
+<table class="table">
 <thead><tr class="header">
 <th align="left">animals</th>
 </tr></thead>
@@ -139,7 +138,7 @@
 </tbody>
 </table>
 <p>To make dummy columns from this data, you would need to produce two new columns. One would indicate if the animal is a dog, and the other would indicate if the animal is a cat. Each row would get a value of 1 in the column indicating which animal they are, and 0 in the other column.</p>
-<table class="table table">
+<table class="table">
 <thead><tr class="header">
 <th>animals</th>
 <th>dog</th>
@@ -164,7 +163,7 @@
 </tbody>
 </table>
 <p>In the function dummy_cols, the names of these new columns are concatenated to the original column and separated by an underscore.</p>
-<table class="table table">
+<table class="table">
 <thead><tr class="header">
 <th>animals</th>
 <th>animals_dog</th>
@@ -189,14 +188,14 @@
 </tbody>
 </table>
 <p>With an example like this, it is fairly easy to make the dummy columns yourself. <code><a href="reference/dummy_cols.html">dummy_cols()</a></code> automates the process, and is useful when you have many columns to general dummy variables from or with many categories within the column.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">fastDummies_example &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb3-2" title="2">                    <span class="dt">gender  =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),</a>
-<a class="sourceLine" id="cb3-3" title="3">                    <span class="dt">animals =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),</a>
-<a class="sourceLine" id="cb3-4" title="4">                    <span class="dt">dates   =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">fastDummies_example &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb3-2" title="2">                    <span class="dt">gender  =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),</a>
+<a class="sourceLine" id="cb3-3" title="3">                    <span class="dt">animals =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),</a>
+<a class="sourceLine" id="cb3-4" title="4">                    <span class="dt">dates   =</span> <span class="kw"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,</a>
 <a class="sourceLine" id="cb3-5" title="5">                                          <span class="st">"2012-01-01"</span>)),</a>
 <a class="sourceLine" id="cb3-6" title="6">                    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb3-7" title="7">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(fastDummies_example)</a></code></pre></div>
-<table class="table table">
+<a class="sourceLine" id="cb3-7" title="7">knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(fastDummies_example)</a></code></pre></div>
+<table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
 <th align="left">gender</th>
@@ -225,9 +224,9 @@
 </tbody>
 </table>
 <p>The object <strong>fastDummies_example</strong> has two character type columns, one integer column, and a Date column. By default, <code><a href="reference/dummy_cols.html">dummy_cols()</a></code> will make dummy variables from factor or character columns only. This is because in most cases those are the only types of data you want dummy variables from. If those are the only columns you want, then the function takes your data set as the first parameter and returns a data.frame with the newly created variables appended to the end of the original data.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fastDummies/topics/dummy_cols">dummy_cols</a></span>(fastDummies_example)</a>
-<a class="sourceLine" id="cb4-2" title="2">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(results)</a></code></pre></div>
-<table class="table table">
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fastDummies/man/dummy_cols.html">dummy_cols</a></span>(fastDummies_example)</a>
+<a class="sourceLine" id="cb4-2" title="2">knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(results)</a></code></pre></div>
+<table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
 <th align="left">gender</th>
@@ -278,14 +277,14 @@
 <p>When dealing with data, there are often missing rows. While truly handling missing data is far beyond the scope of this package, the function <code><a href="reference/dummy_rows.html">dummy_rows()</a></code> lets you add those missing rows back into the data.</p>
 <p>The function takes all character, factor, and Date columns, finds all possible combinations of their values, and adds the rows that are not in the original data set. Any columns not used in creating the combinations (e.g. numeric) are given a value of NA (unless otherwise specified with <em>dummy_value</em>).</p>
 <p>Lets start with a simple example.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">fastDummies_example &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb5-2" title="2">                    <span class="dt">gender  =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),</a>
-<a class="sourceLine" id="cb5-3" title="3">                    <span class="dt">animals =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),</a>
-<a class="sourceLine" id="cb5-4" title="4">                    <span class="dt">dates   =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">fastDummies_example &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">numbers =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb5-2" title="2">                    <span class="dt">gender  =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),</a>
+<a class="sourceLine" id="cb5-3" title="3">                    <span class="dt">animals =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),</a>
+<a class="sourceLine" id="cb5-4" title="4">                    <span class="dt">dates   =</span> <span class="kw"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,</a>
 <a class="sourceLine" id="cb5-5" title="5">                                          <span class="st">"2012-01-01"</span>)),</a>
 <a class="sourceLine" id="cb5-6" title="6">                    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb5-7" title="7">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(fastDummies_example)</a></code></pre></div>
-<table class="table table">
+<a class="sourceLine" id="cb5-7" title="7">knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(fastDummies_example)</a></code></pre></div>
+<table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
 <th align="left">gender</th>
@@ -314,9 +313,9 @@
 </tbody>
 </table>
 <p>This data set has four columns: two character, one Date, and one numeric. The function by default will use the character and Date columns in creating the combinations. First, a small amount of math to explain the combinations. Each column has two distinct values - gender: male &amp; female; animals: dog &amp; cat; dates: 2011-12-31 &amp; 2011-12-31. To find the number of possible combinations, multiple the number of unique values in each column together. 2 * 2 * 2 = 8.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/fastDummies/topics/dummy_rows">dummy_rows</a></span>(fastDummies_example)</a>
-<a class="sourceLine" id="cb6-2" title="2">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(results)</a></code></pre></div>
-<table class="table table">
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">results &lt;-<span class="st"> </span>fastDummies<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/fastDummies/man/dummy_rows.html">dummy_rows</a></span>(fastDummies_example)</a>
+<a class="sourceLine" id="cb6-2" title="2">knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(results)</a></code></pre></div>
+<table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
 <th align="left">gender</th>
@@ -375,6 +374,7 @@
 </tbody>
 </table>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -399,12 +399,12 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Jacob Kaplan <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0601-0387" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li>Jacob Kaplan <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0601-0387" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
 
-      <div class="dev-status">
+  <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/package=fastDummies"><img src="http://www.r-pkg.org/badges/version/fastDummies" alt="CRAN_Status_Badge"></a></li>
@@ -415,7 +415,6 @@
 </ul>
 </div>
 </div>
-
 </div>
 
 
@@ -424,12 +423,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

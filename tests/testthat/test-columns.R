@@ -327,3 +327,55 @@ test_that("remove_most_frequent_dummy works", {
                  "hour_6"))
 
 })
+
+
+test_that("remove_selected_columns works", {
+  expect_named(dummy_cols(most_frequent, remove_selected_columns = TRUE),
+               c("hour",
+                 "animal_cat",
+                 "animal_dog",
+                 "animal_gorilla",
+                 "day_friday",
+                 "day_monday",
+                 "day_saturday",
+                 "day_tuesday",
+                 "day_wednesday"))
+  expect_named(dummy_cols(most_frequent, select_columns = c("animal", "day"),
+                          remove_selected_columns = TRUE),
+               c("hour",
+                 "animal_cat",
+                 "animal_dog",
+                 "animal_gorilla",
+                 "day_friday",
+                 "day_monday",
+                 "day_saturday",
+                 "day_tuesday",
+                 "day_wednesday"))
+  expect_named(dummy_cols(most_frequent, select_columns = "animal",
+                          remove_selected_columns = TRUE),
+               c("day",
+                 "hour",
+                 "animal_cat",
+                 "animal_dog",
+                 "animal_gorilla"))
+  expect_named(dummy_cols(most_frequent, select_columns = "day",
+                          remove_selected_columns = TRUE),
+               c("animal",
+                 "hour",
+                 "day_friday",
+                 "day_monday",
+                 "day_saturday",
+                 "day_tuesday",
+                 "day_wednesday"))
+  expect_named(dummy_cols(most_frequent, select_columns = "hour",
+                          remove_selected_columns = TRUE),
+               c( "animal",
+                  "day",
+                  "hour_1",
+                  "hour_2",
+                  "hour_3",
+                  "hour_4",
+                  "hour_5",
+                  "hour_6"))
+
+})

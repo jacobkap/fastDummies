@@ -1,6 +1,6 @@
 ## Test environments
 
-* local Windows install, R 3.6.0
+* local Windows install, R 3.6.1
 * Ubuntu 14.04.6 (on travis-ci), R 3.6.1
 * AppVeyor, R 3.6.1
 * win-builder (devel and release)
@@ -16,6 +16,6 @@ There were no ERRORs or WARNINGs or NOTES.
    
 ## Reverse dependencies
 
-There are three reverse dependencies. revdepcheck::revdep_check returns OK for all three.
+There are four reverse dependencies. revdepcheck::revdep_check() returns OK for all three.
 
 

@@ -147,6 +147,41 @@ test_that("returns expected number of columns - remove most common", {
 
 })
 
+
+test_that("returns expected number of columns - remove selected columns", {
+  expect_equal(ncol(dummy_cols(no_dummies_needed,
+                               remove_selected_columns = TRUE)), 4)
+  expect_equal(ncol(dummy_cols(no_dummies_needed,
+                               select_columns = "animals",
+                               remove_selected_columns = TRUE)), 3)
+
+  expect_equal(ncol(dummy_cols(crime,
+                               remove_selected_columns = TRUE)), 4)
+  expect_equal(ncol(dummy_cols(crime,
+                               select_columns = "city",
+                               remove_selected_columns = TRUE)), 4)
+  expect_equal(ncol(dummy_cols(crime,
+                               select_columns = "year",
+                               remove_selected_columns = TRUE)), 4)
+  expect_equal(ncol(dummy_cols(crime,
+                               select_columns = c("city", "year"),
+                               remove_selected_columns = TRUE)), 5)
+
+  expect_equal(ncol(dummy_cols(fastDummies_example,
+                               remove_selected_columns = TRUE)), 6)
+  expect_equal(ncol(dummy_cols(fastDummies_example,
+                               select_columns = "gender",
+                               remove_selected_columns = TRUE)), 5)
+  expect_equal(ncol(dummy_cols(fastDummies_example,
+                               select_columns = "dates",
+                               remove_selected_columns = TRUE)), 5)
+  expect_equal(ncol(dummy_cols(fastDummies_example,
+                               select_columns =
+                                 c("dates", "gender", "numbers"),
+                               remove_selected_columns = TRUE)), 8)
+
+})
+
 test_that("dummy_cols returns expected number of columns - vector ", {
   expect_equal(ncol(dummy_cols(fastDummies_example$numbers)), 4)
   expect_equal(ncol(dummy_cols(fastDummies_example$animals)), 3)
