@@ -92,15 +92,6 @@ cat(try(A[B], silent = TRUE))
 #  DT[where, select|update, group by][order by][...] ... [...]
 
 ## ------------------------------------------------------------------------
-base::cbind.data.frame
-
-## ------------------------------------------------------------------------
-foo = data.frame(a = 1:3)
-cbind.data.frame = function(...) cat("Not printed\n")
-cbind(foo)
-rm("cbind.data.frame")
-
-## ------------------------------------------------------------------------
 DT = data.table(a = rep(1:3, 1:3), b = 1:6, c = 7:12)
 DT
 DT[ , { mySD = copy(.SD)

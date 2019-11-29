@@ -1,10 +1,14 @@
+# fastDummies 1.6.0
+
+* Adds the parameter `remove_selected_columns` to `dummy_columns()`. If TRUE (not default),
+  removes the columns which are used to create the dummy columns.
+
 # fastDummies 1.5.0
 
 * Removes `sort_columns` parameter. Now by default will order by level if the variable is a 
   factor type.
 * Fix bug where `split` parameter didn't work properly. 
 * If value is NA, sets to NA in dummy column rather than value of 0. Closes #18 by @DLustenBerger.
-
 
 # fastDummies 1.4.1
 

@@ -1,10 +1,10 @@
 * using log directory 'C:/Users/user/Dropbox/R_project/fastDummies/revdep/checks/NeuralSens/new/NeuralSens.Rcheck'
-* using R version 3.6.0 (2019-04-26)
+* using R version 3.6.1 (2019-07-05)
 * using platform: x86_64-w64-mingw32 (64-bit)
 * using session charset: ISO8859-1
 * using options '--no-manual --no-build-vignettes'
 * checking for file 'NeuralSens/DESCRIPTION' ... OK
-* this is package 'NeuralSens' version '0.0.5'
+* this is package 'NeuralSens' version '0.1.0'
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK

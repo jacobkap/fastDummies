@@ -16,6 +16,7 @@ get0	get0
 hasName	hasName
 import	import
 isFALSE	isFALSE
+isTRUE	isTRUE
 lengths	lengths
 startsWith	startsWith
 strrep	strrep

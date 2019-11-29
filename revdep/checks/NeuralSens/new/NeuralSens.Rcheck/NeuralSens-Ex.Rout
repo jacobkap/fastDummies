@@ -1,5 +1,5 @@
 
-R version 3.6.0 (2019-04-26) -- "Planting of a Tree"
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 
@@ -26,6 +26,73 @@ Type 'q()' to quit R.
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 > cleanEx()
+> nameEx("ActFunc")
+> ### * ActFunc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ActFunc
+> ### Title: Activation function of neuron
+> ### Aliases: ActFunc
+> 
+> ### ** Examples
+> 
+> # Return the sigmoid activation function of a neuron
+> ActivationFunction <- ActFunc("sigmoid")
+> # Return the tanh activation function of a neuron
+> ActivationFunction <- ActFunc("tanh")
+> # Return the activation function of several layers of neurons
+> actfuncs <- c("linear","sigmoid","linear")
+> ActivationFunctions <- sapply(actfuncs, ActFunc)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("CombineSens")
+> ### * CombineSens
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: CombineSens
+> ### Title: Sensitivity analysis plot over time of the data
+> ### Aliases: CombineSens
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # mod should be a neural network classification model
+> ##D sens <- SensAnalysisMLP(mod)
+> ##D combinesens <- CombineSens(sens)
+> ##D rawsens <- SensAnalysisMLP(mod, .rawSens = TRUE)
+> ##D meanCombinerawSens <- CombineSens(rawsens, "mean")
+> ##D sqmeanCombinerawSens <- CombineSens(rawsens, "sqmean")
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("DerActFunc")
+> ### * DerActFunc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: DerActFunc
+> ### Title: Derivative of activation function of neuron
+> ### Aliases: DerActFunc
+> 
+> ### ** Examples
+> 
+> # Return derivative of the sigmoid activation function of a neuron
+> ActivationFunction <- DerActFunc("sigmoid")
+> # Return derivative of the tanh activation function of a neuron
+> ActivationFunction <- DerActFunc("tanh")
+> # Return derivative of the activation function of several layers of neurons
+> actfuncs <- c("linear","sigmoid","linear")
+> ActivationFunctions <- sapply(actfuncs, DerActFunc)
+> 
+> 
+> 
+> cleanEx()
 > nameEx("SensAnalysisMLP")
 > ### * SensAnalysisMLP
 > 
@@ -37,6 +104,73 @@ Type 'q()' to quit R.
 > ###   SensAnalysisMLP.H2OMultinomialModel
 > ###   SensAnalysisMLP.H2ORegressionModel SensAnalysisMLP.list
 > ###   SensAnalysisMLP.mlp SensAnalysisMLP.nn SensAnalysisMLP.nnet
+> ###   SensAnalysisMLP.nnetar SensAnalysisMLP.numeric
+> 
+> ### ** Examples
+> 
+> ## Load data -------------------------------------------------------------------
+> data("DAILY_DEMAND_TR")
+> fdata <- DAILY_DEMAND_TR
+> fdata[,3] <- ifelse(as.data.frame(fdata)[,3] %in% c("SUN","SAT"), 0, 1)
+> ## Parameters of the NNET ------------------------------------------------------
+> hidden_neurons <- 5
+> iters <- 100
+> decay <- 0.1
+> 
+> ################################################################################
+> #########################  REGRESSION NNET #####################################
+> ################################################################################
+> ## Regression dataframe --------------------------------------------------------
+> # Scale the data
+> fdata.Reg.tr <- fdata[,2:ncol(fdata)]
+> fdata.Reg.tr[,3] <- fdata.Reg.tr[,3]/10
+> fdata.Reg.tr[,1] <- fdata.Reg.tr[,1]/1000
+> 
+> # Normalize the data for some models
+> preProc <- caret::preProcess(fdata.Reg.tr, method = c("center","scale"))
+> nntrData <- predict(preProc, fdata.Reg.tr)
+> 
+> #' ## TRAIN nnet NNET --------------------------------------------------------
+> # Create a formula to train NNET
+> form <- paste(names(fdata.Reg.tr)[2:ncol(fdata.Reg.tr)], collapse = " + ")
+> form <- formula(paste(names(fdata.Reg.tr)[1], form, sep = " ~ "))
+> 
+> set.seed(150)
+> nnetmod <- nnet::nnet(form,
++                       data = nntrData,
++                       linear.output = TRUE,
++                       size = hidden_neurons,
++                       decay = decay,
++                       maxit = iters)
+# weights:  21
+initial  value 2491.475466 
+iter  10 value 1629.026735
+iter  20 value 1452.888487
+iter  30 value 1445.542191
+iter  40 value 1440.373949
+iter  50 value 1438.257558
+iter  60 value 1437.456665
+iter  70 value 1437.406442
+final  value 1437.405717 
+converged
+> # Try SensAnalysisMLP
+> NeuralSens::SensAnalysisMLP(nnetmod, trData = nntrData)
+  varNames      mean      std meanSensSQ
+1       WD  2.530563 1.116399   7.649467
+2     TEMP -1.387817 4.331976  20.682574
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("SensFeaturePlot")
+> ### * SensFeaturePlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: SensFeaturePlot
+> ### Title: Feature sensitivity plot
+> ### Aliases: SensFeaturePlot
 > 
 > ### ** Examples
 > 
@@ -55,7 +189,7 @@ Type 'q()' to quit R.
 > ## Regression dataframe --------------------------------------------------------
 > # Scale the data
 > fdata.Reg.tr <- fdata[,2:ncol(fdata)]
-> fdata.Reg.tr[,2:3] <- fdata.Reg.tr[,2:3]/10
+> fdata.Reg.tr[,3] <- fdata.Reg.tr[,3]/10
 > fdata.Reg.tr[,1] <- fdata.Reg.tr[,1]/1000
 > 
 > # Normalize the data for some models
@@ -74,24 +208,155 @@ Type 'q()' to quit R.
 +                            size = hidden_neurons,
 +                            decay = decay,
 +                            maxit = iters)
-# weights:  21
-initial  value 2487.870002 
-iter  10 value 1587.516208
-iter  20 value 1349.706741
-iter  30 value 1333.940734
-iter  40 value 1329.097060
-iter  50 value 1326.518168
-iter  60 value 1323.148577
-iter  70 value 1322.378772
-iter  80 value 1322.018088
-final  value 1321.996301 
+# weights:  46
+initial  value 2863.278326 
+iter  10 value 1977.944541
+iter  20 value 1533.283973
+iter  30 value 1516.297822
+iter  40 value 1514.440383
+iter  50 value 1514.254863
+iter  60 value 1514.231086
+iter  70 value 1514.209355
+iter  80 value 1514.196097
+iter  90 value 1514.160880
+iter 100 value 1514.117851
+iter 110 value 1514.113952
+final  value 1514.113499 
 converged
 > # Try SensAnalysisMLP
-> NeuralSens::SensAnalysisMLP(nnetmod, trData = nntrData)
-  varNames      mean      std meanSensSQ
-1       WD  2.709325 1.182701   8.738521
-2     TEMP -1.520089 4.172400  19.710797
+> sensraw <- NeuralSens::SensAnalysisMLP(nnetmod, trData = nntrData, plot = FALSE, .rawSens = TRUE)
+> NeuralSens::SensFeaturePlot(sensraw, fdata = nntrData)
 > 
+> 
+> 
+> cleanEx()
+> nameEx("SensTimePlot")
+> ### * SensTimePlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: SensTimePlot
+> ### Title: Sensitivity analysis plot over time of the data
+> ### Aliases: SensTimePlot
+> 
+> ### ** Examples
+> 
+> ## Load data -------------------------------------------------------------------
+> data("DAILY_DEMAND_TR")
+> fdata <- DAILY_DEMAND_TR
+> fdata[,3] <- ifelse(as.data.frame(fdata)[,3] %in% c("SUN","SAT"), 0, 1)
+> ## Parameters of the NNET ------------------------------------------------------
+> hidden_neurons <- 5
+> iters <- 250
+> decay <- 0.1
+> 
+> ################################################################################
+> #########################  REGRESSION NNET #####################################
+> ################################################################################
+> ## Regression dataframe --------------------------------------------------------
+> # Scale the data
+> fdata.Reg.tr <- fdata[,2:ncol(fdata)]
+> fdata.Reg.tr[,3] <- fdata.Reg.tr[,3]/10
+> fdata.Reg.tr[,1] <- fdata.Reg.tr[,1]/1000
+> 
+> # Normalize the data for some models
+> preProc <- caret::preProcess(fdata.Reg.tr, method = c("center","scale"))
+> nntrData <- predict(preProc, fdata.Reg.tr)
+> 
+> #' ## TRAIN nnet NNET --------------------------------------------------------
+> # Create a formula to train NNET
+> form <- paste(names(fdata.Reg.tr)[2:ncol(fdata.Reg.tr)], collapse = " + ")
+> form <- formula(paste(names(fdata.Reg.tr)[1], form, sep = " ~ "))
+> 
+> set.seed(150)
+> nnetmod <- nnet::nnet(form,
++                       data = nntrData,
++                       linear.output = TRUE,
++                       size = hidden_neurons,
++                       decay = decay,
++                       maxit = iters)
+# weights:  21
+initial  value 2491.475466 
+iter  10 value 1629.026735
+iter  20 value 1452.888487
+iter  30 value 1445.542191
+iter  40 value 1440.373949
+iter  50 value 1438.257558
+iter  60 value 1437.456665
+iter  70 value 1437.406442
+final  value 1437.405717 
+converged
+> # Try SensTimePlot
+> NeuralSens::SensTimePlot(nnetmod, fdata = nntrData, date.var = NULL)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("SensitivityPlots")
+> ### * SensitivityPlots
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: SensitivityPlots
+> ### Title: Plot sensitivities of a neural network model
+> ### Aliases: SensitivityPlots
+> 
+> ### ** Examples
+> 
+> ## Load data -------------------------------------------------------------------
+> data("DAILY_DEMAND_TR")
+> fdata <- DAILY_DEMAND_TR
+> 
+> ## Parameters of the NNET ------------------------------------------------------
+> hidden_neurons <- 5
+> iters <- 250
+> decay <- 0.1
+> 
+> ################################################################################
+> #########################  REGRESSION NNET #####################################
+> ################################################################################
+> ## Regression dataframe --------------------------------------------------------
+> # Scale the data
+> fdata.Reg.tr <- fdata[,2:ncol(fdata)]
+> fdata.Reg.tr[,3] <- fdata.Reg.tr[,3]/10
+> fdata.Reg.tr[,1] <- fdata.Reg.tr[,1]/1000
+> 
+> # Normalize the data for some models
+> preProc <- caret::preProcess(fdata.Reg.tr, method = c("center","scale"))
+> nntrData <- predict(preProc, fdata.Reg.tr)
+> 
+> #' ## TRAIN nnet NNET --------------------------------------------------------
+> # Create a formula to train NNET
+> form <- paste(names(fdata.Reg.tr)[2:ncol(fdata.Reg.tr)], collapse = " + ")
+> form <- formula(paste(names(fdata.Reg.tr)[1], form, sep = " ~ "))
+> 
+> set.seed(150)
+> nnetmod <- nnet::nnet(form,
++                            data = nntrData,
++                            linear.output = TRUE,
++                            size = hidden_neurons,
++                            decay = decay,
++                            maxit = iters)
+# weights:  46
+initial  value 2863.278326 
+iter  10 value 1977.944541
+iter  20 value 1533.283973
+iter  30 value 1516.297822
+iter  40 value 1514.440383
+iter  50 value 1514.254863
+iter  60 value 1514.231086
+iter  70 value 1514.209355
+iter  80 value 1514.196097
+iter  90 value 1514.160880
+iter 100 value 1514.117851
+iter 110 value 1514.113952
+final  value 1514.113499 
+converged
+> # Try SensAnalysisMLP
+> sens <- NeuralSens::SensAnalysisMLP(nnetmod, trData = nntrData, plot = FALSE)
+> NeuralSens::SensitivityPlots(sens)
+> sensraw <- NeuralSens::SensAnalysisMLP(nnetmod, trData = nntrData, plot = FALSE, .rawSens = TRUE)
+> NeuralSens::SensitivityPlots(der = sensraw[,,1])
 > 
 > 
 > 
@@ -100,7 +365,7 @@ converged
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.81 0.5 4.5 NA NA 
+Time elapsed:  7.25 0.36 8.08 NA NA 
 > grDevices::dev.off()
 null device 
           1 

@@ -2,7 +2,7 @@ Package: fastDummies
 Type: Package
 Title: Fast Creation of Dummy (Binary) Columns and Rows from
         Categorical Variables
-Version: 1.5.0
+Version: 1.6.0
 Authors@R: c(
     person("Jacob", "Kaplan", email = "jkkaplan6@gmail.com", role = c("aut", "cre"),
     comment = c(ORCID = "0000-0002-0601-0387")), 
@@ -22,8 +22,8 @@ Language: en-US
 RemoteType: local
 RemoteUrl: C:\Users\user\Dropbox\R_project\fastDummies
 NeedsCompilation: no
-Packaged: 2019-09-02 19:12:53 UTC; user
+Packaged: 2019-11-29 00:04:54 UTC; user
 Author: Jacob Kaplan [aut, cre] (<https://orcid.org/0000-0002-0601-0387>),
   Benjamin Schlegel [ctb]
 Maintainer: Jacob Kaplan <jkkaplan6@gmail.com>
-Built: R 3.6.0; ; 2019-09-02 19:12:55 UTC; windows
+Built: R 3.6.1; ; 2019-11-29 00:04:56 UTC; windows
