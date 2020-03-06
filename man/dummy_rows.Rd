@@ -4,8 +4,12 @@
 \alias{dummy_rows}
 \title{Fast creation of dummy rows}
 \usage{
-dummy_rows(.data, select_columns = NULL, dummy_value = NA,
-  dummy_indicator = FALSE)
+dummy_rows(
+  .data,
+  select_columns = NULL,
+  dummy_value = NA,
+  dummy_indicator = FALSE
+)
 }
 \arguments{
 \item{.data}{An object with the data set you want to make dummy columns from.}
@@ -50,7 +54,8 @@ dummy_rows(crime, select_columns = c("city", "year"),
 \seealso{
 \code{\link{dummy_cols}} For creating dummy columns
 
-Other dummy functions: \code{\link{dummy_cols}},
-  \code{\link{dummy_columns}}
+Other dummy functions: 
+\code{\link{dummy_cols}()},
+\code{\link{dummy_columns}()}
 }
 \concept{dummy functions}

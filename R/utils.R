@@ -12,7 +12,7 @@ check_type <- function(.data) {
 
 fix_data_type <- function(.data, data_type) {
   if (data_type == "is_data_frame") {
-    .data <- as.data.frame(.data)
+    .data <- as.data.frame(.data, stringsAsFactors = FALSE)
   } else if (data_type == "is_tibble") {
     .data <- tibble::as_tibble(.data)
   }
