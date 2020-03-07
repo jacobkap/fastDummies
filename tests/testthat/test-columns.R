@@ -75,8 +75,6 @@ test_that("The correct dummy columns are made - default", {
                  "month_September"))
 
 
-
-
   expect_named(dummy_cols(fastDummies_example),
                c("numbers",
                  "gender",

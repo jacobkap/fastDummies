@@ -1,6 +1,4 @@
-Submitting this update at request of Kurt Hornik who alerted me that the package
-fails tests for the development version on Ubuntu devices due to stringsAsFactors = FALSE
-update for R 4.0.0. 
+Submitting this update at request of Kurt Hornik who alerted me that the package fails tests for the development version on Ubuntu devices due to stringsAsFactors = FALSE update for R 4.0.0. Checking the Ubunut developnment device on Rhub shows all checks pass so I believe this update fixes the problem. 
 
 ## Test environments
 
