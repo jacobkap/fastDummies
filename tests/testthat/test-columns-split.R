@@ -18,7 +18,7 @@ split_test <- data.frame(
 
 test_that("split parameter works", {
   expect_named(dummy_cols(df, split = ";"),
-               c("ID", "pets", "pets_dog", "pets_cat", "pets_mouse"))
+               c("ID", "pets", "pets_cat", "pets_dog", "pets_mouse"))
 
   expect_equal(dummy_cols(df, split = ";")$pets_dog,
                c(1, 1, 1, 0))

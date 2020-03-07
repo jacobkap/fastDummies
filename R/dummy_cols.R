@@ -139,7 +139,7 @@ dummy_cols <- function(.data,
     if (remove_first_dummy) {
       unique_vals <- unique_vals[-1]
     }
-
+    unique_vals <- sort(unique_vals, na.last = TRUE)
     data.table::alloc.col(.data, ncol(.data) + length(unique_vals))
     data.table::set(.data, j = paste0(col_name, "_", unique_vals), value = 0L)
     for (unique_value in unique_vals) {
@@ -152,9 +152,9 @@ dummy_cols <- function(.data,
 
       # Sets NA values to NA, only for columns that are not the NA columns
       if (!is.na(unique_value)) {
-      data.table::set(.data, i =
-                        which(is.na(.data[[col_name]])),
-                      j = paste0(col_name, "_", unique_value), value = NA)
+        data.table::set(.data, i =
+                          which(is.na(.data[[col_name]])),
+                        j = paste0(col_name, "_", unique_value), value = NA)
       }
 
       if (!is.null(split)) {

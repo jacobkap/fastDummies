@@ -1,6 +1,7 @@
 # fastDummies 1.6.1
 
-* Bug fixes
+* Bug fixes.
+* Dummy columns are now returned in alphabetical order. 
 
 # fastDummies 1.6.0
 
