@@ -107,9 +107,10 @@ dummy_cols <- function(.data,
       if (any(is.na(.data[[col_name]]))) {
         unique_vals <- c(unique_vals, NA)
       }
-      # Else by order values appear.
+      # Else by alphabetical order.
     } else {
       unique_vals <- unique(.data[[col_name]])
+      unique_vals <- stringi::stri_sort(unique_vals, na_last = TRUE, locale = "en_US")
     }
     unique_vals <- as.character(unique_vals)
 
@@ -139,7 +140,7 @@ dummy_cols <- function(.data,
     if (remove_first_dummy) {
       unique_vals <- unique_vals[-1]
     }
-    unique_vals <- sort(unique_vals, na.last = TRUE)
+
     data.table::alloc.col(.data, ncol(.data) + length(unique_vals))
     data.table::set(.data, j = paste0(col_name, "_", unique_vals), value = 0L)
     for (unique_value in unique_vals) {

@@ -30,7 +30,7 @@ sort_order_example <- data.frame(numbers = 1:12,
                                            "December",
                                            "November"))
 sort_order_example$month <- factor(sort_order_example$month,
-                                   levels = month.name)
+                                   levels = as.character(sort_order_example$month))
 
 
 sort_order_example2       <- sort_order_example
@@ -45,18 +45,18 @@ test_that("The correct dummy columns are made - default", {
   expect_named(dummy_cols(sort_order_example),
                c("numbers",
                  "month",
-                 "month_April",
-                 "month_August",
-                 "month_December",
                  "month_February",
                  "month_January",
+                 "month_March",
                  "month_July",
                  "month_June",
-                 "month_March",
                  "month_May",
-                 "month_November",
+                 "month_April",
+                 "month_August",
                  "month_October",
-                 "month_September"))
+                 "month_September",
+                 "month_December",
+                 "month_November"))
 
   expect_named(dummy_cols(sort_order_example2),
                c("numbers",
