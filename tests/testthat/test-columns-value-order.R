@@ -6,6 +6,7 @@ load(system.file("testdata", "fastDummies_data.rda",
 split_example <- data.frame(owner = 1:4,
                             pets = c("dog", "dog, cat, hamster", "cat",
                                      "hamster"), stringsAsFactors = FALSE)
+numeric_order <- data.frame(photos = c(1, 5, 7, 2, 40, 23, 12, 6, 1))
 
 test_that("Order of dummy columns (e.g. 0,0,1,0) is right", {
 
@@ -24,6 +25,16 @@ test_that("Order of dummy columns (e.g. 0,0,1,0) is right", {
                           remove_first_dummy = TRUE)$animals_dog, c(1, 1, 0))
   expect_equal(dummy_cols(fastDummies_example, select_columns = "animals",
                           remove_first_dummy = TRUE)$animals_dog, c(1, 1, 0))
+
+  expect_named(dummy_cols(numeric_order), c("photos",
+                                            "photos_1",
+                                            "photos_2",
+                                            "photos_5",
+                                            "photos_6",
+                                            "photos_7",
+                                            "photos_12",
+                                            "photos_23",
+                                            "photos_40"))
 
 
   # Splitter test

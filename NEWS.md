@@ -1,3 +1,7 @@
+# fastDummies 1.6.2
+
+* Dummy columns are now returned in alphabetical order including numeric order (e.g. photos_2 is before photos_11).
+
 # fastDummies 1.6.1
 
 * Bug fixes.

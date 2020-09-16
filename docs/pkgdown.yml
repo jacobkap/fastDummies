@@ -1,7 +1,8 @@
-pandoc: 2.7.2
-pkgdown: 1.4.1
+pandoc: 2.9.1
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   making-dummy-rows: making-dummy-rows.html
   making-dummy-variables: making-dummy-variables.html
+last_built: 2020-09-16T15:04Z
 

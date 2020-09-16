@@ -110,7 +110,10 @@ dummy_cols <- function(.data,
       # Else by alphabetical order.
     } else {
       unique_vals <- unique(.data[[col_name]])
-      unique_vals <- stringi::stri_sort(unique_vals, na_last = TRUE, locale = "en_US")
+      unique_vals <- stringr::str_sort(unique_vals,
+                                       na_last = TRUE,
+                                       locale = "en_US",
+                                       numeric = TRUE)
     }
     unique_vals <- as.character(unique_vals)
 
