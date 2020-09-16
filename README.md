@@ -10,7 +10,7 @@ status](https://codecov.io/gh/jacobkap/fastDummies/branch/master/graph/badge.svg
 
 ## Overview
 
-The goal of fastDummies is to quickly create dummy variables (columns)
+The goal of `fastDummies` is to quickly create dummy variables (columns)
 and dummy rows. Creating dummy variables is possible through base R or
 other packages, but this package is much faster than those methods.
 
@@ -116,11 +116,11 @@ results <- fastDummies::dummy_cols(fastDummies_example)
 knitr::kable(results)
 ```
 
-| numbers | gender | animals | dates      | gender\_male | gender\_female | animals\_dog | animals\_cat |
-| ------: | :----- | :------ | :--------- | -----------: | -------------: | -----------: | -----------: |
-|       1 | male   | dog     | 2012-01-01 |            1 |              0 |            1 |            0 |
-|       2 | male   | dog     | 2011-12-31 |            1 |              0 |            1 |            0 |
-|       3 | female | cat     | 2012-01-01 |            0 |              1 |            0 |            1 |
+| numbers | gender | animals | dates      | gender\_female | gender\_male | animals\_cat | animals\_dog |
+| ------: | :----- | :------ | :--------- | -------------: | -----------: | -----------: | -----------: |
+|       1 | male   | dog     | 2012-01-01 |              0 |            1 |            0 |            1 |
+|       2 | male   | dog     | 2011-12-31 |              0 |            1 |            0 |            1 |
+|       3 | female | cat     | 2012-01-01 |              1 |            0 |            1 |            0 |
 
 # Dummy Rows
 

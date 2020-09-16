@@ -15,4 +15,4 @@ There were no ERRORs or WARNINGs or NOTES.
 
 ## Reverse dependencies
 
-There are no reverse dependencies
+There are six reverse dependencies. revdepcheck::revdep_check() returns OK for all six.

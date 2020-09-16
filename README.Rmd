@@ -11,7 +11,7 @@ output: github_document
 
 ## Overview
 
-The goal of fastDummies is to quickly create dummy variables (columns) and dummy rows. Creating dummy variables is possible through base R or other packages, but this package is much faster than those methods. 
+The goal of `fastDummies` is to quickly create dummy variables (columns) and dummy rows. Creating dummy variables is possible through base R or other packages, but this package is much faster than those methods. 
 
 ## Installation
 ```{r, eval = FALSE}
