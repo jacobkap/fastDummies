@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">fastDummies</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.3</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
-<p>The goal of fastDummies is to quickly create dummy variables (columns) and dummy rows. Creating dummy variables is possible through base R or other packages, but this package is much faster than those methods.</p>
+<p>The goal of <code>fastDummies</code> is to quickly create dummy variables (columns) and dummy rows. Creating dummy variables is possible through base R or other packages, but this package is much faster than those methods.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -106,8 +106,7 @@
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/jacobkap/fastDummies">fastDummies</a></span>)
-</pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jacobkap/fastDummies">fastDummies</a></span><span class="op">)</span></pre></div>
 <p>There are two functions in this package:</p>
 <ul>
 <li>
@@ -191,14 +190,13 @@
 </table>
 <p>With an example like this, it is fairly easy to make the dummy columns yourself. <code><a href="reference/dummy_cols.html">dummy_cols()</a></code> automates the process, and is useful when you have many columns to general dummy variables from or with many categories within the column.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">fastDummies_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(numbers = <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,
-                    gender  = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),
-                    animals = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),
-                    dates   = <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,
-                                          <span class="st">"2012-01-01"</span>)),
-                    stringsAsFactors = <span class="fl">FALSE</span>)
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">fastDummies_example</span>)
-</pre></div>
+<span class="va">fastDummies_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>numbers <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,
+                    gender  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span><span class="op">)</span>,
+                    animals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span><span class="op">)</span>,
+                    dates   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,
+                                          <span class="st">"2012-01-01"</span><span class="op">)</span><span class="op">)</span>,
+                    stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">fastDummies_example</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -229,19 +227,18 @@
 </table>
 <p>The object <strong>fastDummies_example</strong> has two character type columns, one integer column, and a Date column. By default, <code><a href="reference/dummy_cols.html">dummy_cols()</a></code> will make dummy variables from factor or character columns only. This is because in most cases those are the only types of data you want dummy variables from. If those are the only columns you want, then the function takes your data set as the first parameter and returns a data.frame with the newly created variables appended to the end of the original data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">results</span> <span class="op">&lt;-</span> <span class="kw">fastDummies</span>::<span class="fu"><a href="reference/dummy_cols.html">dummy_cols</a></span>(<span class="kw">fastDummies_example</span>)
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">results</span>)
-</pre></div>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">fastDummies</span><span class="fu">::</span><span class="fu"><a href="reference/dummy_cols.html">dummy_cols</a></span><span class="op">(</span><span class="va">fastDummies_example</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
 <th align="left">gender</th>
 <th align="left">animals</th>
 <th align="left">dates</th>
-<th align="right">gender_male</th>
 <th align="right">gender_female</th>
-<th align="right">animals_dog</th>
+<th align="right">gender_male</th>
 <th align="right">animals_cat</th>
+<th align="right">animals_dog</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -249,30 +246,30 @@
 <td align="left">male</td>
 <td align="left">dog</td>
 <td align="left">2012-01-01</td>
-<td align="right">1</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0</td>
+<td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="right">2</td>
 <td align="left">male</td>
 <td align="left">dog</td>
 <td align="left">2011-12-31</td>
-<td align="right">1</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0</td>
+<td align="right">1</td>
 </tr>
 <tr class="odd">
 <td align="right">3</td>
 <td align="left">female</td>
 <td align="left">cat</td>
 <td align="left">2012-01-01</td>
-<td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">1</td>
+<td align="right">0</td>
 </tr>
 </tbody>
 </table>
@@ -284,14 +281,13 @@
 <p>The function takes all character, factor, and Date columns, finds all possible combinations of their values, and adds the rows that are not in the original data set. Any columns not used in creating the combinations (e.g. numeric) are given a value of NA (unless otherwise specified with <em>dummy_value</em>).</p>
 <p>Lets start with a simple example.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="kw">fastDummies_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(numbers = <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,
-                    gender  = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),
-                    animals = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),
-                    dates   = <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,
-                                          <span class="st">"2012-01-01"</span>)),
-                    stringsAsFactors = <span class="fl">FALSE</span>)
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">fastDummies_example</span>)
-</pre></div>
+<span class="va">fastDummies_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>numbers <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,
+                    gender  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span><span class="op">)</span>,
+                    animals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span><span class="op">)</span>,
+                    dates   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,
+                                          <span class="st">"2012-01-01"</span><span class="op">)</span><span class="op">)</span>,
+                    stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">fastDummies_example</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -322,9 +318,8 @@
 </table>
 <p>This data set has four columns: two character, one Date, and one numeric. The function by default will use the character and Date columns in creating the combinations. First, a small amount of math to explain the combinations. Each column has two distinct values - gender: male &amp; female; animals: dog &amp; cat; dates: 2011-12-31 &amp; 2011-12-31. To find the number of possible combinations, multiple the number of unique values in each column together. 2 * 2 * 2 = 8.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw">results</span> <span class="op">&lt;-</span> <span class="kw">fastDummies</span>::<span class="fu"><a href="reference/dummy_rows.html">dummy_rows</a></span>(<span class="kw">fastDummies_example</span>)
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">results</span>)
-</pre></div>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">fastDummies</span><span class="fu">::</span><span class="fu"><a href="reference/dummy_rows.html">dummy_rows</a></span><span class="op">(</span><span class="va">fastDummies_example</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>

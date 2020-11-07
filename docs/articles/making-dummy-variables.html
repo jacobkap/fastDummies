@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fastDummies</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.3</span>
       </span>
     </div>
 
@@ -82,13 +82,13 @@
 
       
 
-      </header><script src="making-dummy-variables_files/header-attrs-2.3.2/header-attrs.js"></script><script src="making-dummy-variables_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="making-dummy-variables_files/header-attrs-2.4/header-attrs.js"></script><script src="making-dummy-variables_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Making dummy variables with dummy_cols()</h1>
                         <h4 class="author">Jacob Kaplan</h4>
             
-            <h4 class="date">2020-09-16</h4>
+            <h4 class="date">2020-11-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jacobkap/fastDummies/blob/master/vignettes/making-dummy-variables.Rmd"><code>vignettes/making-dummy-variables.Rmd</code></a></small>
       <div class="hidden name"><code>making-dummy-variables.Rmd</code></div>
@@ -168,14 +168,13 @@
 </table>
 <p>With an example like this, it is fairly easy to make the dummy columns yourself. <code><a href="../reference/dummy_cols.html">dummy_cols()</a></code> automates the process, and is useful when you have many columns to general dummy variables from or with many categories within the column.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">fastDummies_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(numbers = <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,
-                    gender  = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),
-                    animals = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),
-                    dates   = <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,
-                                          <span class="st">"2012-01-01"</span>)),
-                    stringsAsFactors = <span class="fl">FALSE</span>)
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">fastDummies_example</span>)
-</pre></div>
+<span class="va">fastDummies_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>numbers <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,
+                    gender  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span><span class="op">)</span>,
+                    animals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span><span class="op">)</span>,
+                    dates   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,
+                                          <span class="st">"2012-01-01"</span><span class="op">)</span><span class="op">)</span>,
+                    stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">fastDummies_example</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -206,9 +205,8 @@
 </table>
 <p>The object <strong>fastDummies_example</strong> has two character type columns, one integer column, and a Date column. By default, <code><a href="../reference/dummy_cols.html">dummy_cols()</a></code> will make dummy variables from factor or character columns only. This is because in most cases those are the only types of data you want dummy variables from. If those are the only columns you want, then the function takes your data set as the first parameter and returns a data.frame with the newly created variables appended to the end of the original data.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">results</span> <span class="op">&lt;-</span> <span class="kw">fastDummies</span>::<span class="fu"><a href="../reference/dummy_cols.html">dummy_cols</a></span>(<span class="kw">fastDummies_example</span>)
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">results</span>)
-</pre></div>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">fastDummies</span><span class="fu">::</span><span class="fu"><a href="../reference/dummy_cols.html">dummy_cols</a></span><span class="op">(</span><span class="va">fastDummies_example</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -255,9 +253,8 @@
 </table>
 <p>In some situations, you would want columns with types other than factor and character to generate dummy variables. For example, a column of years would be numeric but could be well-suited for making into dummy variables depending on your analysis. Use the <em>select_columns</em> parameter to select specific columns to make dummy variables from.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">results</span> <span class="op">&lt;-</span> <span class="kw">fastDummies</span>::<span class="fu"><a href="../reference/dummy_cols.html">dummy_cols</a></span>(<span class="kw">fastDummies_example</span>, select_columns = <span class="st">"numbers"</span>)
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">results</span>)
-</pre></div>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">fastDummies</span><span class="fu">::</span><span class="fu"><a href="../reference/dummy_cols.html">dummy_cols</a></span><span class="op">(</span><span class="va">fastDummies_example</span>, select_columns <span class="op">=</span> <span class="st">"numbers"</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -300,9 +297,8 @@
 </table>
 <p>The final option for <code><a href="../reference/dummy_cols.html">dummy_cols()</a></code> is <em>remove_first_dummy</em> which by default is FALSE. If TRUE, it removes the first dummy variable created from each column. This is done to avoid multicollinearity in a multiple regression model caused by included all dummy variables. The “first” dummy variable is the one at the top of the rows (i.e. the first value that is not NA).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">results</span> <span class="op">&lt;-</span> <span class="kw">fastDummies</span>::<span class="fu"><a href="../reference/dummy_cols.html">dummy_cols</a></span>(<span class="kw">fastDummies_example</span>, remove_first_dummy = <span class="fl">TRUE</span>)
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">results</span>)
-</pre></div>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">fastDummies</span><span class="fu">::</span><span class="fu"><a href="../reference/dummy_cols.html">dummy_cols</a></span><span class="op">(</span><span class="va">fastDummies_example</span>, remove_first_dummy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>

@@ -66,6 +66,10 @@ dummy_cols <- function(.data,
          to proceed.")
   }
 
+  if (is.vector(.data)) {
+    .data <- data.frame(x = .data)
+  }
+
   data_type <- check_type(.data)
 
   if (!data.table::is.data.table(.data)) {
@@ -74,9 +78,9 @@ dummy_cols <- function(.data,
 
   # Grabs column names that are character or factor class -------------------
   if (!is.null(select_columns)) {
-    char_cols <- select_columns
+    char_cols        <- select_columns
     cols_not_in_data <- char_cols[!char_cols %in% names(.data)]
-    char_cols <- char_cols[!char_cols %in% cols_not_in_data]
+    char_cols        <- char_cols[!char_cols %in% cols_not_in_data]
     if (length(char_cols) == 0) {
       stop("select_columns is/are not in data. Please check data and spelling.")
     }
@@ -131,13 +135,41 @@ dummy_cols <- function(.data,
       vals <- as.character(.data[[col_name]])
       vals <- data.frame(sort(table(vals), decreasing = TRUE),
                          stringsAsFactors = FALSE)
-      if (vals$Freq[1] > vals$Freq[2]) {
-        vals <- as.character(vals$vals[2:nrow(vals)])
-        unique_vals <- unique_vals[which(unique_vals %in% vals)]
-        unique_vals <- vals[order(match(vals, unique_vals))]
+      # If there is a actual most frequent value, drop that value. Else,
+      # if there is a tie, drop the one that's first alphabetically.
+      top_vals <- vals[vals$Freq %in% max(vals$Freq), ]
+      other_vals <- vals$vals[!vals$Freq %in% max(vals$Freq)]
+      other_vals <- as.character(other_vals)
+      top_vals <- top_vals[stringr::str_order(top_vals$vals,
+                                              na_last = TRUE,
+                                              locale = "en_US",
+                                              numeric = TRUE), ]
+      if (nrow(top_vals) == 1) {
+        top_vals <- NULL
       } else {
-        remove_first_dummy <- TRUE
+        top_vals <- as.character(top_vals$vals[2:nrow(top_vals)])
       }
+
+      unique_vals <- c(top_vals, other_vals)
+      unique_vals <- stringr::str_sort(unique_vals,
+                                       na_last = TRUE,
+                                       locale = "en_US",
+                                       numeric = TRUE)
+      #    unique_vals <- vals[order(match(vals, unique_vals))]
+      # if (vals$Freq[1] > vals$Freq[2]) {
+      #   vals <- as.character(vals$vals[2:nrow(vals)])
+      #   unique_vals <- unique_vals[which(unique_vals %in% vals)]
+      #   unique_vals <- vals[order(match(vals, unique_vals))]
+      # } else {
+      #   vals <- vals[vals$Freq %in% max(vals$Freq), ]
+      #   vals <- vals[stringr::str_order(vals$vals,
+      #                                   na_last = TRUE,
+      #                                   locale = "en_US",
+      #                                   numeric = TRUE)]
+      #   vals <- as.character(vals$vals[2:nrow(vals)])
+      #   unique_vals <- unique_vals[which(unique_vals %in% vals)]
+      #   unique_vals <- vals[order(match(vals, unique_vals))]
+      # }
     }
 
     if (remove_first_dummy) {
@@ -145,7 +177,8 @@ dummy_cols <- function(.data,
     }
 
     data.table::alloc.col(.data, ncol(.data) + length(unique_vals))
-    data.table::set(.data, j = paste0(col_name, "_", unique_vals), value = 0L)
+    #   data.table::set(.data, j = paste0(col_name, "_", unique_vals), value = 0L)
+    .data[, paste0(col_name, "_", unique_vals)] <- 0L
     for (unique_value in unique_vals) {
       data.table::set(.data, i =
                         which(data.table::chmatch(

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fastDummies</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.3</span>
       </span>
     </div>
 
@@ -82,13 +82,13 @@
 
       
 
-      </header><script src="making-dummy-rows_files/header-attrs-2.3.2/header-attrs.js"></script><script src="making-dummy-rows_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="making-dummy-rows_files/header-attrs-2.4/header-attrs.js"></script><script src="making-dummy-rows_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Making dummy rows with dummy_rows()</h1>
                         <h4 class="author">Jacob Kaplan</h4>
             
-            <h4 class="date">2020-09-16</h4>
+            <h4 class="date">2020-11-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jacobkap/fastDummies/blob/master/vignettes/making-dummy-rows.Rmd"><code>vignettes/making-dummy-rows.Rmd</code></a></small>
       <div class="hidden name"><code>making-dummy-rows.Rmd</code></div>
@@ -101,14 +101,13 @@
 <p>The function takes all character, factor, and Date columns, finds all possible combinations of their values, and adds the rows that are not in the original data set. Any columns not used in creating the combinations (e.g. numeric) are given a value of NA (unless otherwise specified with <em>dummy_value</em>).</p>
 <p>Lets start with a simple example.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">fastDummies_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(numbers = <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,
-                    gender  = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>),
-                    animals = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>),
-                    dates   = <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,
-                                          <span class="st">"2012-01-01"</span>)),
-                    stringsAsFactors = <span class="fl">FALSE</span>)
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">fastDummies_example</span>)
-</pre></div>
+<span class="va">fastDummies_example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>numbers <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,
+                    gender  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"male"</span>, <span class="st">"female"</span><span class="op">)</span>,
+                    animals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"dog"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span><span class="op">)</span>,
+                    dates   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2012-01-01"</span>, <span class="st">"2011-12-31"</span>,
+                                          <span class="st">"2012-01-01"</span><span class="op">)</span><span class="op">)</span>,
+                    stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">fastDummies_example</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -139,9 +138,8 @@
 </table>
 <p>This data set has four columns: two character, one Date, and one numeric. The function by default will use the character and Date columns in creating the combinations. First, a small amount of math to explain the combinations. Each column has two distinct values - gender: male &amp; female; animals: dog &amp; cat; dates: 2011-12-31 &amp; 2011-12-31. To find the number of possible combinations, multiple the number of unique values in each column together. 2 * 2 * 2 = 8.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">results</span> <span class="op">&lt;-</span> <span class="kw">fastDummies</span>::<span class="fu"><a href="../reference/dummy_rows.html">dummy_rows</a></span>(<span class="kw">fastDummies_example</span>)
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">results</span>)
-</pre></div>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">fastDummies</span><span class="fu">::</span><span class="fu"><a href="../reference/dummy_rows.html">dummy_rows</a></span><span class="op">(</span><span class="va">fastDummies_example</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -203,9 +201,8 @@
 <p>When we run the function we can see that there are indeed 8 rows possible, and that the 5 rows missing from the original data have been added.</p>
 <p>To explicitly see which rows are new, set the <em>dummy_indicator</em> parameter to TRUE. This provides a column called dummy_indicator with a value of 0 if the row is in the original data and 1 if it was added.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">results</span> <span class="op">&lt;-</span> <span class="kw">fastDummies</span>::<span class="fu"><a href="../reference/dummy_rows.html">dummy_rows</a></span>(<span class="kw">fastDummies_example</span>, dummy_indicator = <span class="fl">TRUE</span>)
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">results</span>)
-</pre></div>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">fastDummies</span><span class="fu">::</span><span class="fu"><a href="../reference/dummy_rows.html">dummy_rows</a></span><span class="op">(</span><span class="va">fastDummies_example</span>, dummy_indicator <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -275,10 +272,9 @@
 </table>
 <p>By default, columns not used for making the combinations are given a value of NA in the new rows. You can choose the value given with the parameter <em>dummy_value</em>. It takes an input, a string or single number.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">results1</span> <span class="op">&lt;-</span> <span class="kw">fastDummies</span>::<span class="fu"><a href="../reference/dummy_rows.html">dummy_rows</a></span>(<span class="kw">fastDummies_example</span>, dummy_value = <span class="fl">0</span>)
-<span class="kw">results2</span> <span class="op">&lt;-</span> <span class="kw">fastDummies</span>::<span class="fu"><a href="../reference/dummy_rows.html">dummy_rows</a></span>(<span class="kw">fastDummies_example</span>, dummy_value = <span class="st">"new value"</span>)
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">results1</span>)
-</pre></div>
+<span class="va">results1</span> <span class="op">&lt;-</span> <span class="fu">fastDummies</span><span class="fu">::</span><span class="fu"><a href="../reference/dummy_rows.html">dummy_rows</a></span><span class="op">(</span><span class="va">fastDummies_example</span>, dummy_value <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
+<span class="va">results2</span> <span class="op">&lt;-</span> <span class="fu">fastDummies</span><span class="fu">::</span><span class="fu"><a href="../reference/dummy_rows.html">dummy_rows</a></span><span class="op">(</span><span class="va">fastDummies_example</span>, dummy_value <span class="op">=</span> <span class="st">"new value"</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">results1</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">numbers</th>
@@ -338,8 +334,7 @@
 </tbody>
 </table>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">results2</span>)
-</pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">results2</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">numbers</th>
@@ -400,11 +395,10 @@
 </table>
 <p>The parameter <em>select_columns</em> lets you choose which columns to use when making the combinations. It accepts a string or vector of column names. This can come in handy when you want to include a numeric column, such as years, when making the combinations. A new data set will help demonstrate this. This data set shows (imaginary) crime in New York City and San Francisco during 1990 and 2000. The problem is that there is no row for New York City for 2000. We want to add that row.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw">crime</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(city = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"SF"</span>, <span class="st">"SF"</span>, <span class="st">"NYC"</span>),
-                    year = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1990</span>, <span class="fl">2000</span>, <span class="fl">1990</span>),
-                    crime = <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>)
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">crime</span>)
-</pre></div>
+<span class="va">crime</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>city <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SF"</span>, <span class="st">"SF"</span>, <span class="st">"NYC"</span><span class="op">)</span>,
+                    year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2000</span>, <span class="fl">1990</span><span class="op">)</span>,
+                    crime <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">crime</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">city</th>
@@ -431,9 +425,8 @@
 </table>
 <p>Using the default parameters for <code><a href="../reference/dummy_rows.html">dummy_rows()</a></code> doesn’t give us what we want since it only selects the city column. We need to select both city and year to get all the combinations we want.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="kw">results</span> <span class="op">&lt;-</span> <span class="kw">fastDummies</span>::<span class="fu"><a href="../reference/dummy_rows.html">dummy_rows</a></span>(<span class="kw">crime</span>, select_columns = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"city"</span>, <span class="st">"year"</span>))
-<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">results</span>)
-</pre></div>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">fastDummies</span><span class="fu">::</span><span class="fu"><a href="../reference/dummy_rows.html">dummy_rows</a></span><span class="op">(</span><span class="va">crime</span>, select_columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"city"</span>, <span class="st">"year"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">city</th>

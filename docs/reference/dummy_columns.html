@@ -75,7 +75,7 @@ character columns." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fastDummies</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.3</span>
       </span>
     </div>
 
@@ -141,15 +141,15 @@ statistical analysis when you want binary columns rather than
 character columns.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dummy_columns</span>(
-  <span class='kw'>.data</span>,
-  select_columns = <span class='kw'>NULL</span>,
-  remove_first_dummy = <span class='fl'>FALSE</span>,
-  remove_most_frequent_dummy = <span class='fl'>FALSE</span>,
-  ignore_na = <span class='fl'>FALSE</span>,
-  split = <span class='kw'>NULL</span>,
-  remove_selected_columns = <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>dummy_columns</span><span class='op'>(</span>
+  <span class='va'>.data</span>,
+  select_columns <span class='op'>=</span> <span class='cn'>NULL</span>,
+  remove_first_dummy <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  remove_most_frequent_dummy <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ignore_na <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  split <span class='op'>=</span> <span class='cn'>NULL</span>,
+  remove_selected_columns <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,21 +202,21 @@ and dog dummy columns.</p></td>
 <code><a href='dummy_rows.html'>dummy_rows</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>crime</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(city = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SF"</span>, <span class='st'>"SF"</span>, <span class='st'>"NYC"</span>),
-    year = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1990</span>, <span class='fl'>2000</span>, <span class='fl'>1990</span>),
-    crime = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>)
-<span class='fu'><a href='dummy_cols.html'>dummy_cols</a></span>(<span class='kw'>crime</span>)
+    <pre class="examples"><div class='input'><span class='va'>crime</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>city <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"SF"</span>, <span class='st'>"SF"</span>, <span class='st'>"NYC"</span><span class='op'>)</span>,
+    year <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1990</span>, <span class='fl'>2000</span>, <span class='fl'>1990</span><span class='op'>)</span>,
+    crime <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>
+<span class='fu'><a href='dummy_cols.html'>dummy_cols</a></span><span class='op'>(</span><span class='va'>crime</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   city year crime city_NYC city_SF
 #&gt; 1   SF 1990     1        0       1
 #&gt; 2   SF 2000     2        0       1
 #&gt; 3  NYC 1990     3        1       0</div><div class='input'><span class='co'># Include year column</span>
-<span class='fu'><a href='dummy_cols.html'>dummy_cols</a></span>(<span class='kw'>crime</span>, select_columns = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"city"</span>, <span class='st'>"year"</span>))
+<span class='fu'><a href='dummy_cols.html'>dummy_cols</a></span><span class='op'>(</span><span class='va'>crime</span>, select_columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"city"</span>, <span class='st'>"year"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   city year crime city_NYC city_SF year_1990 year_2000
 #&gt; 1   SF 1990     1        0       1         1         0
 #&gt; 2   SF 2000     2        0       1         0         1
 #&gt; 3  NYC 1990     3        1       0         1         0</div><div class='input'><span class='co'># Remove first dummy for each pair of dummy columns made</span>
-<span class='fu'><a href='dummy_cols.html'>dummy_cols</a></span>(<span class='kw'>crime</span>, select_columns = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"city"</span>, <span class='st'>"year"</span>),
-    remove_first_dummy = <span class='fl'>TRUE</span>)
+<span class='fu'><a href='dummy_cols.html'>dummy_cols</a></span><span class='op'>(</span><span class='va'>crime</span>, select_columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"city"</span>, <span class='st'>"year"</span><span class='op'>)</span>,
+    remove_first_dummy <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   city year crime city_SF year_2000
 #&gt; 1   SF 1990     1       1         0
 #&gt; 2   SF 2000     2       1         1

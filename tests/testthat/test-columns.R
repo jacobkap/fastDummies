@@ -58,6 +58,16 @@ test_that("The correct dummy columns are made - default", {
                  "month_December",
                  "month_November"))
 
+  expect_named(dummy_cols(c("a", "b")),
+               c("x",
+                 "x_a",
+                 "x_b"))
+
+  expect_named(dummy_cols(1:2),
+               c("x",
+                 "x_1",
+                 "x_2"))
+
   expect_named(dummy_cols(sort_order_example2),
                c("numbers",
                  "month",
@@ -276,6 +286,12 @@ test_that("Remove first dummy leads to proper dummy columns being made", {
 })
 
 test_that("remove_most_frequent_dummy works", {
+  expect_named(dummy_cols(.data = data.frame(X = as.factor(c("a", "b", "b", "c", "c"))),
+                          remove_most_frequent_dummy = TRUE),
+               c("X",
+                 "X_a",
+                 "X_c"))
+
   expect_named(dummy_cols(most_frequent, remove_most_frequent_dummy = TRUE),
                c("animal",
                  "day",

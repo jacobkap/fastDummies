@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fastDummies</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.3</span>
       </span>
     </div>
 
@@ -129,9 +129,18 @@
       <small>Source: <a href='https://github.com/jacobkap/fastDummies/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="fastdummies-163" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.3">
+<a href="#fastdummies-163" class="anchor"></a>fastDummies 1.6.3<small> Unreleased </small>
+</h1>
+<ul>
+<li>Fix bug where inputting a vector or a one column data.frame returned an issue. Now will convert the vector to a data.frame and return that. Closes <a href='https://github.com/jacobkap/fastDummies/issues/23'>#23</a> by <a href='https://github.com/Garyf20'>@Garyf20</a>.</li>
+<li>Fix bug where <code>remove_most_frequent_dummy</code> wasn’t working right when there was a tie for which value was the most frequent. Closes <a href='https://github.com/jacobkap/fastDummies/issues/22'>#22</a> by eden70.</li>
+</ul>
+</div>
     <div id="fastdummies-162" class="section level1">
 <h1 class="page-header" data-toc-text="1.6.2">
-<a href="#fastdummies-162" class="anchor"></a>fastDummies 1.6.2<small> Unreleased </small>
+<a href="#fastdummies-162" class="anchor"></a>fastDummies 1.6.2<small> 2020-09-16 </small>
 </h1>
 <ul>
 <li>Dummy columns are now returned in alphabetical order including numeric order (e.g. photos_2 is before photos_11).</li>
