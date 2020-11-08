@@ -67,7 +67,7 @@ dummy_cols <- function(.data,
   }
 
   if (is.vector(.data)) {
-    .data <- data.frame(x = .data)
+    .data <- data.frame(x = .data, stringsAsFactors = FALSE)
   }
 
   data_type <- check_type(.data)

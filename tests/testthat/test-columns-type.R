@@ -3,10 +3,14 @@ context("Original Columns don't change type")
 load(system.file("testdata", "fastDummies_data.rda",
                  package = "fastDummies"))
 
+fastDummies_example_character <- fastDummies_example
+fastDummies_example_character$animals <- as.character(fastDummies_example_character$animals)
+
 test_that("Original columns keep same type", {
 
   expect_is(dummy_cols(fastDummies_example)$numbers, "integer")
   expect_is(dummy_cols(fastDummies_example)$animals, "factor")
+  expect_is(dummy_cols(fastDummies_example_character)$animals, "character")
   expect_is(dummy_cols(fastDummies_example)$dates, "Date")
   expect_is(dummy_cols(fastDummies_example,
                        remove_first_dummy = TRUE)$numbers, "integer")
