@@ -1,0 +1,138 @@
+* using log directory 'C:/Users/user/Dropbox/R_project/fastDummies/revdep/checks/DMCFB/new/DMCFB.Rcheck'
+* using R version 4.0.2 (2020-06-22)
+* using platform: x86_64-w64-mingw32 (64-bit)
+* using session charset: ISO8859-1
+* using options '--no-manual --no-build-vignettes'
+* checking for file 'DMCFB/DESCRIPTION' ... OK
+* checking extension type ... Package
+* this is package 'DMCFB' version '1.4.0'
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking whether package 'DMCFB' can be installed ... WARNING
+Found the following significant warnings:
+  Warning: package 'SummarizedExperiment' was built under R version 4.0.3
+  Warning: package 'MatrixGenerics' was built under R version 4.0.3
+  Warning: package 'matrixStats' was built under R version 4.0.3
+  Warning: package 'GenomicRanges' was built under R version 4.0.3
+  Warning: package 'BiocGenerics' was built under R version 4.0.3
+  Warning: package 'S4Vectors' was built under R version 4.0.3
+  Warning: package 'IRanges' was built under R version 4.0.3
+  Warning: package 'GenomeInfoDb' was built under R version 4.0.3
+  Warning: package 'Biobase' was built under R version 4.0.3
+  Warning: package 'BiocParallel' was built under R version 4.0.3
+See 'C:/Users/user/Dropbox/R_project/fastDummies/revdep/checks/DMCFB/new/DMCFB.Rcheck/00install.out' for details.
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking 'build' directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking installed files from 'inst/doc' ... OK
+* checking files in 'vignettes' ... OK
+* checking examples ... ERROR
+Running examples in 'DMCFB-Ex.R' failed
+The error most likely occurred in:
+
+> ### Name: findDMCFB-method
+> ### Title: findDMCFB method
+> ### Aliases: findDMCFB-method findDMCFB,BSDMC-method findDMCFB
+> 
+> ### ** Examples
+> 
+> set.seed(1980)
+> nr <- 1000
+> nc <- 4
+> metht <- matrix(as.integer(runif(nr * nc, 0, 100)), nr)
+> methc <- matrix(rbinom(n = nr * nc, c(metht), prob = runif(nr * nc)), nr, nc)
+> methl <- methc / metht
+> r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
+> names(r1) <- 1:nr
+> cd1 <- DataFrame(
++   Group = rep(c("G1", "G2"), each = nc / 2),
++   row.names = LETTERS[1:nc]
++ )
+> OBJ1 <- cBSDMC(
++   rowRanges = r1, methReads = methc, totalReads = metht,
++   methLevels = methl, colData = cd1
++ )
+> OBJ2 <- findDMCFB(OBJ1,
++   bwa = 10, bwb = 10, nBurn = 50, nMC = 50, nThin = 1,
++   alpha = 0.05, nCores = 2, pSize = 500, sfiles = FALSE
++ )
+------------------------------------------------------------
+Running Bayesian functional regression model ...
+The priors's SD = 0.3033, estimated from data ... 
+Number of assigned cores: 2 ... 
+------------------------------------------------------------
+Fitted model: 
+logit(MethRead/ReadDepth) ~ F(Group)
+------------------------------------------------------------
+Creating 1 batches of genomic positions ...
+Running batch 1/1; chr1; 1000 positions; Region [   1, 1000]; Date 2020-11-28 11:33:41
+Warning: namespace 'DMCFB' is not available and has been replaced
+by .GlobalEnv when processing object '<unknown>'
+Loading required package: DMCFB
+Warning in library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+  there is no package called 'DMCFB'
+Warning: namespace 'DMCFB' is not available and has been replaced
+by .GlobalEnv when processing object '<unknown>'
+Error: BiocParallel errors
+  element index: 1, 2
+  first error: unable to find required package 'DMCFB'
+Execution halted
+* checking for unstated dependencies in 'tests' ... OK
+* checking tests ... ERROR
+  Running 'testthat.R'
+Running the tests in 'tests/testthat.R' failed.
+Last 13 lines of output:
+  [90m 5. [39m      +-BiocParallel::bplapply(mylist, .fitpar, BPPARAM = optbp)
+  [90m 6. [39m      \-BiocParallel::bplapply(mylist, .fitpar, BPPARAM = optbp)
+  
+  Warning message:
+  In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+    there is no package called 'DMCFB'
+  Warning message:
+  In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+    there is no package called 'DMCFB'
+  == testthat results  ===========================================================
+  [33mError[39m (test-findDMCFB.R:12:5): test findDMCFB
+  
+  [ [33mFAIL[39m 1 | [35mWARN[39m 0 | [34mSKIP[39m 0 | [32mPASS[39m 0 ]
+  Error: Test failures
+  Execution halted
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in 'inst/doc' ... OK
+* checking running R code from vignettes ... NONE
+  'DMCFB.Rmd' using 'UTF-8'... OK
+* checking re-building of vignette outputs ... SKIPPED
+* DONE
+Status: 2 ERRORs, 1 WARNING

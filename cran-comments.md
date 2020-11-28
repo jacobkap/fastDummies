@@ -16,3 +16,4 @@ There were no ERRORs or WARNINGs or NOTES.
 ## Reverse dependencies
 
 There are five reverse dependencies. revdepcheck::revdep_check() returns OK for all five.
+ 

@@ -1,0 +1,718 @@
+
+R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "gscaLCA"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> library('gscaLCA')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("AddHealth")
+> ### * AddHealth
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: AddHealth
+> ### Title: Add Health data about substance use
+> ### Aliases: AddHealth
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(AddHealth)
+> str(AddHealth)
+'data.frame':	5114 obs. of  8 variables:
+ $ AID      : int  57101310 57103869 57109625 57111071 57113943 57117542 57118381 57118943 57120005 57120046 ...
+ $ Smoking  : Factor w/ 2 levels "Yes","No": 1 1 1 1 2 1 1 2 2 1 ...
+ $ Alcohol  : Factor w/ 2 levels "Yes","No": 1 2 1 1 1 1 1 1 1 1 ...
+ $ Drug     : Factor w/ 2 levels "Yes","No": 2 2 1 1 2 1 2 2 2 2 ...
+ $ Marijuana: Factor w/ 2 levels "Yes","No": 2 1 1 1 1 1 2 2 1 1 ...
+ $ Cocaine  : Factor w/ 2 levels "Yes","No": 2 2 1 1 2 1 2 2 2 1 ...
+ $ Gender   : Factor w/ 2 levels "M","F": 2 1 1 1 1 1 2 2 1 1 ...
+ $ Edu      : int  2 1 1 4 4 1 4 8 5 4 ...
+> head(AddHealth)
+       AID Smoking Alcohol Drug Marijuana Cocaine Gender Edu
+1 57101310     Yes     Yes   No        No      No      F   2
+2 57103869     Yes      No   No       Yes      No      M   1
+3 57109625     Yes     Yes  Yes       Yes     Yes      M   1
+4 57111071     Yes     Yes  Yes       Yes     Yes      M   4
+5 57113943      No     Yes   No       Yes      No      M   4
+6 57117542     Yes     Yes  Yes       Yes     Yes      M   1
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("TALIS")
+> ### * TALIS
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: TALIS
+> ### Title: Teaching and Learning International Survey
+> ### Aliases: TALIS
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> str(TALIS)
+'data.frame':	2560 obs. of  6 variables:
+ $ IDTEACH: int  300101 300102 300103 300104 300105 300106 300107 300108 300109 300110 ...
+ $ Mtv_1  : int  2 2 2 2 3 2 2 2 2 2 ...
+ $ Mtv_2  : int  1 2 2 3 3 1 3 1 3 2 ...
+ $ Pdgg_1 : int  2 2 2 2 1 1 1 2 3 2 ...
+ $ Pdgg_2 : int  2 2 1 3 2 2 2 3 3 3 ...
+ $ Stsf   : int  3 2 2 3 2 2 3 3 2 3 ...
+> head(TALIS)
+  IDTEACH Mtv_1 Mtv_2 Pdgg_1 Pdgg_2 Stsf
+1  300101     2     1      2      2    3
+2  300102     2     2      2      2    2
+3  300103     2     2      2      1    2
+4  300104     2     3      2      3    3
+5  300105     3     3      1      2    2
+6  300106     2     1      1      2    2
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("gscaLCA")
+> ### * gscaLCA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: gscaLCA
+> ### Title: Main function of gscaLCA by using fuzzy clustering GSCA
+> ### Aliases: gscaLCA
+> 
+> ### ** Examples
+> 
+> 
+> #AddHealth data with 3 clusters with 500 samples
+> AH.sample= AddHealth[1:500,]
+> R3 = gscaLCA (dat = AH.sample,
++                varnames = names(AddHealth)[2:6],
++                ID.var = "AID",
++                num.class = 3,
++                num.factor = "EACH",
++                Boot.num = 0)
+[1] "Listwise deletion was applied for cases whose variables used in gscaLCA have any missing."
+> summary(R3)
+=========================================================
+LCA by using Fuzzy Clustering GSCA
+=========================================================
+Fit with 3 latent classes: 
+ number of used observations: 495 
+ number of deleted observations: 5 
+ number of bootstrap for SE: 0 / 0 
+
+MODEL FIT -----------------------------------------------
+ FIT      :  0.9937 
+ AFIT     :  0.9935 
+ FPI      :  0.4259 
+ NCE      :  0.4641 
+ 
+Estimated Latent Class Prevalence (%) ------------------
+ 34.75% 18.59% 46.67% 
+ 
+Conditional Item Response Probability -------------------
+ $Smoking
+           Class Category Estimate
+1 Latent Class 1      Yes   0.2500
+2 Latent Class 1       No   0.7500
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.7922
+6 Latent Class 3       No   0.2078
+
+$Alcohol
+           Class Category Estimate
+1 Latent Class 1      Yes   0.4244
+2 Latent Class 1       No   0.5756
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.9394
+6 Latent Class 3       No   0.0606
+
+$Drug
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0000
+2 Latent Class 1       No   1.0000
+3 Latent Class 2      Yes   0.0000
+4 Latent Class 2       No   1.0000
+5 Latent Class 3      Yes   0.4069
+6 Latent Class 3       No   0.5931
+
+$Marijuana
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0930
+2 Latent Class 1       No   0.9070
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.6797
+6 Latent Class 3       No   0.3203
+
+$Cocaine
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0000
+2 Latent Class 1       No   1.0000
+3 Latent Class 2      Yes   0.0000
+4 Latent Class 2       No   1.0000
+5 Latent Class 3      Yes   0.4069
+6 Latent Class 3       No   0.5931
+
+> R3$model.fit      # Model fit
+      Estimate SE 95CI.lower 95CI.upper
+FIT  0.9937368  0  0.9937368  0.9937368
+AFIT 0.9935005  0  0.9935005  0.9935005
+FPI  0.4259217  0  0.4259217  0.4259217
+NCE  0.4640640  0  0.4640640  0.4640640
+> R3$LCprevalence   # Latent Class Prevalence
+                Percent Count SE 95.CI.lower 95.CI.upper
+Latent Class 1 34.74747   172  0    34.74747    34.74747
+Latent Class 2 18.58586    92  0    18.58586    18.58586
+Latent Class 3 46.66667   231  0    46.66667    46.66667
+> R3$RespProb       # Item Response Probability
+$Smoking
+           Class Category  Estimate SE 95.CI.lower 95.CI.upper
+1 Latent Class 1      Yes 0.2500000 NA   0.2500000   0.2500000
+2 Latent Class 1       No 0.7500000 NA   0.7500000   0.7500000
+3 Latent Class 2      Yes 1.0000000 NA   1.0000000   1.0000000
+4 Latent Class 2       No 0.0000000 NA   0.0000000   0.0000000
+5 Latent Class 3      Yes 0.7922078 NA   0.7922078   0.7922078
+6 Latent Class 3       No 0.2077922 NA   0.2077922   0.2077922
+
+$Alcohol
+           Class Category   Estimate SE 95.CI.lower 95.CI.upper
+1 Latent Class 1      Yes 0.42441860 NA  0.42441860  0.42441860
+2 Latent Class 1       No 0.57558140 NA  0.57558140  0.57558140
+3 Latent Class 2      Yes 1.00000000 NA  1.00000000  1.00000000
+4 Latent Class 2       No 0.00000000 NA  0.00000000  0.00000000
+5 Latent Class 3      Yes 0.93939394 NA  0.93939394  0.93939394
+6 Latent Class 3       No 0.06060606 NA  0.06060606  0.06060606
+
+$Drug
+           Class Category  Estimate SE 95.CI.lower 95.CI.upper
+1 Latent Class 1      Yes 0.0000000 NA   0.0000000   0.0000000
+2 Latent Class 1       No 1.0000000 NA   1.0000000   1.0000000
+3 Latent Class 2      Yes 0.0000000 NA   0.0000000   0.0000000
+4 Latent Class 2       No 1.0000000 NA   1.0000000   1.0000000
+5 Latent Class 3      Yes 0.4069264 NA   0.4069264   0.4069264
+6 Latent Class 3       No 0.5930736 NA   0.5930736   0.5930736
+
+$Marijuana
+           Class Category   Estimate SE 95.CI.lower 95.CI.upper
+1 Latent Class 1      Yes 0.09302326 NA  0.09302326  0.09302326
+2 Latent Class 1       No 0.90697674 NA  0.90697674  0.90697674
+3 Latent Class 2      Yes 1.00000000 NA  1.00000000  1.00000000
+4 Latent Class 2       No 0.00000000 NA  0.00000000  0.00000000
+5 Latent Class 3      Yes 0.67965368 NA  0.67965368  0.67965368
+6 Latent Class 3       No 0.32034632 NA  0.32034632  0.32034632
+
+$Cocaine
+           Class Category  Estimate SE 95.CI.lower 95.CI.upper
+1 Latent Class 1      Yes 0.0000000 NA   0.0000000   0.0000000
+2 Latent Class 1       No 1.0000000 NA   1.0000000   1.0000000
+3 Latent Class 2      Yes 0.0000000 NA   0.0000000   0.0000000
+4 Latent Class 2       No 1.0000000 NA   1.0000000   1.0000000
+5 Latent Class 3      Yes 0.4069264 NA   0.4069264   0.4069264
+6 Latent Class 3       No 0.5930736 NA   0.5930736   0.5930736
+
+> head(R3$membership)     # Membership for all observations
+             Class1     Class2    Class3          label
+57101310 0.32173095 0.17464509 0.5036240 Latent Class 3
+57103869 0.59616482 0.12053479 0.2833004 Latent Class 1
+57109625 0.01161718 0.01173085 0.9766520 Latent Class 3
+57111071 0.01161718 0.01173085 0.9766520 Latent Class 3
+57113943 0.20547847 0.07396532 0.7205562 Latent Class 3
+57117542 0.01161718 0.01173085 0.9766520 Latent Class 3
+> 
+> # AddHealth data with 3 clusters with 500 samples with two covariates
+> R3_2C = gscaLCA (dat = AH.sample,
++                  varnames = names(AddHealth)[2:6],
++                  ID.var = "AID",
++                  num.class = 3,
++                  num.factor = "EACH",
++                  Boot.num = 0,
++                  multiple.Core = FALSE,
++                  covnames = names(AddHealth)[7:8], # Gender and Edu
++                  cov.model = c(1, 0),   # Only Gender varaible is added to the gscaLCR.
++                  multinomial.ref = "MAX")
+[1] "Listwise deletion was applied for cases whose variables used in gscaLCA have any missing."
+> 
+> # To print with the results of multinomial regression with hard partitioning of the gscaLCR,
+> # use the option of "multinomial.hard".
+> summary(R3_2C, "multinomial.hard")
+=========================================================
+LCA by using Fuzzy Clustering GSCA
+=========================================================
+Fit with 3 latent classes: 
+ number of used observations: 495 
+ number of deleted observations: 5 
+ number of bootstrap for SE: 0 / 0 
+
+MODEL FIT -----------------------------------------------
+ FIT      :  0.9909 
+ AFIT     :  0.9905 
+ FPI      :  0.4577 
+ NCE      :  0.4924 
+ 
+Estimated Latent Class Prevalence (%) ------------------
+ 46.67% 18.59% 34.75% 
+ 
+Conditional Item Response Probability -------------------
+ $Smoking
+           Class Category Estimate
+1 Latent Class 1      Yes   0.7922
+2 Latent Class 1       No   0.2078
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.2500
+6 Latent Class 3       No   0.7500
+
+$Alcohol
+           Class Category Estimate
+1 Latent Class 1      Yes   0.9394
+2 Latent Class 1       No   0.0606
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.4244
+6 Latent Class 3       No   0.5756
+
+$Drug
+           Class Category Estimate
+1 Latent Class 1      Yes   0.4069
+2 Latent Class 1       No   0.5931
+3 Latent Class 2      Yes   0.0000
+4 Latent Class 2       No   1.0000
+5 Latent Class 3      Yes   0.0000
+6 Latent Class 3       No   1.0000
+
+$Marijuana
+           Class Category Estimate
+1 Latent Class 1      Yes   0.6797
+2 Latent Class 1       No   0.3203
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.0930
+6 Latent Class 3       No   0.9070
+
+$Cocaine
+           Class Category Estimate
+1 Latent Class 1      Yes   0.4069
+2 Latent Class 1       No   0.5931
+3 Latent Class 2      Yes   0.0000
+4 Latent Class 2       No   1.0000
+5 Latent Class 3      Yes   0.0000
+6 Latent Class 3       No   1.0000
+
+Relationship Between Prevalence and Covariates -------
+ Multinomial logistic regression is applied with hard partitioning 
+ $`Latent Class 2 / Latent Class 1`
+            Estimate Std.error z.value P-value
+(Intercept)  -1.2614    0.3183 -3.9634  0.0001
+GenderF       0.2078    0.2518  0.8255  0.4091
+Edu           0.0599    0.0728  0.8218  0.4112
+
+$`Latent Class 3 / Latent Class 1`
+            Estimate Std.error z.value P-value
+(Intercept)  -0.6167    0.2622 -2.3522  0.0187
+GenderF       0.6587    0.2101  3.1347  0.0017
+Edu          -0.0148    0.0603 -0.2449  0.8065
+
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("gscaLCR")
+> ### * gscaLCR
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: gscaLCR
+> ### Title: The 2nd and 3rd step of gscaLCA, which are the partitioning and
+> ###   fitting regression
+> ### Aliases: gscaLCR
+> 
+> ### ** Examples
+> 
+> R2 = gscaLCA (dat = AddHealth[1:500, ], # Data has to include the possible covarite to run gscaLCR
++                varnames = names(AddHealth)[2:6],
++                ID.var = "AID",
++                num.class = 3,
++                num.factor = "EACH",
++                Boot.num = 0,
++                multiple.Core = F)
+[1] "Listwise deletion was applied for cases whose variables used in gscaLCA have any missing."
+> 
+> R2.gender = gscaLCR (R2, covnames = "Gender")
+> summary(R2.gender,  "multinomial.hard") # hard partitioning with multinomial regression
+=========================================================
+LCA by using Fuzzy Clustering GSCA
+=========================================================
+Fit with 3 latent classes: 
+ number of used observations: 495 
+ number of deleted observations: 5 
+ number of bootstrap for SE: 0 / 0 
+
+MODEL FIT -----------------------------------------------
+ FIT      :  0.9937 
+ AFIT     :  0.9935 
+ FPI      :  0.4259 
+ NCE      :  0.4641 
+ 
+Estimated Latent Class Prevalence (%) ------------------
+ 34.75% 18.59% 46.67% 
+ 
+Conditional Item Response Probability -------------------
+ $Smoking
+           Class Category Estimate
+1 Latent Class 1      Yes   0.2500
+2 Latent Class 1       No   0.7500
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.7922
+6 Latent Class 3       No   0.2078
+
+$Alcohol
+           Class Category Estimate
+1 Latent Class 1      Yes   0.4244
+2 Latent Class 1       No   0.5756
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.9394
+6 Latent Class 3       No   0.0606
+
+$Drug
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0000
+2 Latent Class 1       No   1.0000
+3 Latent Class 2      Yes   0.0000
+4 Latent Class 2       No   1.0000
+5 Latent Class 3      Yes   0.4069
+6 Latent Class 3       No   0.5931
+
+$Marijuana
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0930
+2 Latent Class 1       No   0.9070
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.6797
+6 Latent Class 3       No   0.3203
+
+$Cocaine
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0000
+2 Latent Class 1       No   1.0000
+3 Latent Class 2      Yes   0.0000
+4 Latent Class 2       No   1.0000
+5 Latent Class 3      Yes   0.4069
+6 Latent Class 3       No   0.5931
+
+Relationship Between Prevalence and Covariates -------
+ Multinomial logistic regression is applied with hard partitioning 
+ $`Latent Class 1 / Latent Class 3`
+            Estimate Std.error z.value P-value
+(Intercept)  -0.6678    0.1588 -4.2058  0.0000
+GenderF       0.6501    0.2072  3.1383  0.0017
+
+$`Latent Class 2 / Latent Class 3`
+            Estimate Std.error z.value P-value
+(Intercept)  -1.0486    0.1815 -5.7779  0.0000
+GenderF       0.2442    0.2476  0.9863  0.3240
+
+> summary(R2.gender,  "multinomial.soft") # soft partitioning with multinomial regression
+=========================================================
+LCA by using Fuzzy Clustering GSCA
+=========================================================
+Fit with 3 latent classes: 
+ number of used observations: 495 
+ number of deleted observations: 5 
+ number of bootstrap for SE: 0 / 0 
+
+MODEL FIT -----------------------------------------------
+ FIT      :  0.9937 
+ AFIT     :  0.9935 
+ FPI      :  0.4259 
+ NCE      :  0.4641 
+ 
+Estimated Latent Class Prevalence (%) ------------------
+ 34.75% 18.59% 46.67% 
+ 
+Conditional Item Response Probability -------------------
+ $Smoking
+           Class Category Estimate
+1 Latent Class 1      Yes   0.2500
+2 Latent Class 1       No   0.7500
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.7922
+6 Latent Class 3       No   0.2078
+
+$Alcohol
+           Class Category Estimate
+1 Latent Class 1      Yes   0.4244
+2 Latent Class 1       No   0.5756
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.9394
+6 Latent Class 3       No   0.0606
+
+$Drug
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0000
+2 Latent Class 1       No   1.0000
+3 Latent Class 2      Yes   0.0000
+4 Latent Class 2       No   1.0000
+5 Latent Class 3      Yes   0.4069
+6 Latent Class 3       No   0.5931
+
+$Marijuana
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0930
+2 Latent Class 1       No   0.9070
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.6797
+6 Latent Class 3       No   0.3203
+
+$Cocaine
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0000
+2 Latent Class 1       No   1.0000
+3 Latent Class 2      Yes   0.0000
+4 Latent Class 2       No   1.0000
+5 Latent Class 3      Yes   0.4069
+6 Latent Class 3       No   0.5931
+
+Relationship Between Prevalence and Covariates -------
+ Multinomial logistic regression is applied with soft partitioning 
+ $`Latent Class 1 / Latent Class 3`
+            Estimate Std.error z.value P-value
+(Intercept)  -0.6071    0.1796 -3.3791  0.0007
+GenderF       0.6978    0.2359  2.9576  0.0031
+
+$`Latent Class 2 / Latent Class 3`
+            Estimate Std.error z.value P-value
+(Intercept)  -0.7654    0.1894 -4.0421  0.0001
+GenderF       0.2894    0.2603  1.1119  0.2662
+
+> summary(R2.gender,  "binomial.hard")    # hard partitioning with binomial regression
+=========================================================
+LCA by using Fuzzy Clustering GSCA
+=========================================================
+Fit with 3 latent classes: 
+ number of used observations: 495 
+ number of deleted observations: 5 
+ number of bootstrap for SE: 0 / 0 
+
+MODEL FIT -----------------------------------------------
+ FIT      :  0.9937 
+ AFIT     :  0.9935 
+ FPI      :  0.4259 
+ NCE      :  0.4641 
+ 
+Estimated Latent Class Prevalence (%) ------------------
+ 34.75% 18.59% 46.67% 
+ 
+Conditional Item Response Probability -------------------
+ $Smoking
+           Class Category Estimate
+1 Latent Class 1      Yes   0.2500
+2 Latent Class 1       No   0.7500
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.7922
+6 Latent Class 3       No   0.2078
+
+$Alcohol
+           Class Category Estimate
+1 Latent Class 1      Yes   0.4244
+2 Latent Class 1       No   0.5756
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.9394
+6 Latent Class 3       No   0.0606
+
+$Drug
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0000
+2 Latent Class 1       No   1.0000
+3 Latent Class 2      Yes   0.0000
+4 Latent Class 2       No   1.0000
+5 Latent Class 3      Yes   0.4069
+6 Latent Class 3       No   0.5931
+
+$Marijuana
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0930
+2 Latent Class 1       No   0.9070
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.6797
+6 Latent Class 3       No   0.3203
+
+$Cocaine
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0000
+2 Latent Class 1       No   1.0000
+3 Latent Class 2      Yes   0.0000
+4 Latent Class 2       No   1.0000
+5 Latent Class 3      Yes   0.4069
+6 Latent Class 3       No   0.5931
+
+Relationship Between Prevalence and Covariates -------
+ Binomial logistic regression is applied with hard partitioning 
+ $`Latent Class 1`
+            Estimate Std.error z.value P-value
+(Intercept)  -0.9683    0.1516 -6.3850  0.0000
+GenderF       0.5808    0.1949  2.9801  0.0029
+
+$`Latent Class 2`
+            Estimate Std.error z.value P-value
+(Intercept)  -1.4626    0.1733 -8.4386  0.0000
+GenderF      -0.0261    0.2325 -0.1124  0.9105
+
+$`Latent Class 3`
+            Estimate Std.error z.value P-value
+(Intercept)   0.1471    0.1358  1.0827  0.2790
+GenderF      -0.5046    0.1826 -2.7629  0.0057
+
+> summary(R2.gender,  "binomial.soft")    # soft partitioning with binomial regression
+=========================================================
+LCA by using Fuzzy Clustering GSCA
+=========================================================
+Fit with 3 latent classes: 
+ number of used observations: 495 
+ number of deleted observations: 5 
+ number of bootstrap for SE: 0 / 0 
+
+MODEL FIT -----------------------------------------------
+ FIT      :  0.9937 
+ AFIT     :  0.9935 
+ FPI      :  0.4259 
+ NCE      :  0.4641 
+ 
+Estimated Latent Class Prevalence (%) ------------------
+ 34.75% 18.59% 46.67% 
+ 
+Conditional Item Response Probability -------------------
+ $Smoking
+           Class Category Estimate
+1 Latent Class 1      Yes   0.2500
+2 Latent Class 1       No   0.7500
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.7922
+6 Latent Class 3       No   0.2078
+
+$Alcohol
+           Class Category Estimate
+1 Latent Class 1      Yes   0.4244
+2 Latent Class 1       No   0.5756
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.9394
+6 Latent Class 3       No   0.0606
+
+$Drug
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0000
+2 Latent Class 1       No   1.0000
+3 Latent Class 2      Yes   0.0000
+4 Latent Class 2       No   1.0000
+5 Latent Class 3      Yes   0.4069
+6 Latent Class 3       No   0.5931
+
+$Marijuana
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0930
+2 Latent Class 1       No   0.9070
+3 Latent Class 2      Yes   1.0000
+4 Latent Class 2       No   0.0000
+5 Latent Class 3      Yes   0.6797
+6 Latent Class 3       No   0.3203
+
+$Cocaine
+           Class Category Estimate
+1 Latent Class 1      Yes   0.0000
+2 Latent Class 1       No   1.0000
+3 Latent Class 2      Yes   0.0000
+4 Latent Class 2       No   1.0000
+5 Latent Class 3      Yes   0.4069
+6 Latent Class 3       No   0.5931
+
+Relationship Between Prevalence and Covariates -------
+ Binomial logistic regression is applied with soft partitioning 
+ $`Latent Class 1`
+            Estimate Std.error z.value P-value
+(Intercept)   0.9118    0.2700  3.3775  0.0007
+GenderF       0.5156    0.3613  1.4268  0.1536
+
+$`Latent Class 2`
+            Estimate Std.error z.value P-value
+(Intercept)   1.0103    0.3028  3.3366  0.0008
+GenderF      -0.0621    0.4027 -0.1542  0.8774
+
+$`Latent Class 3`
+            Estimate Std.error z.value P-value
+(Intercept)   2.4859    0.3849  6.4591  0.0000
+GenderF      -0.6919    0.4836 -1.4308  0.1525
+
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("summary.gscaLCA")
+> ### * summary.gscaLCA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: summary.gscaLCA
+> ### Title: Summary of gscaLCA output or gscaLCR output
+> ### Aliases: summary.gscaLCA
+> 
+> ### ** Examples
+> 
+> # summary(R2)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  6.84 0.47 7.39 NA NA 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

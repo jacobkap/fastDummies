@@ -1,0 +1,331 @@
+
+R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "DMCFB"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> library('DMCFB')
+Loading required package: SummarizedExperiment
+Warning: package 'SummarizedExperiment' was built under R version 4.0.3
+Loading required package: MatrixGenerics
+Warning: package 'MatrixGenerics' was built under R version 4.0.3
+Loading required package: matrixStats
+Warning: package 'matrixStats' was built under R version 4.0.3
+
+Attaching package: 'MatrixGenerics'
+
+The following objects are masked from 'package:matrixStats':
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Warning: package 'GenomicRanges' was built under R version 4.0.3
+Loading required package: stats4
+Loading required package: BiocGenerics
+Warning: package 'BiocGenerics' was built under R version 4.0.3
+Loading required package: parallel
+
+Attaching package: 'BiocGenerics'
+
+The following objects are masked from 'package:parallel':
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from 'package:stats':
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from 'package:base':
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Warning: package 'S4Vectors' was built under R version 4.0.3
+
+Attaching package: 'S4Vectors'
+
+The following object is masked from 'package:base':
+
+    expand.grid
+
+Loading required package: IRanges
+Warning: package 'IRanges' was built under R version 4.0.3
+
+Attaching package: 'IRanges'
+
+The following object is masked from 'package:grDevices':
+
+    windows
+
+Loading required package: GenomeInfoDb
+Warning: package 'GenomeInfoDb' was built under R version 4.0.3
+Loading required package: Biobase
+Warning: package 'Biobase' was built under R version 4.0.3
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: 'Biobase'
+
+The following object is masked from 'package:MatrixGenerics':
+
+    rowMedians
+
+The following objects are masked from 'package:matrixStats':
+
+    anyMissing, rowMedians
+
+Loading required package: BiocParallel
+Warning: package 'BiocParallel' was built under R version 4.0.3
+DMCFB package, Version 1.4.0, Released 2020-10-27
+DMCFB is a pipeline for identifying differentially methylated 
+    cytosines using a Bayesian functional regression model in bisulfite
+    sequencing data. By using a functional regression data model, it tries to
+    capture position-specific, group-specific and other covariates-specific
+    methylation patterns as well as spatial correlation patterns and unknown
+    underlying models of methylation data. It is robust and flexible with
+    respect to the true underlying models and inclusion of any covariates, and
+    the missing values are imputed using spatial correlation between positions
+    and samples. A Bayesian approach is adopted for estimation and inference in
+    the proposed method.
+BugReports: https://github.com/shokoohi/DMCFB/issues
+
+Attaching package: 'DMCFB'
+
+The following object is masked from 'package:Biobase':
+
+    combine
+
+The following object is masked from 'package:BiocGenerics':
+
+    combine
+
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("BSDMC-class")
+> ### * BSDMC-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: BSDMC-class
+> ### Title: BSDMC object
+> ### Aliases: BSDMC-class BSDMC
+> ### Keywords: object
+> 
+> ### ** Examples
+> 
+> nr <- 500
+> nc <- 16
+> metht <- matrix(as.integer(runif(nr * nc, 0, nr)), nr)
+> methc <- matrix(rbinom(n = nr * nc, c(metht), prob = runif(nr * nc)), nr, nc)
+> meths <- matrix(as.integer(runif(nr * nc, 0, 10)), nr)
+> methl <- methc / metht
+> methv <- matrix((runif(nr * nc, 0.1, 0.5)), nr)
+> r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
+> names(r1) <- 1:nr
+> cd1 <- DataFrame(Group = rep(c("G1", "G2"), each = nc / 2),
++   row.names = LETTERS[1:nc])
+> OBJ2 <- cBSDMC(
++   rowRanges = r1, methReads = methc, totalReads = metht,
++   methLevels = methl, methStates = meths, methVars = methv, colData = cd1
++ )
+> OBJ2
+class: BSDMC 
+dim: 500 16 
+metadata(0):
+assays(3): methReads totalReads methLevels
+rownames(500): 1 2 ... 499 500
+rowData names(0):
+colnames(16): A B ... O P
+colData names(1): Group
+> 
+> 
+> 
+> cleanEx()
+> nameEx("cBSDMC-method")
+> ### * cBSDMC-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cBSDMC-method
+> ### Title: cBSDMC method
+> ### Aliases: cBSDMC-method cBSDMC,matrix,matrix,matrix,GRanges-method
+> ###   cBSDMC
+> 
+> ### ** Examples
+> 
+> set.seed(1980)
+> nr <- 150
+> nc <- 8
+> metht <- matrix(as.integer(runif(nr * nc, 0, 100)), nr)
+> methc <- matrix(rbinom(n = nr * nc, c(metht), prob = runif(nr * nc)), nr, nc)
+> meths <- matrix(as.integer(runif(nr * nc, 0, 10)), nr)
+> methl <- methc / metht
+> methv <- matrix((runif(nr * nc, 0.1, 0.5)), nr)
+> r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
+> names(r1) <- 1:nr
+> cd1 <- DataFrame(
++   Group = rep(c("G1", "G2"), each = nc / 2),
++   row.names = LETTERS[1:nc]
++ )
+> OBJ2 <- cBSDMC(
++   rowRanges = r1, methReads = methc, totalReads = metht,
++   methLevels = methl, methStates = meths, methVars = methv, colData = cd1
++ )
+> OBJ2
+class: BSDMC 
+dim: 150 8 
+metadata(0):
+assays(3): methReads totalReads methLevels
+rownames(150): 1 2 ... 149 150
+rowData names(0):
+colnames(8): A B ... G H
+colData names(1): Group
+> 
+> 
+> 
+> cleanEx()
+> nameEx("combine-method")
+> ### * combine-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: combine-method
+> ### Title: combine method
+> ### Aliases: combine-method combine,BSDMC,BSDMC-method combine
+> 
+> ### ** Examples
+> 
+> set.seed(1980)
+> nr <- 150
+> nc <- 8
+> metht <- matrix(as.integer(runif(nr * nc * 2, 0, nr)), nr)
+> methc <- matrix(
++   rbinom(n = nr * nc, c(metht), prob = runif(nr * nc * 2)),
++   nr, nc * 2
++ )
+> methl <- methc / metht
+> r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
+> names(r1) <- 1:nr
+> cd1 <- DataFrame(Group = rep("G1", each = nc), row.names = LETTERS[1:nc])
+> OBJ1 <- cBSDMC(
++   rowRanges = r1, methReads = methc[, 1:nc], totalReads = metht[, 1:nc],
++   methLevels = methl[, 1:nc], colData = cd1
++ )
+> cd2 <- DataFrame(
++   Group = rep("G2", each = nc),
++   row.names = LETTERS[nc + 1:nc]
++ )
+> OBJ2 <- cBSDMC(
++   rowRanges = r1, methReads = methc[, nc + 1:nc], totalReads =
++     metht[, nc + 1:nc], methLevels = methl[, nc + 1:nc], colData = cd2
++ )
+> OBJ3 <- combine(OBJ1, OBJ2)
+> OBJ3
+class: BSDMC 
+dim: 150 16 
+metadata(0):
+assays(3): methReads totalReads methLevels
+rownames(150): 1 2 ... 149 150
+rowData names(0):
+colnames(16): A B ... O P
+colData names(1): Group
+> 
+> 
+> 
+> cleanEx()
+> nameEx("findDMCFB-method")
+> ### * findDMCFB-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: findDMCFB-method
+> ### Title: findDMCFB method
+> ### Aliases: findDMCFB-method findDMCFB,BSDMC-method findDMCFB
+> 
+> ### ** Examples
+> 
+> set.seed(1980)
+> nr <- 1000
+> nc <- 4
+> metht <- matrix(as.integer(runif(nr * nc, 0, 100)), nr)
+> methc <- matrix(rbinom(n = nr * nc, c(metht), prob = runif(nr * nc)), nr, nc)
+> methl <- methc / metht
+> r1 <- GRanges(rep("chr1", nr), IRanges(1:nr, width = 1), strand = "*")
+> names(r1) <- 1:nr
+> cd1 <- DataFrame(
++   Group = rep(c("G1", "G2"), each = nc / 2),
++   row.names = LETTERS[1:nc]
++ )
+> OBJ1 <- cBSDMC(
++   rowRanges = r1, methReads = methc, totalReads = metht,
++   methLevels = methl, colData = cd1
++ )
+> OBJ2 <- findDMCFB(OBJ1,
++   bwa = 10, bwb = 10, nBurn = 50, nMC = 50, nThin = 1,
++   alpha = 0.05, nCores = 2, pSize = 500, sfiles = FALSE
++ )
+------------------------------------------------------------
+Running Bayesian functional regression model ...
+The priors's SD = 0.3033, estimated from data ... 
+Number of assigned cores: 2 ... 
+------------------------------------------------------------
+Fitted model: 
+logit(MethRead/ReadDepth) ~ F(Group)
+------------------------------------------------------------
+Creating 1 batches of genomic positions ...
+Running batch 1/1; chr1; 1000 positions; Region [   1, 1000]; Date 2020-11-28 11:24:44
+Warning: namespace 'DMCFB' is not available and has been replaced
+by .GlobalEnv when processing object '<unknown>'
+Warning: namespace 'DMCFB' is not available and has been replaced
+by .GlobalEnv when processing object '<unknown>'
+Loading required package: DMCFB
+Warning in library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+  there is no package called 'DMCFB'
+Error: BiocParallel errors
+  element index: 1, 2
+  first error: unable to find required package 'DMCFB'
+Execution halted

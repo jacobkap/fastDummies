@@ -1,0 +1,16 @@
+* using log directory 'C:/Users/user/Dropbox/R_project/fastDummies/revdep/checks/psychNET/new/psychNET.Rcheck'
+* using R version 4.0.2 (2020-06-22)
+* using platform: x86_64-w64-mingw32 (64-bit)
+* using session charset: ISO8859-1
+* using options '--no-manual --no-build-vignettes'
+* checking for file 'psychNET/DESCRIPTION' ... OK
+* checking extension type ... Package
+* this is package 'psychNET' version '0.0.4'
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: 'SparseTSCGM'
+
+See section 'The DESCRIPTION file' in the 'Writing R Extensions'
+manual.
+* DONE
+Status: 1 ERROR

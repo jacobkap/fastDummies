@@ -59,14 +59,14 @@ test_that("The correct dummy columns are made - default", {
                  "month_November"))
 
   expect_named(dummy_cols(c("a", "b")),
-               c("x",
-                 "x_a",
-                 "x_b"))
+               c(".data",
+                 ".data_a",
+                 ".data_b"))
 
   expect_named(dummy_cols(1:2),
-               c("x",
-                 "x_1",
-                 "x_2"))
+               c(".data",
+                 ".data_1",
+                 ".data_2"))
 
   expect_named(dummy_cols(sort_order_example2),
                c("numbers",

@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Fast creation of dummy variables</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for dummy_columns {fastDummies}"><tr><td>dummy_columns {fastDummies}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Fast creation of dummy variables</h2>
+
+<h3>Description</h3>
+
+<p>dummy_columns() quickly creates dummy (binary) columns from character and
+factor type columns in the inputted data. This function is useful for
+statistical analysis when you want binary columns rather than
+character columns.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+dummy_columns(
+  .data,
+  select_columns = NULL,
+  remove_first_dummy = FALSE,
+  remove_most_frequent_dummy = FALSE,
+  ignore_na = FALSE,
+  split = NULL,
+  remove_selected_columns = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>.data</code></td>
+<td>
+<p>An object with the data set you want to make dummy columns from.</p>
+</td></tr>
+<tr valign="top"><td><code>select_columns</code></td>
+<td>
+<p>Vector of column names that you want to create dummy variables from.
+If NULL (default), uses all character and factor columns.</p>
+</td></tr>
+<tr valign="top"><td><code>remove_first_dummy</code></td>
+<td>
+<p>Removes the first dummy of every variable such that only n-1 dummies remain.
+This avoids multicollinearity issues in models.</p>
+</td></tr>
+<tr valign="top"><td><code>remove_most_frequent_dummy</code></td>
+<td>
+<p>Removes the most frequently observed category such that only n-1 dummies
+remain. If there is a tie for most frequent, will remove the first
+(by alphabetical order) category that is tied for most frequent.</p>
+</td></tr>
+<tr valign="top"><td><code>ignore_na</code></td>
+<td>
+<p>If TRUE, ignores any NA values in the column. If FALSE (default), then it
+will make a dummy column for value_NA and give a 1 in any row which has a
+NA value.</p>
+</td></tr>
+<tr valign="top"><td><code>split</code></td>
+<td>
+<p>A string to split a column when multiple categories are in the cell. For
+example, if a variable is Pets and the rows are &quot;cat&quot;, &quot;dog&quot;, and &quot;turtle&quot;,
+each of these pets would become its own dummy column. If one row is &quot;cat, dog&quot;,
+then a split value of &quot;,&quot; this row would have a value of 1 for both the cat
+and dog dummy columns.</p>
+</td></tr>
+<tr valign="top"><td><code>remove_selected_columns</code></td>
+<td>
+<p>If TRUE (not default), removes the columns used to generate the dummy columns.</p>
+</td></tr>
+</table>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="dummy_rows.html">dummy_rows</a></code> For creating dummy rows
+</p>
+<p>Other dummy functions: 
+<code><a href="dummy_cols.html">dummy_cols</a>()</code>,
+<code><a href="dummy_rows.html">dummy_rows</a>()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+crime &lt;- data.frame(city = c("SF", "SF", "NYC"),
+    year = c(1990, 2000, 1990),
+    crime = 1:3)
+dummy_cols(crime)
+# Include year column
+dummy_cols(crime, select_columns = c("city", "year"))
+# Remove first dummy for each pair of dummy columns made
+dummy_cols(crime, select_columns = c("city", "year"),
+    remove_first_dummy = TRUE)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>fastDummies</em> version 1.6.3 <a href="00Index.html">Index</a>]</div>
+</body></html>
