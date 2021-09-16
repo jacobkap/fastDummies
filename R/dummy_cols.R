@@ -32,6 +32,9 @@
 #' and dog dummy columns.
 #' @param remove_selected_columns
 #' If TRUE (not default), removes the columns used to generate the dummy columns.
+#' @param omit_colname_prefix
+#' If TRUE (not default) and `length(select_columns) == 1`, omit pre-pending the
+#' name of `select_columns` to the names of the newly generated dummy columns
 #'
 #' @return
 #' A data.frame (or tibble or data.table, depending on input data type) with
@@ -54,7 +57,8 @@ dummy_cols <- function(.data,
                        remove_most_frequent_dummy = FALSE,
                        ignore_na = FALSE,
                        split = NULL,
-                       remove_selected_columns = FALSE) {
+                       remove_selected_columns = FALSE,
+                       omit_colname_prefix = FALSE) {
 
   stopifnot(is.null(select_columns) || is.character(select_columns),
             select_columns != "",
@@ -177,6 +181,7 @@ dummy_cols <- function(.data,
     }
 
     data.table::alloc.col(.data, ncol(.data) + length(unique_vals))
+
     #   data.table::set(.data, j = paste0(col_name, "_", unique_vals), value = 0L)
     .data[, paste0(col_name, "_", unique_vals)] <- 0L
     for (unique_value in unique_vals) {
@@ -219,8 +224,22 @@ dummy_cols <- function(.data,
   }
 
   .data <- fix_data_type(.data, data_type)
-  return(.data)
+  if (omit_colname_prefix) {
+    if (length(select_columns) == 1) {
 
+      new_col_index <-
+        as.logical(rowSums(sapply(unique_vals, function(x)
+          grepl(paste0(select_columns, "_", x), names(.data)))))
+      names(.data)[new_col_index] <-
+        gsub(paste0(select_columns, "_"), "", names(.data)[new_col_index])
+
+    } else {
+      message("Can't omit the colname prefix when recoding more than one column.")
+      message("Returning prefixed dummy columns.")
+    }
+  }
+
+  return(.data)
 }
 
 
