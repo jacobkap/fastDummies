@@ -11,7 +11,8 @@ dummy_cols(
   remove_most_frequent_dummy = FALSE,
   ignore_na = FALSE,
   split = NULL,
-  remove_selected_columns = FALSE
+  remove_selected_columns = FALSE,
+  omit_colname_prefix = FALSE
 )
 }
 \arguments{
@@ -38,6 +39,9 @@ then a split value of "," this row would have a value of 1 for both the cat
 and dog dummy columns.}
 
 \item{remove_selected_columns}{If TRUE (not default), removes the columns used to generate the dummy columns.}
+
+\item{omit_colname_prefix}{If TRUE (not default) and `length(select_columns) == 1`, omit pre-pending the
+name of `select_columns` to the names of the newly generated dummy columns}
 }
 \value{
 A data.frame (or tibble or data.table, depending on input data type) with
