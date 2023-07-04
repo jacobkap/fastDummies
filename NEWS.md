@@ -1,3 +1,7 @@
+# fastDummies 1.7.1
+
+* Adds onattach message.
+
 # fastDummies 1.7.0
 
 * Add option to omit colname prefix when only one column is recoded. Thanks to @teofiln for the PR.

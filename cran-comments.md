@@ -1,6 +1,6 @@
 ## Test environments
 
-* local Windows install, R 4.0.2
+* local Windows install, R 4.3.1
 * ubuntu 14.04.6 (on travis-ci), R 4.0.2
 * AppVeyor, R 4.0.3
 * Rhub
@@ -17,3 +17,4 @@ There were no ERRORs or WARNINGs or NOTES.
 
 There are five reverse dependencies. revdepcheck::revdep_check() returns OK for all five.
  
+
