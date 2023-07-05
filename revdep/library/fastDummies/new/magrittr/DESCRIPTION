@@ -1,26 +1,17 @@
 Type: Package
 Package: magrittr
 Title: A Forward-Pipe Operator for R
-Version: 2.0.1
-Authors@R: 
-    c(person(given = "Stefan Milton",
-             family = "Bache",
-             role = c("aut", "cph"),
-             email = "stefan@stefanbache.dk",
-             comment = "Original author and creator of magrittr"),
-      person(given = "Hadley",
-             family = "Wickham",
-             role = "aut",
-             email = "hadley@rstudio.com"),
-      person(given = "Lionel",
-             family = "Henry",
-             role = "cre",
-             email = "lionel@rstudio.com"),
-      person(given = "RStudio",
-             role = c("cph", "fnd")))
-Description: Provides a mechanism for chaining commands with a
-    new forward-pipe operator, %>%. This operator will forward a value, or
-    the result of an expression, into the next function call/expression.
+Version: 2.0.3
+Authors@R: c(
+    person("Stefan Milton", "Bache", , "stefan@stefanbache.dk", role = c("aut", "cph"),
+           comment = "Original author and creator of magrittr"),
+    person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
+    person("Lionel", "Henry", , "lionel@rstudio.com", role = "cre"),
+    person("RStudio", role = c("cph", "fnd"))
+  )
+Description: Provides a mechanism for chaining commands with a new
+    forward-pipe operator, %>%. This operator will forward a value, or the
+    result of an expression, into the next function call/expression.
     There is flexible support for the type of right-hand side expressions.
     For more information, see package vignette.  To quote Rene Magritte,
     "Ceci n'est pas un pipe."
@@ -28,13 +19,15 @@ License: MIT + file LICENSE
 URL: https://magrittr.tidyverse.org,
         https://github.com/tidyverse/magrittr
 BugReports: https://github.com/tidyverse/magrittr/issues
+Depends: R (>= 3.4.0)
 Suggests: covr, knitr, rlang, rmarkdown, testthat
 VignetteBuilder: knitr
 ByteCompile: Yes
+Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 NeedsCompilation: yes
-Packaged: 2020-11-17 12:44:34 UTC; lionel
+Packaged: 2022-03-29 09:34:37 UTC; lionel
 Author: Stefan Milton Bache [aut, cph] (Original author and creator of
     magrittr),
   Hadley Wickham [aut],
@@ -42,6 +35,6 @@ Author: Stefan Milton Bache [aut, cph] (Original author and creator of
   RStudio [cph, fnd]
 Maintainer: Lionel Henry <lionel@rstudio.com>
 Repository: CRAN
-Date/Publication: 2020-11-17 16:20:06 UTC
-Built: R 4.0.3; x86_64-w64-mingw32; 2020-11-26 14:46:25 UTC; windows
-Archs: i386, x64
+Date/Publication: 2022-03-30 07:30:09 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-06-25 00:39:28 UTC; windows
+Archs: x64

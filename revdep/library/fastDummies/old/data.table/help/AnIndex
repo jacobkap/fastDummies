@@ -223,8 +223,7 @@ union	setops
 unique	duplicated
 unique.data.table	duplicated
 uniqueN	duplicated
-update	update.dev.pkg
-update.dev.pkg	update.dev.pkg
+update_dev_pkg	update_dev_pkg
 wday	IDateTime
 week	IDateTime
 within	transform.data.table

@@ -1,3 +1,11 @@
+# fastDummies 1.6.3
+
+* Fix bug where inputting a vector or a one column data.frame returned an issue. Now
+  will convert the vector to a data.frame and return that. Will name each column ".data_". Closes #23 by @Garyf20.
+* Fix bug where `remove_most_frequent_dummy` wasn't working right when there was a 
+  tie for which value was the most frequent. Closes #22 by eden70.
+  
+
 # fastDummies 1.6.2
 
 * Dummy columns are now returned in alphabetical order including numeric order (e.g. photos_2 is before photos_11).

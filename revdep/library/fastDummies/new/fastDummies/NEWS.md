@@ -1,3 +1,11 @@
+# fastDummies 1.7.1
+
+* Adds onattach message.
+
+# fastDummies 1.7.0
+
+* Add option to omit colname prefix when only one column is recoded. Thanks to @teofiln for the PR.
+
 # fastDummies 1.6.3
 
 * Fix bug where inputting a vector or a one column data.frame returned an issue. Now

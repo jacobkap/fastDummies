@@ -1,20 +1,27 @@
+dflt_term_cap           Default Arg Helper Funs
 fansi                   Details About Manipulation of Strings
                         Containing Control Sequences
 fansi_lines             Colorize Character Vectors
-has_ctl                 Checks for Presence of Control Sequences
+has_ctl                 Check for Presence of Control Sequences
 html_code_block         Format Character Vector for Display as Code in
                         HTML
 html_esc                Escape Characters With Special HTML Meaning
-nchar_ctl               ANSI Control Sequence Aware Version of nchar
-set_knit_hooks          Set an Output Hook to Display ANSI CSI SGR in
-                        Rmarkdown
-sgr_to_html             Convert ANSI CSI SGR Escape Sequence to HTML
-                        Equivalents
-strip_ctl               Strip ANSI Control Sequences
-strsplit_ctl            ANSI Control Sequence Aware Version of strsplit
-strtrim_ctl             ANSI Control Sequence Aware Version of strtrim
-strwrap_ctl             ANSI Control Sequence Aware Version of strwrap
-substr_ctl              ANSI Control Sequence Aware Version of substr
+in_html                 Frame HTML in a Web Page And Display
+make_styles             Generate CSS Mapping Classes to Colors
+nchar_ctl               Control Sequence Aware Version of nchar
+normalize_state         Normalize CSI and OSC Sequences
+set_knit_hooks          Set an Output Hook Convert Control Sequences to
+                        HTML in Rmarkdown
+sgr_256                 Show 8 Bit CSI SGR Colors
+state_at_end            Utilities for Managing CSI and OSC State In
+                        Strings
+strip_ctl               Strip Control Sequences
+strsplit_ctl            Control Sequence Aware Version of strsplit
+strtrim_ctl             Control Sequence Aware Version of strtrim
+strwrap_ctl             Control Sequence Aware Version of strwrap
+substr_ctl              Control Sequence Aware Version of substr
 tabs_as_spaces          Replace Tabs With Spaces
 term_cap_test           Test Terminal Capabilities
-unhandled_ctl           Identify Unhandled ANSI Control Sequences
+to_html                 Convert Control Sequences to HTML Equivalents
+trimws_ctl              Control Sequence Aware Version of trimws
+unhandled_ctl           Identify Unhandled Control Sequences

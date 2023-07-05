@@ -1,6 +1,6 @@
 
-R version 4.0.2 (2020-06-22) -- "Taking Off Again"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R version 4.3.1 (2023-06-16 ucrt) -- "Beagle Scouts"
+Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -44,6 +44,37 @@ Type 'q()' to quit R.
 > # Return the activation function of several layers of neurons
 > actfuncs <- c("linear","sigmoid","linear")
 > ActivationFunctions <- sapply(actfuncs, ActFunc)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("AlphaSensAnalysis")
+> ### * AlphaSensAnalysis
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: AlphaSensAnalysis
+> ### Title: Sensitivity alpha-curve associated to MLP function
+> ### Aliases: AlphaSensAnalysis
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("AlphaSensCurve")
+> ### * AlphaSensCurve
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: AlphaSensCurve
+> ### Title: Sensitivity alpha-curve associated to MLP function of an input
+> ###   variable
+> ### Aliases: AlphaSensCurve
+> 
+> ### ** Examples
+> 
 > 
 > 
 > 
@@ -211,6 +242,28 @@ converged
 > 
 > 
 > cleanEx()
+> nameEx("Der3ActFunc")
+> ### * Der3ActFunc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Der3ActFunc
+> ### Title: Third derivative of activation function of neuron
+> ### Aliases: Der3ActFunc
+> 
+> ### ** Examples
+> 
+> # Return derivative of the sigmoid activation function of a neuron
+> ActivationFunction <- Der3ActFunc("sigmoid")
+> # Return derivative of the tanh activation function of a neuron
+> ActivationFunction <- Der3ActFunc("tanh")
+> # Return derivative of the activation function of several layers of neurons
+> actfuncs <- c("linear","sigmoid","linear")
+> ActivationFunctions <- sapply(actfuncs, Der3ActFunc)
+> 
+> 
+> 
+> cleanEx()
 > nameEx("DerActFunc")
 > ### * DerActFunc
 > 
@@ -229,6 +282,134 @@ converged
 > # Return derivative of the activation function of several layers of neurons
 > actfuncs <- c("linear","sigmoid","linear")
 > ActivationFunctions <- sapply(actfuncs, DerActFunc)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("HessDotPlot")
+> ### * HessDotPlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: HessDotPlot
+> ### Title: Second derivatives 3D scatter or surface plot against input
+> ###   values
+> ### Aliases: HessDotPlot
+> 
+> ### ** Examples
+> 
+> ## Load data -------------------------------------------------------------------
+> data("DAILY_DEMAND_TR")
+> fdata <- DAILY_DEMAND_TR
+> ## Parameters of the NNET ------------------------------------------------------
+> hidden_neurons <- 5
+> iters <- 250
+> decay <- 0.1
+> 
+> ################################################################################
+> #########################  REGRESSION NNET #####################################
+> ################################################################################
+> ## Regression dataframe --------------------------------------------------------
+> # Scale the data
+> fdata.Reg.tr <- fdata[,2:ncol(fdata)]
+> fdata.Reg.tr[,3] <- fdata.Reg.tr[,3]/10
+> fdata.Reg.tr[,1] <- fdata.Reg.tr[,1]/1000
+> 
+> # Normalize the data for some models
+> preProc <- caret::preProcess(fdata.Reg.tr, method = c("center","scale"))
+> nntrData <- predict(preProc, fdata.Reg.tr)
+> 
+> #' ## TRAIN nnet NNET --------------------------------------------------------
+> # Create a formula to train NNET
+> form <- paste(names(fdata.Reg.tr)[2:ncol(fdata.Reg.tr)], collapse = " + ")
+> form <- formula(paste(names(fdata.Reg.tr)[1], form, sep = " ~ "))
+> 
+> set.seed(150)
+> nnetmod <- nnet::nnet(form,
++                       data = nntrData,
++                       linear.output = TRUE,
++                       size = hidden_neurons,
++                       decay = decay,
++                       maxit = iters)
+# weights:  21
+initial  value 2487.870002 
+iter  10 value 1587.516208
+iter  20 value 1349.706741
+iter  30 value 1333.940734
+iter  40 value 1329.097060
+iter  50 value 1326.518168
+iter  60 value 1323.148574
+iter  70 value 1322.378769
+iter  80 value 1322.018091
+final  value 1321.996301 
+converged
+> # Try HessDotPlot
+> NeuralSens::HessDotPlot(nnetmod, fdata = nntrData, surface = TRUE, color = "WD")
+Loading required namespace: plotly
+> 
+> 
+> 
+> cleanEx()
+> nameEx("HessFeaturePlot")
+> ### * HessFeaturePlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: HessFeaturePlot
+> ### Title: Feature sensitivity plot
+> ### Aliases: HessFeaturePlot
+> 
+> ### ** Examples
+> 
+> ## Load data -------------------------------------------------------------------
+> data("DAILY_DEMAND_TR")
+> fdata <- DAILY_DEMAND_TR
+> 
+> ## Parameters of the NNET ------------------------------------------------------
+> hidden_neurons <- 5
+> iters <- 250
+> decay <- 0.1
+> 
+> ################################################################################
+> #########################  REGRESSION NNET #####################################
+> ################################################################################
+> ## Regression dataframe --------------------------------------------------------
+> # Scale the data
+> fdata.Reg.tr <- fdata[,2:ncol(fdata)]
+> fdata.Reg.tr[,3] <- fdata.Reg.tr[,3]/10
+> fdata.Reg.tr[,1] <- fdata.Reg.tr[,1]/1000
+> 
+> # Normalize the data for some models
+> preProc <- caret::preProcess(fdata.Reg.tr, method = c("center","scale"))
+> nntrData <- predict(preProc, fdata.Reg.tr)
+> 
+> #' ## TRAIN nnet NNET --------------------------------------------------------
+> # Create a formula to train NNET
+> form <- paste(names(fdata.Reg.tr)[2:ncol(fdata.Reg.tr)], collapse = " + ")
+> form <- formula(paste(names(fdata.Reg.tr)[1], form, sep = " ~ "))
+> 
+> set.seed(150)
+> nnetmod <- nnet::nnet(form,
++                            data = nntrData,
++                            linear.output = TRUE,
++                            size = hidden_neurons,
++                            decay = decay,
++                            maxit = iters)
+# weights:  21
+initial  value 2487.870002 
+iter  10 value 1587.516208
+iter  20 value 1349.706741
+iter  30 value 1333.940734
+iter  40 value 1329.097060
+iter  50 value 1326.518168
+iter  60 value 1323.148574
+iter  70 value 1322.378769
+iter  80 value 1322.018091
+final  value 1321.996301 
+converged
+> # Try SensAnalysisMLP
+> hess <- NeuralSens::HessianMLP(nnetmod, trData = nntrData, plot = FALSE)
+> NeuralSens::HessFeaturePlot(hess)
 > 
 > 
 > 
@@ -475,6 +656,68 @@ $.outcome
 > 
 > 
 > cleanEx()
+> nameEx("SensDotPlot")
+> ### * SensDotPlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: SensDotPlot
+> ### Title: Sensitivity scatter plot against input values
+> ### Aliases: SensDotPlot
+> 
+> ### ** Examples
+> 
+> ## Load data -------------------------------------------------------------------
+> data("DAILY_DEMAND_TR")
+> fdata <- DAILY_DEMAND_TR
+> ## Parameters of the NNET ------------------------------------------------------
+> hidden_neurons <- 5
+> iters <- 250
+> decay <- 0.1
+> 
+> ################################################################################
+> #########################  REGRESSION NNET #####################################
+> ################################################################################
+> ## Regression dataframe --------------------------------------------------------
+> # Scale the data
+> fdata.Reg.tr <- fdata[,2:ncol(fdata)]
+> fdata.Reg.tr[,3] <- fdata.Reg.tr[,3]/10
+> fdata.Reg.tr[,1] <- fdata.Reg.tr[,1]/1000
+> 
+> # Normalize the data for some models
+> preProc <- caret::preProcess(fdata.Reg.tr, method = c("center","scale"))
+> nntrData <- predict(preProc, fdata.Reg.tr)
+> 
+> #' ## TRAIN nnet NNET --------------------------------------------------------
+> # Create a formula to train NNET
+> form <- paste(names(fdata.Reg.tr)[2:ncol(fdata.Reg.tr)], collapse = " + ")
+> form <- formula(paste(names(fdata.Reg.tr)[1], form, sep = " ~ "))
+> 
+> set.seed(150)
+> nnetmod <- nnet::nnet(form,
++                       data = nntrData,
++                       linear.output = TRUE,
++                       size = hidden_neurons,
++                       decay = decay,
++                       maxit = iters)
+# weights:  21
+initial  value 2487.870002 
+iter  10 value 1587.516208
+iter  20 value 1349.706741
+iter  30 value 1333.940734
+iter  40 value 1329.097060
+iter  50 value 1326.518168
+iter  60 value 1323.148574
+iter  70 value 1322.378769
+iter  80 value 1322.018091
+final  value 1321.996301 
+converged
+> # Try SensDotPlot
+> NeuralSens::SensDotPlot(nnetmod, fdata = nntrData)
+> 
+> 
+> 
+> cleanEx()
 > nameEx("SensFeaturePlot")
 > ### * SensFeaturePlot
 > 
@@ -664,9 +907,12 @@ final  value 1696.690265
 converged
 > # Try SensTimePlot
 > NeuralSens::SensTimePlot(nnetmod, fdata = nntrData, date.var = NULL)
-Warning: Use of `plotdata$value` is discouraged. Use `value` instead.
-Warning: Use of `plotdata$variable` is discouraged. Use `variable` instead.
-Warning: Use of `plotdata$variable` is discouraged. Use `variable` instead.
+Warning: Use of `plotdata$value` is discouraged.
+ℹ Use `value` instead.
+Warning: Use of `plotdata$variable` is discouraged.
+ℹ Use `variable` instead.
+Warning: Use of `plotdata$variable` is discouraged.
+ℹ Use `variable` instead.
 > 
 > 
 > 
@@ -852,6 +1098,555 @@ converged
 > diag3Darray(x)
 [1] 1 4 6
 > # 1, 4, 6
+> 
+> 
+> 
+> cleanEx()
+> nameEx("diag4Darray-set")
+> ### * diag4Darray-set
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: diag4Darray<-
+> ### Title: Define function to change the diagonal of array
+> ### Aliases: diag4Darray<-
+> 
+> ### ** Examples
+> 
+> x <- array(1, dim = c(4,4,4,4))
+> diag4Darray(x) <- c(2,2,2,2)
+> x
+, , 1, 1
+
+     [,1] [,2] [,3] [,4]
+[1,]    2    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 2, 1
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 3, 1
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 4, 1
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 1, 2
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 2, 2
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    2    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 3, 2
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 4, 2
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 1, 3
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 2, 3
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 3, 3
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    2    1
+[4,]    1    1    1    1
+
+, , 4, 3
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 1, 4
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 2, 4
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 3, 4
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    1
+
+, , 4, 4
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    1    1    1    1
+[3,]    1    1    1    1
+[4,]    1    1    1    2
+
+> # , , 1, 1
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    2    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 2, 1
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 3, 1
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 4, 1
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 1, 2
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 2, 2
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    2    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 3, 2
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 4, 2
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 1, 3
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 2, 3
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 3, 3
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    2    1
+> # [4,]    1    1    1    1
+> #
+> # , , 4, 3
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 1, 4
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 2, 4
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 3, 4
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    1
+> #
+> # , , 4, 4
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    1    1    1
+> # [2,]    1    1    1    1
+> # [3,]    1    1    1    1
+> # [4,]    1    1    1    2
+> 
+> 
+> 
+> cleanEx()
+> nameEx("diag4Darray")
+> ### * diag4Darray
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: diag4Darray
+> ### Title: Define function to create a 'diagonal' array or get the diagonal
+> ###   of an array
+> ### Aliases: diag4Darray
+> 
+> ### ** Examples
+> 
+> x <- diag4Darray(c(1,3,6,2), dim = 4)
+> x
+, , 1, 1
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 2, 1
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 3, 1
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 4, 1
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 1, 2
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 2, 2
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    3    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 3, 2
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 4, 2
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 1, 3
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 2, 3
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 3, 3
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    6    0
+[4,]    0    0    0    0
+
+, , 4, 3
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 1, 4
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 2, 4
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 3, 4
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 4, 4
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    2
+
+> # , , 1, 1
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    1    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 2, 1
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 3, 1
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 4, 1
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 1, 2
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 2, 2
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    3    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 3, 2
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 4, 2
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 1, 3
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 2, 3
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 3, 3
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    6    0
+> # [4,]    0    0    0    0
+> #
+> # , , 4, 3
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 1, 4
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 2, 4
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 3, 4
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    0
+> #
+> # , , 4, 4
+> #
+> #      [,1] [,2] [,3] [,4]
+> # [1,]    0    0    0    0
+> # [2,]    0    0    0    0
+> # [3,]    0    0    0    0
+> # [4,]    0    0    0    2
+> diag4Darray(x)
+[1] 1 3 6 2
+> # 1, 3, 6, 2
 > 
 > 
 > 
@@ -1233,9 +2028,26 @@ WD   2.414398 1.868676
 TEMP 1.868676 6.269440
 
 $.outcome$meanSensSQ
-           WD      TEMP
-WD   6.394465  3.490592
-TEMP 3.490592 40.700468
+           WD     TEMP
+WD   2.528728 1.868313
+TEMP 1.868313 6.379692
+
+
+$.outcome
+$.outcome$mean
+              WD        TEMP
+WD   -0.75371769 -0.02008632
+TEMP -0.02008632  1.18930246
+
+$.outcome$std
+           WD     TEMP
+WD   2.414398 1.868676
+TEMP 1.868676 6.269440
+
+$.outcome$meanSensSQ
+           WD     TEMP
+WD   2.528728 1.868313
+TEMP 1.868313 6.379692
 
 
 > 
@@ -1307,8 +2119,13 @@ Sensitivity analysis of 2-5-1 MLP network.
 Sensitivity measures of each output:
 $.outcome
           mean      std meanSensSQ
-WD    2.709330 1.182700   8.738544
-TEMP -1.520092 4.172399  19.710796
+WD    2.709330 1.182700   2.956103
+TEMP -1.520092 4.172399   4.439684
+
+$.outcome
+          mean      std meanSensSQ
+WD    2.709330 1.182700   2.956103
+TEMP -1.520092 4.172399   4.439684
 
 > 
 > 
@@ -1389,9 +2206,9 @@ WD   2.414398 1.868676
 TEMP 1.868676 6.269440
 
 $.outcome$meanSensSQ
-           WD      TEMP
-WD   6.394465  3.490592
-TEMP 3.490592 40.700468
+           WD     TEMP
+WD   2.528728 1.868313
+TEMP 1.868313 6.379692
 
 
 > 
@@ -1463,8 +2280,8 @@ Sensitivity analysis of 2-5-1 MLP network.
 Sensitivity measures of each output:
 $.outcome
           mean      std meanSensSQ
-WD    2.709330 1.182700   8.738544
-TEMP -1.520092 4.172399  19.710796
+WD    2.709330 1.182700   2.956103
+TEMP -1.520092 4.172399   4.439684
 
 > 
 > 
@@ -1474,7 +2291,7 @@ TEMP -1.520092 4.172399  19.710796
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  15.47 0.39 16.93 NA NA 
+Time elapsed:  9.46 0.4 9.87 NA NA 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,28 +1,37 @@
 Package: utf8
-Version: 1.1.4
 Title: Unicode Text Processing
-Authors@R: c(
-  person(c("Patrick", "O."), "Perry",
-         role = c("aut", "cph", "cre"),
-         email = "patperry@gmail.com"),
-  person("Unicode, Inc.",
-         role = c("cph", "dtc"),
-         comment = "Unicode Character Database"))
-Depends: R (>= 2.10)
-Suggests: knitr, rmarkdown, testthat
-Description: Process and print 'UTF-8' encoded international text (Unicode). Input, validate, normalize, encode, format, and display.
+Version: 1.2.3
+Authors@R: 
+    c(person(given = c("Patrick", "O."),
+             family = "Perry",
+             role = c("aut", "cph")),
+      person(given = "Kirill",
+             family = "M\u00fcller",
+             role = "cre",
+             email = "kirill@cynkra.com"),
+      person(given = "Unicode, Inc.",
+             role = c("cph", "dtc"),
+             comment = "Unicode Character Database"))
+Description: Process and print 'UTF-8' encoded international
+    text (Unicode). Input, validate, normalize, encode, format, and
+    display.
 License: Apache License (== 2.0) | file LICENSE
-URL: https://github.com/patperry/r-utf8
+URL: https://ptrckprry.com/r-utf8/, https://github.com/patperry/r-utf8
 BugReports: https://github.com/patperry/r-utf8/issues
-LazyData: Yes
-Encoding: UTF-8
+Depends: R (>= 2.10)
+Suggests: cli, covr, knitr, rlang, rmarkdown, testthat (>= 3.0.0),
+        withr
 VignetteBuilder: knitr, rmarkdown
+Config/testthat/edition: 3
+Encoding: UTF-8
+RoxygenNote: 7.2.3
 NeedsCompilation: yes
-Packaged: 2018-05-24 15:00:57 UTC; ptrck
-Author: Patrick O. Perry [aut, cph, cre],
+Packaged: 2023-01-31 05:28:43 UTC; kirill
+Author: Patrick O. Perry [aut, cph],
+  Kirill Müller [cre],
   Unicode, Inc. [cph, dtc] (Unicode Character Database)
-Maintainer: Patrick O. Perry <patperry@gmail.com>
+Maintainer: Kirill Müller <kirill@cynkra.com>
 Repository: CRAN
-Date/Publication: 2018-05-24 17:09:15 UTC
-Built: R 4.0.2; x86_64-w64-mingw32; 2020-09-13 16:26:09 UTC; windows
-Archs: i386, x64
+Date/Publication: 2023-01-31 18:00:02 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-06-25 00:39:28 UTC; windows
+Archs: x64

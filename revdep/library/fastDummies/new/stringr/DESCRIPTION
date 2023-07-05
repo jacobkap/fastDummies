@@ -1,6 +1,6 @@
 Package: stringr
 Title: Simple, Consistent Wrappers for Common String Operations
-Version: 1.4.0
+Version: 1.5.0
 Authors@R: 
     c(person(given = "Hadley",
              family = "Wickham",
@@ -8,26 +8,31 @@ Authors@R:
              email = "hadley@rstudio.com"),
       person(given = "RStudio",
              role = c("cph", "fnd")))
-Description: A consistent, simple and easy to use set of
-    wrappers around the fantastic 'stringi' package. All function and
-    argument names (and positions) are consistent, all functions deal with
-    "NA"'s and zero length vectors in the same way, and the output from
-    one function is easy to feed into the input of another.
-License: GPL-2 | file LICENSE
-URL: http://stringr.tidyverse.org, https://github.com/tidyverse/stringr
+Description: A consistent, simple and easy to use set of wrappers around
+    the fantastic 'stringi' package. All function and argument names (and
+    positions) are consistent, all functions deal with "NA"'s and zero
+    length vectors in the same way, and the output from one function is
+    easy to feed into the input of another.
+License: MIT + file LICENSE
+URL: https://stringr.tidyverse.org,
+        https://github.com/tidyverse/stringr
 BugReports: https://github.com/tidyverse/stringr/issues
-Depends: R (>= 3.1)
-Imports: glue (>= 1.2.0), magrittr, stringi (>= 1.1.7)
-Suggests: covr, htmltools, htmlwidgets, knitr, rmarkdown, testthat
+Depends: R (>= 3.3)
+Imports: cli, glue (>= 1.6.1), lifecycle (>= 1.0.3), magrittr, rlang
+        (>= 1.0.0), stringi (>= 1.5.3), vctrs
+Suggests: covr, htmltools, htmlwidgets, knitr, rmarkdown, testthat (>=
+        3.0.0)
 VignetteBuilder: knitr
+Config/Needs/website: tidyverse/tidytemplate
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.2.1
 NeedsCompilation: no
-Packaged: 2019-02-09 16:03:19 UTC; hadley
+Packaged: 2022-12-01 20:53:42 UTC; hadleywickham
 Author: Hadley Wickham [aut, cre, cph],
   RStudio [cph, fnd]
 Maintainer: Hadley Wickham <hadley@rstudio.com>
 Repository: CRAN
-Date/Publication: 2019-02-10 03:40:03 UTC
-Built: R 4.0.2; ; 2020-09-13 16:26:31 UTC; windows
+Date/Publication: 2022-12-02 10:20:02 UTC
+Built: R 4.3.1; ; 2023-06-25 01:54:54 UTC; windows

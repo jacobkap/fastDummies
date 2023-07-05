@@ -6,6 +6,7 @@ knitr::opts_chunk$set(
 
 ## ----setup--------------------------------------------------------------------
 library(vctrs)
+library(rlang)
 library(zeallot)
 
 ## -----------------------------------------------------------------------------
@@ -148,7 +149,10 @@ vec_c(m, 1)
 
 ## -----------------------------------------------------------------------------
 if_else <- function(test, yes, no) {
-  vec_assert(test, logical())
+  if (!is_logical(test)) {
+    abort("`test` must be a logical vector.")
+  }
+  
   c(yes, no) %<-% vec_cast_common(yes, no)
   c(test, yes, no) %<-% vec_recycle_common(test, yes, no)
 

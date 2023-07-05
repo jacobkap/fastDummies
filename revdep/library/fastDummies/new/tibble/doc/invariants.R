@@ -1,11 +1,13 @@
 ## ---- include = FALSE---------------------------------------------------------
-knitr::opts_chunk$set(
-  error = TRUE,
-  collapse = TRUE,
-  #eval = FALSE, echo = FALSE,
-  comment = "#>"
-)
+# To suppress messages
+library(tibble)
+library(vctrs)
 
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  error = TRUE
+)
 tibble:::set_dftbl_hooks()
 
 options(
@@ -16,11 +18,11 @@ options(
 )
 
 # Set to FALSE for production
-if (!exists("eval_details")) eval_details <- FALSE
+eval_details <- (Sys.getenv("IN_GALLEY") != "")
 
 ## ----setup--------------------------------------------------------------------
-library(vctrs)
 library(tibble)
+library(vctrs)
 
 new_df <- function() {
   df <- data.frame(n = c(1L, NA, 3L, NA))
@@ -243,9 +245,9 @@ tbl[list(1), ]
 tbl["1", ]
 
 ## ----bracket-i-oob, dftbl = TRUE----------------------------------------------
-df[10, ]
+
 tbl[10, ]
-df["x", ]
+
 tbl["x", ]
 
 ## ----bracket-i-recycle, dftbl = TRUE------------------------------------------
@@ -559,8 +561,12 @@ with_tbl2(tbl2[2:3, 1] <- tbl2[1:2, 2])
 with_tbl2(tbl2[2:3, 2] <- tbl[1:2, 1])
 
 ## ----bracket-i-j-na-init, dftbl = TRUE----------------------------------------
-with_df({df$x <- NA; df[2:3, "x"] <- 3:2})
+
 with_tbl({tbl$x <- NA; tbl[2:3, "x"] <- 3:2})
+with_df({df[2:3, 2:3] <- NA})
+with_tbl({tbl[2:3, 2:3] <- NA})
+
+## ----bracket-i-j-typed-na-init, dftbl = TRUE----------------------------------
 
 with_tbl({tbl$x <- NA_integer_; tbl[2:3, "x"] <- 3:2})
 

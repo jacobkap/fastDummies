@@ -1,6 +1,6 @@
 
-R version 4.0.2 (2020-06-22) -- "Taking Off Again"
-Copyright (C) 2020 The R Foundation for Statistical Computing
+R version 4.3.1 (2023-06-16 ucrt) -- "Beagle Scouts"
+Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -16,8 +16,6 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library(testthat)
-Warning message:
-package 'testthat' was built under R version 4.0.3 
 > library(DMCFB)
 Loading required package: SummarizedExperiment
 Loading required package: MatrixGenerics
@@ -46,15 +44,8 @@ The following objects are masked from 'package:matrixStats':
 Loading required package: GenomicRanges
 Loading required package: stats4
 Loading required package: BiocGenerics
-Loading required package: parallel
 
 Attaching package: 'BiocGenerics'
-
-The following objects are masked from 'package:parallel':
-
-    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-    clusterExport, clusterMap, parApply, parCapply, parLapply,
-    parLapplyLB, parRapply, parSapply, parSapplyLB
 
 The following objects are masked from 'package:stats':
 
@@ -62,7 +53,7 @@ The following objects are masked from 'package:stats':
 
 The following objects are masked from 'package:base':
 
-    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    Filter, Find, Map, Position, Reduce, anyDuplicated, aperm, append,
     as.data.frame, basename, cbind, colnames, dirname, do.call,
     duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
     lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
@@ -73,9 +64,13 @@ Loading required package: S4Vectors
 
 Attaching package: 'S4Vectors'
 
-The following object is masked from 'package:base':
+The following object is masked from 'package:utils':
 
-    expand.grid
+    findMatches
+
+The following objects are masked from 'package:base':
+
+    I, expand.grid, unname
 
 Loading required package: IRanges
 
@@ -105,7 +100,7 @@ The following objects are masked from 'package:matrixStats':
     anyMissing, rowMedians
 
 Loading required package: BiocParallel
-DMCFB package, Version 1.4.0, Released 2020-10-27
+DMCFB package, Version 1.14.0, Released 2023-05-07
 DMCFB is a pipeline for identifying differentially methylated 
     cytosines using a Bayesian functional regression model in bisulfite
     sequencing data. By using a functional regression data model, it tries to
@@ -128,49 +123,29 @@ The following object is masked from 'package:BiocGenerics':
 
     combine
 
-Warning messages:
-1: package 'SummarizedExperiment' was built under R version 4.0.3 
-2: package 'MatrixGenerics' was built under R version 4.0.3 
-3: package 'matrixStats' was built under R version 4.0.3 
-4: package 'GenomicRanges' was built under R version 4.0.3 
-5: package 'BiocGenerics' was built under R version 4.0.3 
-6: package 'S4Vectors' was built under R version 4.0.3 
-7: package 'IRanges' was built under R version 4.0.3 
-8: package 'GenomeInfoDb' was built under R version 4.0.3 
-9: package 'Biobase' was built under R version 4.0.3 
-10: package 'BiocParallel' was built under R version 4.0.3 
 > 
 > test_check("DMCFB")
-Warning: namespace 'DMCFB' is not available and has been replaced
-by .GlobalEnv when processing object '<unknown>'
-Warning: namespace 'DMCFB' is not available and has been replaced
-by .GlobalEnv when processing object '<unknown>'
-Warning: namespace 'DMCFB' is not available and has been replaced
-by .GlobalEnv when processing object '<unknown>'
-Warning: namespace 'DMCFB' is not available and has been replaced
-by .GlobalEnv when processing object '<unknown>'
--- [33mError[39m (test-findDMCFB.R:12:5): test findDMCFB -------------------------------
+[ FAIL 1 | WARN 1 | SKIP 0 | PASS 0 ]
+
+══ Failed tests ════════════════════════════════════════════════════════════════
+── Error ('test-findDMCFB.R:12:5'): test findDMCFB ─────────────────────────────
+<bplist_error/bperror/error/condition>
 Error: BiocParallel errors
-  element index: 1, 2
-  first error: unable to find required package 'DMCFB'
-[1mBacktrace:[22m
-[90m    [39mx
-[90m 1. [39m+-DMCFB::findDMCFB(...) [90mtest-findDMCFB.R:12:4[39m
-[90m 2. [39m\-DMCFB::findDMCFB(...)
-[90m 3. [39m  \-DMCFB:::.MCMCFB(...)
-[90m 4. [39m    \-DMCFB:::.myfun(mylist, .fitpar)
-[90m 5. [39m      +-BiocParallel::bplapply(mylist, .fitpar, BPPARAM = optbp)
-[90m 6. [39m      \-BiocParallel::bplapply(mylist, .fitpar, BPPARAM = optbp)
+  2 remote errors, element index: 1, 2
+  0 unevaluated and other errors
+  first remote error:
+Error in .requirePackage(package): unable to find required package 'DMCFB'
 
-Warning message:
-In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
-  there is no package called 'DMCFB'
-Warning message:
-In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
-  there is no package called 'DMCFB'
-== testthat results  ===========================================================
-[33mError[39m (test-findDMCFB.R:12:5): test findDMCFB
+Backtrace:
+    ▆
+ 1. ├─DMCFB::findDMCFB(...) at test-findDMCFB.R:12:4
+ 2. └─DMCFB::findDMCFB(...)
+ 3.   └─DMCFB:::.MCMCFB(...)
+ 4.     └─DMCFB (local) .myfun(mylist, .fitpar)
+ 5.       ├─BiocParallel::bplapply(mylist, .fitpar, BPPARAM = optbp)
+ 6.       └─BiocParallel::bplapply(mylist, .fitpar, BPPARAM = optbp)
+ 7.         └─BiocParallel:::.bpinit(...)
 
-[ [33mFAIL[39m 1 | [35mWARN[39m 0 | [34mSKIP[39m 0 | [32mPASS[39m 0 ]
+[ FAIL 1 | WARN 1 | SKIP 0 | PASS 0 ]
 Error: Test failures
 Execution halted

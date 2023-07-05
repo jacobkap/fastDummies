@@ -1,9 +1,9 @@
 Package: data.table
-Version: 1.13.2
+Version: 1.14.8
 Title: Extension of `data.frame`
 Authors@R: c(
   person("Matt","Dowle",           role=c("aut","cre"), email="mattjdowle@gmail.com"),
-  person("Arun","Srinivasan",      role="aut",          email="arunkumar.sriniv@gmail.com"),
+  person("Arun","Srinivasan",      role="aut",          email="asrini@pm.me"),
   person("Jan","Gorecki",          role="ctb"),
   person("Michael","Chirico",      role="ctb"),
   person("Pasha","Stetsenko",      role="ctb"),
@@ -60,21 +60,22 @@ Authors@R: c(
   person("Jens Peder","Meldgaard", role="ctb"),
   person("Vaclav","Tlapak",        role="ctb"),
   person("Kevin","Ushey",          role="ctb"),
-  person("Dirk","Eddelbuettel",    role="ctb"))
+  person("Dirk","Eddelbuettel",    role="ctb"),
+  person("Ben","Schwen",           role="ctb"))
 Depends: R (>= 3.1.0)
 Imports: methods
-Suggests: bit64, curl, R.utils, xts, nanotime, zoo, yaml, knitr,
-        rmarkdown
+Suggests: bit64 (>= 4.0.0), bit (>= 4.0.4), curl, R.utils, xts,
+        nanotime, zoo (>= 1.8-1), yaml, knitr, rmarkdown
 SystemRequirements: zlib
 Description: Fast aggregation of large data (e.g. 100GB in RAM), fast ordered joins, fast add/modify/delete of columns by group using no copies at all, list columns, friendly and fast character-separated-value read/write. Offers a natural and flexible syntax, for faster development.
 License: MPL-2.0 | file LICENSE
-URL: http://r-datatable.com, https://Rdatatable.gitlab.io/data.table,
+URL: https://r-datatable.com, https://Rdatatable.gitlab.io/data.table,
         https://github.com/Rdatatable/data.table
 BugReports: https://github.com/Rdatatable/data.table/issues
 VignetteBuilder: knitr
 ByteCompile: TRUE
 NeedsCompilation: yes
-Packaged: 2020-10-17 06:10:02 UTC; mdowle
+Packaged: 2023-02-16 16:37:18 UTC; mdowle
 Author: Matt Dowle [aut, cre],
   Arun Srinivasan [aut],
   Jan Gorecki [ctb],
@@ -133,9 +134,10 @@ Author: Matt Dowle [aut, cre],
   Jens Peder Meldgaard [ctb],
   Vaclav Tlapak [ctb],
   Kevin Ushey [ctb],
-  Dirk Eddelbuettel [ctb]
+  Dirk Eddelbuettel [ctb],
+  Ben Schwen [ctb]
 Maintainer: Matt Dowle <mattjdowle@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-10-19 18:50:02 UTC
-Built: R 4.0.3; x86_64-w64-mingw32; 2020-11-01 19:48:26 UTC; windows
-Archs: i386, x64
+Date/Publication: 2023-02-17 12:20:12 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-06-25 00:39:38 UTC; windows
+Archs: x64

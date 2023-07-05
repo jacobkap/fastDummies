@@ -3,5 +3,11 @@ deprecate_soft          Deprecate functions and arguments
 deprecated              Mark an argument as deprecated
 expect_deprecated       Does expression produce lifecycle warnings or
                         errors?
-last_warnings           Display last deprecation warnings
+last_lifecycle_warnings
+                        Display last deprecation warnings
+pkg_lifecycle_statuses
+                        Lint usages of functions that have a non-stable
+                        life cycle.
+signal_stage            Signal other experimental or superseded
+                        features
 verbosity               Control the verbosity of deprecation signals

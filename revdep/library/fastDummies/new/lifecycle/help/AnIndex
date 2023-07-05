@@ -7,10 +7,12 @@ deprecate_warn	deprecate_soft
 expect_defunct	expect_deprecated
 expect_deprecated	expect_deprecated
 is_present	deprecated
-last_warning	last_warnings
-last_warnings	last_warnings
+last_lifecycle_warnings	last_lifecycle_warnings
 lifecycle	lifecycle-package
-lifecycle_cnd_data	signal_experimental
+lint_lifecycle	lint_lifecycle
+lint_tidyverse_lifecycle	lint_lifecycle
+pkg_lifecycle_statuses	lint_lifecycle
 signal_experimental	signal_experimental
+signal_stage	signal_stage
 signal_superseded	signal_experimental
 verbosity	verbosity

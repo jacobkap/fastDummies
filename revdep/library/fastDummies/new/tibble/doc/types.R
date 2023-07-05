@@ -6,6 +6,7 @@ knitr::opts_chunk$set(
 library(dplyr)
 library(tidyr)
 library(purrr)
+requireNamespace("hms", quietly = TRUE)
 
 ## ----setup--------------------------------------------------------------------
 library(tibble)
@@ -47,18 +48,18 @@ data <- list(
     POSIXt = Sys.time(),
     difftime = vctrs::new_duration(1)
   ),
-  
+
   "Objects from other packages" = rlang::quos(
     hms = hms::hms(1),
     integer64 = bit64::as.integer64(1e10),
     blob = blob::blob(raw(1))
   ),
-  
+
   "Data frames" = rlang::quos(
     data.frame = data.frame(a = 1),
     tbl_df = tibble(a = 1)
   ),
-  
+
   "Unchanged" = rlang::quos(
     AsIs = I(1L)
   ),
@@ -82,32 +83,32 @@ data <- list(
 )
 
 ## ----table, echo = FALSE------------------------------------------------------
-tbl <- 
-  data %>% 
-  map(unclass) %>% 
-  map(enframe, "Data type", "Expression") %>% 
+tbl <-
+  data %>%
+  map(unclass) %>%
+  map(enframe, "Data type", "Expression") %>%
   enframe("Class", "data") %>%
-  unnest(data) %>% 
-  mutate(Example = map_chr(Expression, rlang::as_label)) %>% 
-  mutate(Value = map(Expression, rlang::eval_tidy)) %>% 
-  select(-Expression) %>% 
+  unnest(data) %>%
+  mutate(Example = map_chr(Expression, rlang::as_label)) %>%
+  mutate(Value = map(Expression, rlang::eval_tidy)) %>%
+  select(-Expression) %>%
   mutate(Class = if_else(Class == lag(Class, default = ""), "", Class)) %>%
   mutate("Column header" = map_chr(Value, type_sum))
 
 ## ----kable, echo = FALSE------------------------------------------------------
-tbl %>% 
-  select(-Value) %>% 
-  mutate(Example = paste0("`", Example, "`")) %>% 
+tbl %>%
+  select(-Value) %>%
+  mutate(Example = paste0("`", Example, "`")) %>%
   knitr::kable(escape = FALSE)
 
 ## ----glimpse, echo = FALSE----------------------------------------------------
 tbl %>%
   select(`Data type`, `Value`) %>%
   filter(map_lgl(Value, vctrs::vec_is)) %>%
-  deframe() %>% 
-  as_tibble() %>% 
+  deframe() %>%
+  as_tibble() %>%
   glimpse()
 
-## ----type_sum_default---------------------------------------------------------
+## ----type_sum_default, results = if (Sys.getenv("IN_GALLEY") != "") "hide" else "markup"----
 pillar:::type_sum.default
 

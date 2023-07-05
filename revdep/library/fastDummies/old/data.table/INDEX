@@ -68,5 +68,5 @@ transpose               Efficient transpose of list
 truelength              Over-allocation access
 tstrsplit               strsplit and transpose the resulting list
                         efficiently
-update.dev.pkg          Perform update of development version of a
+update_dev_pkg          Perform update of development version of a
                         package

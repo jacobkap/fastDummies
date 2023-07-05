@@ -1,10 +1,14 @@
-* using log directory 'C:/Users/user/Dropbox/R_project/fastDummies/revdep/checks/NeuralSens/old/NeuralSens.Rcheck'
-* using R version 4.0.2 (2020-06-22)
+* using log directory 'E:/Dropbox/R_project/fastDummies/revdep/checks/NeuralSens/old/NeuralSens.Rcheck'
+* using R version 4.3.1 (2023-06-16 ucrt)
 * using platform: x86_64-w64-mingw32 (64-bit)
-* using session charset: ISO8859-1
+* R was compiled by
+    gcc.exe (GCC) 12.2.0
+    GNU Fortran (GCC) 12.2.0
+* running under: Windows 10 x64 (build 19045)
+* using session charset: UTF-8
 * using options '--no-manual --no-build-vignettes'
 * checking for file 'NeuralSens/DESCRIPTION' ... OK
-* this is package 'NeuralSens' version '0.2.2'
+* this is package 'NeuralSens' version '1.0.3'
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -44,6 +48,7 @@
 * checking for unstated dependencies in examples ... OK
 * checking contents of 'data' directory ... OK
 * checking data for non-ASCII characters ... OK
+* checking LazyData ... OK
 * checking data for ASCII and uncompressed saves ... OK
 * checking examples ... OK
 * DONE

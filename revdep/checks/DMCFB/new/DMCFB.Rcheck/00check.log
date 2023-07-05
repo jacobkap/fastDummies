@@ -1,11 +1,15 @@
-* using log directory 'C:/Users/user/Dropbox/R_project/fastDummies/revdep/checks/DMCFB/new/DMCFB.Rcheck'
-* using R version 4.0.2 (2020-06-22)
+* using log directory 'E:/Dropbox/R_project/fastDummies/revdep/checks/DMCFB/new/DMCFB.Rcheck'
+* using R version 4.3.1 (2023-06-16 ucrt)
 * using platform: x86_64-w64-mingw32 (64-bit)
-* using session charset: ISO8859-1
+* R was compiled by
+    gcc.exe (GCC) 12.2.0
+    GNU Fortran (GCC) 12.2.0
+* running under: Windows 10 x64 (build 19045)
+* using session charset: UTF-8
 * using options '--no-manual --no-build-vignettes'
 * checking for file 'DMCFB/DESCRIPTION' ... OK
 * checking extension type ... Package
-* this is package 'DMCFB' version '1.4.0'
+* this is package 'DMCFB' version '1.14.0'
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -14,19 +18,7 @@
 * checking for executable files ... OK
 * checking for hidden files and directories ... OK
 * checking for portable file names ... OK
-* checking whether package 'DMCFB' can be installed ... WARNING
-Found the following significant warnings:
-  Warning: package 'SummarizedExperiment' was built under R version 4.0.3
-  Warning: package 'MatrixGenerics' was built under R version 4.0.3
-  Warning: package 'matrixStats' was built under R version 4.0.3
-  Warning: package 'GenomicRanges' was built under R version 4.0.3
-  Warning: package 'BiocGenerics' was built under R version 4.0.3
-  Warning: package 'S4Vectors' was built under R version 4.0.3
-  Warning: package 'IRanges' was built under R version 4.0.3
-  Warning: package 'GenomeInfoDb' was built under R version 4.0.3
-  Warning: package 'Biobase' was built under R version 4.0.3
-  Warning: package 'BiocParallel' was built under R version 4.0.3
-See 'C:/Users/user/Dropbox/R_project/fastDummies/revdep/checks/DMCFB/new/DMCFB.Rcheck/00install.out' for details.
+* checking whether package 'DMCFB' can be installed ... OK
 * checking installed package size ... OK
 * checking package directory ... OK
 * checking 'build' directory ... OK
@@ -43,6 +35,7 @@ See 'C:/Users/user/Dropbox/R_project/fastDummies/revdep/checks/DMCFB/new/DMCFB.R
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
 * checking loading without being on the library search path ... OK
+* checking startup messages can be suppressed ... OK
 * checking dependencies in R code ... OK
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
@@ -91,42 +84,46 @@ The error most likely occurred in:
 ------------------------------------------------------------
 Running Bayesian functional regression model ...
 The priors's SD = 0.3033, estimated from data ... 
+Warning: 'memory.size()' is no longer supported
 Number of assigned cores: 2 ... 
 ------------------------------------------------------------
 Fitted model: 
 logit(MethRead/ReadDepth) ~ F(Group)
 ------------------------------------------------------------
 Creating 1 batches of genomic positions ...
-Running batch 1/1; chr1; 1000 positions; Region [   1, 1000]; Date 2020-11-28 11:33:41
-Warning: namespace 'DMCFB' is not available and has been replaced
-by .GlobalEnv when processing object '<unknown>'
+Running batch 1/1; chr1; 1000 positions; Region [   1, 1000]; Date 2023-07-04 17:12:37.165362
 Loading required package: DMCFB
 Warning in library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
   there is no package called 'DMCFB'
-Warning: namespace 'DMCFB' is not available and has been replaced
-by .GlobalEnv when processing object '<unknown>'
+
+Loading required package: DMCFB
+Warning in library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+  there is no package called 'DMCFB'
+
 Error: BiocParallel errors
-  element index: 1, 2
-  first error: unable to find required package 'DMCFB'
+  2 remote errors, element index: 1, 2
+  0 unevaluated and other errors
+  first remote error:
+Error in .requirePackage(package): unable to find required package 'DMCFB'
 Execution halted
 * checking for unstated dependencies in 'tests' ... OK
 * checking tests ... ERROR
   Running 'testthat.R'
 Running the tests in 'tests/testthat.R' failed.
 Last 13 lines of output:
-  [90m 5. [39m      +-BiocParallel::bplapply(mylist, .fitpar, BPPARAM = optbp)
-  [90m 6. [39m      \-BiocParallel::bplapply(mylist, .fitpar, BPPARAM = optbp)
+  Error in .requirePackage(package): unable to find required package 'DMCFB'
   
-  Warning message:
-  In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
-    there is no package called 'DMCFB'
-  Warning message:
-  In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
-    there is no package called 'DMCFB'
-  == testthat results  ===========================================================
-  [33mError[39m (test-findDMCFB.R:12:5): test findDMCFB
+  Backtrace:
+      ▆
+   1. ├─DMCFB::findDMCFB(...) at test-findDMCFB.R:12:4
+   2. └─DMCFB::findDMCFB(...)
+   3.   └─DMCFB:::.MCMCFB(...)
+   4.     └─DMCFB (local) .myfun(mylist, .fitpar)
+   5.       ├─BiocParallel::bplapply(mylist, .fitpar, BPPARAM = optbp)
+   6.       └─BiocParallel::bplapply(mylist, .fitpar, BPPARAM = optbp)
+   7.         └─BiocParallel:::.bpinit(...)
   
-  [ [33mFAIL[39m 1 | [35mWARN[39m 0 | [34mSKIP[39m 0 | [32mPASS[39m 0 ]
+  [ FAIL 1 | WARN 1 | SKIP 0 | PASS 0 ]
   Error: Test failures
   Execution halted
 * checking for unstated dependencies in vignettes ... OK
@@ -135,4 +132,4 @@ Last 13 lines of output:
   'DMCFB.Rmd' using 'UTF-8'... OK
 * checking re-building of vignette outputs ... SKIPPED
 * DONE
-Status: 2 ERRORs, 1 WARNING
+Status: 2 ERRORs

@@ -2,7 +2,7 @@ Package: fastDummies
 Type: Package
 Title: Fast Creation of Dummy (Binary) Columns and Rows from
         Categorical Variables
-Version: 1.6.3
+Version: 1.7.1
 Authors@R: c(
     person("Jacob", "Kaplan", email = "jkkaplan6@gmail.com", role = c("aut", "cre"),
     comment = c(ORCID = "0000-0002-0601-0387")), 
@@ -12,19 +12,18 @@ Depends: R (>= 2.10)
 Imports: data.table, tibble, stringr
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 URL: https://github.com/jacobkap/fastDummies,
         https://jacobkap.github.io/fastDummies/
 BugReports: https://github.com/jacobkap/fastDummies/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Suggests: testthat (>= 2.1.0), knitr, rmarkdown, covr, spelling
 VignetteBuilder: knitr
 Language: en-US
 RemoteType: local
-RemoteUrl: C:\Users\user\Dropbox\R_project\fastDummies
+RemoteUrl: E:\Dropbox\R_project\fastDummies
 NeedsCompilation: no
-Packaged: 2020-11-28 16:45:37 UTC; user
+Packaged: 2023-07-04 21:52:27 UTC; jkkap
 Author: Jacob Kaplan [aut, cre] (<https://orcid.org/0000-0002-0601-0387>),
   Benjamin Schlegel [ctb]
 Maintainer: Jacob Kaplan <jkkaplan6@gmail.com>
-Built: R 4.0.2; ; 2020-11-28 16:45:38 UTC; windows
+Built: R 4.3.1; ; 2023-07-04 21:52:28 UTC; windows

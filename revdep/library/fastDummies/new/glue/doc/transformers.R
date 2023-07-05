@@ -49,21 +49,26 @@ command <- glue_sh("cat {filename}")
 command
 system(command)
 
+## ----include = FALSE----------------------------------------------------------
+if (file.exists("test")) {
+  unlink("test")
+}
+
 ## ---- eval = require("emo")---------------------------------------------------
-#  emoji_transformer <- function(text, envir) {
-#    if (grepl("[*]$", text)) {
-#      text <- sub("[*]$", "", text)
-#      glue_collapse(ji_find(text)$emoji)
-#    } else {
-#      ji(text)
-#    }
-#  }
-#  
-#  glue_ji <- function(..., .envir = parent.frame()) {
-#    glue(..., .open = ":", .close = ":", .envir = .envir, .transformer = emoji_transformer)
-#  }
-#  glue_ji("one :heart:")
-#  glue_ji("many :heart*:")
+emoji_transformer <- function(text, envir) {
+  if (grepl("[*]$", text)) {
+    text <- sub("[*]$", "", text)
+    glue_collapse(ji_find(text)$emoji)
+  } else {
+    ji(text)
+  }
+}
+
+glue_ji <- function(..., .envir = parent.frame()) {
+  glue(..., .open = ":", .close = ":", .envir = .envir, .transformer = emoji_transformer)
+}
+glue_ji("one :heart:")
+glue_ji("many :heart*:")
 
 ## -----------------------------------------------------------------------------
 sprintf_transformer <- function(text, envir) {
@@ -72,7 +77,7 @@ sprintf_transformer <- function(text, envir) {
     format <- substring(regmatches(text, m), 2)
     regmatches(text, m) <- ""
     res <- eval(parse(text = text, keep.source = FALSE), envir)
-    do.call(sprintf, list(glue("%{format}f"), res))
+    do.call(sprintf, list(glue("%{format}"), res))
   } else {
     eval(parse(text = text, keep.source = FALSE), envir)
   }
@@ -81,7 +86,7 @@ sprintf_transformer <- function(text, envir) {
 glue_fmt <- function(..., .envir = parent.frame()) {
   glue(..., .transformer = sprintf_transformer, .envir = .envir)
 }
-glue_fmt("π = {pi:.2}")
+glue_fmt("π = {pi:.3f}")
 
 ## -----------------------------------------------------------------------------
 safely_transformer <- function(otherwise = NA) {

@@ -1,5 +1,5 @@
 ## ---- include = FALSE---------------------------------------------------------
-knitr::opts_chunk$set(collapse = TRUE, comment = pillar::style_subtle("#>"))
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 ## ----setup--------------------------------------------------------------------
 library(vctrs)

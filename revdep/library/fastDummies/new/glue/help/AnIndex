@@ -1,6 +1,5 @@
 as_glue	as_glue
 backtick	quoting
-collapse	glue-deprecated
 double_quote	quoting
 glue	glue
 glue-deprecated	glue-deprecated
@@ -12,6 +11,7 @@ glue_data_safe	glue_safe
 glue_data_sql	glue_sql
 glue_safe	glue_safe
 glue_sql	glue_sql
+glue_sql_collapse	glue_collapse
 identity_transformer	identity_transformer
 quoting	quoting
 single_quote	quoting

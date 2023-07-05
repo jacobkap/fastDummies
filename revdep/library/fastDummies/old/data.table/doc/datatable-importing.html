@@ -11,10 +11,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2020-10-17" />
+<meta name="date" content="2023-02-16" />
 
 <title>Importing data.table</title>
 
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -23,92 +52,40 @@
   div.column{display: inline-block; vertical-align: top; width: 50%;}
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
-      a.sourceLine { display: inline-block; line-height: 1.25; }
-  a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-  a.sourceLine:empty { height: 1.2em; }
-  .sourceCode { overflow: visible; }
-  code.sourceCode { white-space: pre; position: relative; }
-  div.sourceCode { margin: 1em 0; }
-  pre.sourceCode { margin: 0; }
-  @media screen {
-  div.sourceCode { overflow: auto; }
-  }
-  @media print {
-  code.sourceCode { white-space: pre-wrap; }
-  a.sourceLine { text-indent: -1em; padding-left: 1em; }
-  }
-  pre.numberSource a.sourceLine
-    { position: relative; left: -4em; }
-  pre.numberSource a.sourceLine::before
-    { content: attr(title);
-      position: relative; left: -1em; text-align: right; vertical-align: baseline;
-      border: none; pointer-events: all; display: inline-block;
-      -webkit-touch-callout: none; -webkit-user-select: none;
-      -khtml-user-select: none; -moz-user-select: none;
-      -ms-user-select: none; user-select: none;
-      padding: 0 4px; width: 4em;
-      color: #aaaaaa;
-    }
-  pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-  div.sourceCode
-    {  }
-  @media screen {
-  a.sourceLine::before { text-decoration: underline; }
-  }
-  code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-  code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-  code span.at { color: #7d9029; } /* Attribute */
-  code span.bn { color: #40a070; } /* BaseN */
-  code span.bu { } /* BuiltIn */
-  code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-  code span.ch { color: #4070a0; } /* Char */
-  code span.cn { color: #880000; } /* Constant */
-  code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-  code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-  code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-  code span.dt { color: #902000; } /* DataType */
-  code span.dv { color: #40a070; } /* DecVal */
-  code span.er { color: #ff0000; font-weight: bold; } /* Error */
-  code span.ex { } /* Extension */
-  code span.fl { color: #40a070; } /* Float */
-  code span.fu { color: #06287e; } /* Function */
-  code span.im { } /* Import */
-  code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-  code span.op { color: #666666; } /* Operator */
-  code span.ot { color: #007020; } /* Other */
-  code span.pp { color: #bc7a00; } /* Preprocessor */
-  code span.sc { color: #4070a0; } /* SpecialChar */
-  code span.ss { color: #bb6688; } /* SpecialString */
-  code span.st { color: #4070a0; } /* String */
-  code span.va { color: #19177c; } /* Variable */
-  code span.vs { color: #4070a0; } /* VerbatimString */
-  code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -117,9 +94,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -159,13 +136,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -173,6 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
+
 
 
 
@@ -369,7 +354,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">Importing data.table</h1>
-<h4 class="date">2020-10-17</h4>
+<h4 class="date">2023-02-16</h4>
 
 
 
@@ -401,37 +386,37 @@ h2 {
 <div id="usage" class="section level2">
 <h2>Usage</h2>
 <p>As an example we will define two functions in <code>a.pkg</code> package that uses <code>data.table</code>. One function, <code>gen</code>, will generate a simple <code>data.table</code>; another, <code>aggr</code>, will do a simple aggregation of it.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">gen =<span class="st"> </span><span class="cf">function</span> (<span class="dt">n =</span> 100L) {</a>
-<a class="sourceLine" id="cb1-2" title="2">  dt =<span class="st"> </span><span class="kw">as.data.table</span>(<span class="kw">list</span>(<span class="dt">id =</span> <span class="kw">seq_len</span>(n)))</a>
-<a class="sourceLine" id="cb1-3" title="3">  dt[, grp <span class="op">:</span><span class="er">=</span><span class="st"> </span>((id <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%%</span><span class="st"> </span><span class="dv">26</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb1-4" title="4">     ][, grp <span class="op">:</span><span class="er">=</span><span class="st"> </span>letters[grp]</a>
-<a class="sourceLine" id="cb1-5" title="5">       ][]</a>
-<a class="sourceLine" id="cb1-6" title="6">}</a>
-<a class="sourceLine" id="cb1-7" title="7">aggr =<span class="st"> </span><span class="cf">function</span> (x) {</a>
-<a class="sourceLine" id="cb1-8" title="8">  <span class="kw">stopifnot</span>(</a>
-<a class="sourceLine" id="cb1-9" title="9">    <span class="kw">is.data.table</span>(x),</a>
-<a class="sourceLine" id="cb1-10" title="10">    <span class="st">&quot;grp&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">names</span>(x)</a>
-<a class="sourceLine" id="cb1-11" title="11">  )</a>
-<a class="sourceLine" id="cb1-12" title="12">  x[, .N, by =<span class="st"> </span>grp]</a>
-<a class="sourceLine" id="cb1-13" title="13">}</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>gen =<span class="st"> </span><span class="cf">function</span> (<span class="dt">n =</span> 100L) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  dt =<span class="st"> </span><span class="kw">as.data.table</span>(<span class="kw">list</span>(<span class="dt">id =</span> <span class="kw">seq_len</span>(n)))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  dt[, grp <span class="op">:</span><span class="er">=</span><span class="st"> </span>((id <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%%</span><span class="st"> </span><span class="dv">26</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>     ][, grp <span class="op">:</span><span class="er">=</span><span class="st"> </span>letters[grp]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>       ][]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>aggr =<span class="st"> </span><span class="cf">function</span> (x) {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>  <span class="kw">stopifnot</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>    <span class="kw">is.data.table</span>(x),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>    <span class="st">&quot;grp&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">names</span>(x)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>  )</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>  x[, .N, by =<span class="st"> </span>grp]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>}</span></code></pre></div>
 </div>
 <div id="testing" class="section level2">
 <h2>Testing</h2>
 <p>Be sure to include tests in your package. Before each major release of <code>data.table</code>, we check reverse dependencies. This means that if any changes in <code>data.table</code> would break your code, we will be able to spot breaking changes and inform you before releasing the new version. This of course assumes you will publish your package to CRAN or Bioconductor. The most basic test can be a plaintext R script in your package directory <code>tests/test.R</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(a.pkg)</a>
-<a class="sourceLine" id="cb2-2" title="2">dt =<span class="st"> </span><span class="kw">gen</span>()</a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="kw">stopifnot</span>(<span class="kw">nrow</span>(dt) <span class="op">==</span><span class="st"> </span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb2-4" title="4">dt2 =<span class="st"> </span><span class="kw">aggr</span>(dt)</a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="kw">stopifnot</span>(<span class="kw">nrow</span>(dt2) <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">library</span>(a.pkg)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>dt =<span class="st"> </span><span class="kw">gen</span>()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="kw">stopifnot</span>(<span class="kw">nrow</span>(dt) <span class="op">==</span><span class="st"> </span><span class="dv">100</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>dt2 =<span class="st"> </span><span class="kw">aggr</span>(dt)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="kw">stopifnot</span>(<span class="kw">nrow</span>(dt2) <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span>)</span></code></pre></div>
 <p>When testing your package, you may want to use <code>R CMD check --no-stop-on-test-error</code>, which will continue after an error and run all your tests (as opposed to stopping on the first line of script that failed) NB this requires R 3.4.0 or greater.</p>
 </div>
 <div id="testing-using-testthat" class="section level2">
 <h2>Testing using <code>testthat</code></h2>
 <p>It is very common to use the <code>testthat</code> package for purpose of tests. Testing a package that imports <code>data.table</code> is no different from testing other packages. An example test script <code>tests/testthat/test-pkg.R</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">context</span>(<span class="st">&quot;pkg tests&quot;</span>)</a>
-<a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="kw">test_that</span>(<span class="st">&quot;generate dt&quot;</span>, { <span class="kw">expect_true</span>(<span class="kw">nrow</span>(<span class="kw">gen</span>()) <span class="op">==</span><span class="st"> </span><span class="dv">100</span>) })</a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="kw">test_that</span>(<span class="st">&quot;aggregate dt&quot;</span>, { <span class="kw">expect_true</span>(<span class="kw">nrow</span>(<span class="kw">aggr</span>(<span class="kw">gen</span>())) <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span>) })</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">context</span>(<span class="st">&quot;pkg tests&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="kw">test_that</span>(<span class="st">&quot;generate dt&quot;</span>, { <span class="kw">expect_true</span>(<span class="kw">nrow</span>(<span class="kw">gen</span>()) <span class="op">==</span><span class="st"> </span><span class="dv">100</span>) })</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="kw">test_that</span>(<span class="st">&quot;aggregate dt&quot;</span>, { <span class="kw">expect_true</span>(<span class="kw">nrow</span>(<span class="kw">aggr</span>(<span class="kw">gen</span>())) <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span>) })</span></code></pre></div>
 <p>If <code>data.table</code> is in Suggests (but not Imports) then you need to declare <code>.datatable.aware=TRUE</code> in one of the R/* files to avoid “object not found” errors when testing via <code>testthat::test_package</code> or <code>testthat::test_check</code>.</p>
 </div>
 <div id="globals" class="section level2">
@@ -444,22 +429,22 @@ gen: no visible binding for global variable &#39;id&#39;
 Undefined global functions or variables:
 grp id</code></pre>
 <p>The easiest way to deal with this is to pre-define those variables within your package and set them to <code>NULL</code>, optionally adding a comment (as is done in the refined version of <code>gen</code> below). When possible, you could also use a character vector instead of symbols (as in <code>aggr</code> below):</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">gen =<span class="st"> </span><span class="cf">function</span> (<span class="dt">n =</span> 100L) {</a>
-<a class="sourceLine" id="cb5-2" title="2">  id =<span class="st"> </span>grp =<span class="st"> </span><span class="ot">NULL</span> <span class="co"># due to NSE notes in R CMD check</span></a>
-<a class="sourceLine" id="cb5-3" title="3">  dt =<span class="st"> </span><span class="kw">as.data.table</span>(<span class="kw">list</span>(<span class="dt">id =</span> <span class="kw">seq_len</span>(n)))</a>
-<a class="sourceLine" id="cb5-4" title="4">  dt[, grp <span class="op">:</span><span class="er">=</span><span class="st"> </span>((id <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%%</span><span class="st"> </span><span class="dv">26</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb5-5" title="5">     ][, grp <span class="op">:</span><span class="er">=</span><span class="st"> </span>letters[grp]</a>
-<a class="sourceLine" id="cb5-6" title="6">       ][]</a>
-<a class="sourceLine" id="cb5-7" title="7">}</a>
-<a class="sourceLine" id="cb5-8" title="8">aggr =<span class="st"> </span><span class="cf">function</span> (x) {</a>
-<a class="sourceLine" id="cb5-9" title="9">  <span class="kw">stopifnot</span>(</a>
-<a class="sourceLine" id="cb5-10" title="10">    <span class="kw">is.data.table</span>(x),</a>
-<a class="sourceLine" id="cb5-11" title="11">    <span class="st">&quot;grp&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">names</span>(x)</a>
-<a class="sourceLine" id="cb5-12" title="12">  )</a>
-<a class="sourceLine" id="cb5-13" title="13">  x[, .N, by =<span class="st"> &quot;grp&quot;</span>]</a>
-<a class="sourceLine" id="cb5-14" title="14">}</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>gen =<span class="st"> </span><span class="cf">function</span> (<span class="dt">n =</span> 100L) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>  id =<span class="st"> </span>grp =<span class="st"> </span><span class="ot">NULL</span> <span class="co"># due to NSE notes in R CMD check</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  dt =<span class="st"> </span><span class="kw">as.data.table</span>(<span class="kw">list</span>(<span class="dt">id =</span> <span class="kw">seq_len</span>(n)))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>  dt[, grp <span class="op">:</span><span class="er">=</span><span class="st"> </span>((id <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%%</span><span class="st"> </span><span class="dv">26</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>     ][, grp <span class="op">:</span><span class="er">=</span><span class="st"> </span>letters[grp]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>       ][]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>}</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a>aggr =<span class="st"> </span><span class="cf">function</span> (x) {</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a>  <span class="kw">stopifnot</span>(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a>    <span class="kw">is.data.table</span>(x),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a>    <span class="st">&quot;grp&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">names</span>(x)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a>  )</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a>  x[, .N, by =<span class="st"> &quot;grp&quot;</span>]</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a>}</span></code></pre></div>
 <p>The case for <code>data.table</code>’s special symbols (<code>.SD</code>, <code>.BY</code>, <code>.N</code>, <code>.I</code>, <code>.GRP</code>, <code>.NGRP</code>, and <code>.EACHI</code>; see <code>?.N</code>) and assignment operator (<code>:=</code>) is slightly different. You should import whichever of these values you use from <code>data.table</code>’s namespace to protect against any issues arising from the unlikely scenario that we change the exported value of these in the future, e.g. if you want to use <code>.N</code>, <code>.I</code>, and <code>:=</code>, a minimal <code>NAMESPACE</code> would have:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">importFrom</span>(data.table, .N, .I, <span class="st">&#39;:=&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">importFrom</span>(data.table, .N, .I, <span class="st">&#39;:=&#39;</span>)</span></code></pre></div>
 <p>Much simpler is to just use <code>import(data.table)</code> which will greedily allow usage in your package’s code of any object exported from <code>data.table</code>.</p>
 <p>If you don’t mind having <code>id</code> and <code>grp</code> registered as variables globally in your package namespace you can use <code>?globalVariables</code>. Be aware that these notes do not have any impact on the code or its functionality; if you are not going to publish your package, you may simply choose to ignore them.</p>
 </div>
@@ -481,22 +466,22 @@ grp id</code></pre>
 <div id="optionally-import-data.table-suggests" class="section level2">
 <h2>Optionally import <code>data.table</code>: Suggests</h2>
 <p>If you want to use <code>data.table</code> conditionally, i.e., only when it is installed, you should use <code>Suggests: data.table</code> in your <code>DESCRIPTION</code> file instead of using <code>Imports: data.table</code>. By default this definition will not force installation of <code>data.table</code> when installing your package. This also requires you to conditionally use <code>data.table</code> in your package code which should be done using the <code>?requireNamespace</code> function. The below example demonstrates conditional use of <code>data.table</code>’s fast CSV writer <code>?fwrite</code>. If the <code>data.table</code> package is not installed, the much-slower base R <code>?write.table</code> function is used instead.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">my.write =<span class="st"> </span><span class="cf">function</span> (x) {</a>
-<a class="sourceLine" id="cb7-2" title="2">  <span class="cf">if</span>(<span class="kw">requireNamespace</span>(<span class="st">&quot;data.table&quot;</span>, <span class="dt">quietly=</span><span class="ot">TRUE</span>)) {</a>
-<a class="sourceLine" id="cb7-3" title="3">    data.table<span class="op">::</span><span class="kw">fwrite</span>(x, <span class="st">&quot;data.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb7-4" title="4">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb7-5" title="5">    <span class="kw">write.table</span>(x, <span class="st">&quot;data.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb7-6" title="6">  }</a>
-<a class="sourceLine" id="cb7-7" title="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>my.write =<span class="st"> </span><span class="cf">function</span> (x) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>  <span class="cf">if</span>(<span class="kw">requireNamespace</span>(<span class="st">&quot;data.table&quot;</span>, <span class="dt">quietly=</span><span class="ot">TRUE</span>)) {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>    data.table<span class="op">::</span><span class="kw">fwrite</span>(x, <span class="st">&quot;data.csv&quot;</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>    <span class="kw">write.table</span>(x, <span class="st">&quot;data.csv&quot;</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>  }</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>}</span></code></pre></div>
 <p>A slightly more extended version of this would also ensure that the installed version of <code>data.table</code> is recent enough to have the <code>fwrite</code> function available:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">my.write =<span class="st"> </span><span class="cf">function</span> (x) {</a>
-<a class="sourceLine" id="cb8-2" title="2">  <span class="cf">if</span>(<span class="kw">requireNamespace</span>(<span class="st">&quot;data.table&quot;</span>, <span class="dt">quietly=</span><span class="ot">TRUE</span>) <span class="op">&amp;&amp;</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="st">    </span>utils<span class="op">::</span><span class="kw">packageVersion</span>(<span class="st">&quot;data.table&quot;</span>) <span class="op">&gt;=</span><span class="st"> &quot;1.9.8&quot;</span>) {</a>
-<a class="sourceLine" id="cb8-4" title="4">    data.table<span class="op">::</span><span class="kw">fwrite</span>(x, <span class="st">&quot;data.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb8-5" title="5">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb8-6" title="6">    <span class="kw">write.table</span>(x, <span class="st">&quot;data.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb8-7" title="7">  }</a>
-<a class="sourceLine" id="cb8-8" title="8">}</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>my.write =<span class="st"> </span><span class="cf">function</span> (x) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>  <span class="cf">if</span>(<span class="kw">requireNamespace</span>(<span class="st">&quot;data.table&quot;</span>, <span class="dt">quietly=</span><span class="ot">TRUE</span>) <span class="op">&amp;&amp;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="st">    </span>utils<span class="op">::</span><span class="kw">packageVersion</span>(<span class="st">&quot;data.table&quot;</span>) <span class="op">&gt;=</span><span class="st"> &quot;1.9.8&quot;</span>) {</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>    data.table<span class="op">::</span><span class="kw">fwrite</span>(x, <span class="st">&quot;data.csv&quot;</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>    <span class="kw">write.table</span>(x, <span class="st">&quot;data.csv&quot;</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>  }</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>}</span></code></pre></div>
 <p>When using a package as a suggested dependency, you should not <code>import</code> it in the <code>NAMESPACE</code> file. Just mention it in the <code>DESCRIPTION</code> file. When using <code>data.table</code> functions in package code (R/* files) you need to use the <code>data.table::</code> prefix because none of them are imported. When using <code>data.table</code> in package tests (e.g. tests/testthat/test* files), you need to declare <code>.datatable.aware=TRUE</code> in one of the R/* files.</p>
 </div>
 <div id="data.table-in-imports-but-nothing-imported" class="section level2">

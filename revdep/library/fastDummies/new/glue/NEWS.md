@@ -1,5 +1,54 @@
+# glue 1.6.2
+
+* Modify a test for better forward compatibility with R.
+
+# glue 1.6.1
+
+* glue now registers its custom knitr engines in a way that is more robust to namespace-loading edge cases that can arise during package installation (#254).
+
+# glue 1.6.0
+
+* `glue()`, `glue_data()`, `glue_col()`, and `glue_data_col()` gain a new `.literal` argument, which controls how quotes and the comment character are treated when parsing the expression string (#235). This is mostly useful when using a custom transformer.
+
+* Trailing whitespace-only lines don't interfere with indentation (#247).
+
+# glue 1.5.1
+
+* Jennifer Bryan is now the maintainer.
+
+* The existing custom language engines for knitr, `glue` and `glue_sql`, are documented in a new vignette (#71). *Detail added after release: glue now sets up registration of these engines in `.onLoad()`.*
+
+* `glue_col()` gives special treatment to styling functions from the crayon package, e.g. `glue_col("{blue foo}")` "just works" now, even if crayon is not attached (but is installed) (#241).
+
+* Unterminated backticks trigger the same error as unterminated single or double quotes (#237).
+
+* `glue_sql()` collapses zero-length `DBI::SQL` object into `DBI::SQL("NULL")` (#244 @shrektan).
+
+# glue 1.5.0
+
+## Breaking changes
+
+* Long deprecated function `collapse()` has been removed (#213)
+
+## New functions and arguments
+
+* New `glue_sql_collapse()` function to collapse inputs and return a `DBI::SQL()` object (#103).
+
+* `glue()` gains a new `.comment` argument, to control the comment character (#193).
+* `glue()` gains a new `.null` argument, to control the value to replace `NULL` values with (#217, @echasnovski).
+
+## Bugfixes and minor changes
+
+* `sql_quote_transformer()` is now allows whitespace after the trailing `*` (#218).
+* `compare_proxy.glue()` method defined so glue objects can be compared to strings in testthat 3e without errors (#212)
+* `print.glue()` no longer prints an empty newline for 0 length inputs (#214)
+* Unterminated comments in glue expression now throw an error (#227, @gaborcsardi)
+* Unterminated quotes in glue expressions now throw an error (#226, @gaborcsardi)
+
+
 # glue 1.4.2
 
+* `glue_safe()` gives a slightly nicer error message
 * The required version of R is now 3.2 (#189)
 * `glue_sql()` now collapses `DBI::SQL()` elements correctly (#192 @shrektan)
 * The internal `compare()` method gains a `...` argument, for compatibility with testthat 3.0.0
@@ -60,8 +109,8 @@
 ## Breaking changes
 
 * The `evaluate()` function has been removed. Changes elsewhere in glue made
-  the implementation trivial so it was removed for clarities sake. Previous
-  uses can be replaced by `eval(parse(text = text), envir)`.
+  the implementation trivial so it was removed for the sake of clarity.
+  Previous uses can be replaced by `eval(parse(text = text), envir)`.
 
 * `collapse()` has been renamed to `glue_collapse()` to avoid namespace
   collisions with `dplyr::collapse()`.

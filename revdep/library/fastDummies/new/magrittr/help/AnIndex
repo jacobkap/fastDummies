@@ -1,4 +1,5 @@
 magrittr-package	magrittr-package
+%!>%	pipe-eager
 %$%	exposition
 %<>%	compound
 %>%	pipe
@@ -29,6 +30,7 @@ multiply_by_matrix	aliases
 n'est pas	aliases
 not	aliases
 or	aliases
+pipe-eager	pipe-eager
 pipe_eager_lexical	pipe_eager_lexical
 pipe_lazy_masking	pipe_eager_lexical
 pipe_nested	pipe_eager_lexical

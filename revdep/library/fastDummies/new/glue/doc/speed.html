@@ -27,29 +27,30 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
-<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
-// v0.0.1
-// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
 
-document.addEventListener('DOMContentLoaded', function() {
-  const codeList = document.getElementsByClassName("sourceCode");
-  for (var i = 0; i < codeList.length; i++) {
-    var linkList = codeList[i].getElementsByTagName('a');
-    for (var j = 0; j < linkList.length; j++) {
-      if (linkList[j].innerHTML === "") {
-        linkList[j].setAttribute('aria-hidden', 'true');
-      }
-    }
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
   }
-});
-</script>
-
-
-<style type="text/css">code{white-space: pre;}</style>
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -132,6 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
+
 
 
 
@@ -335,58 +337,85 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <blockquote>
 <p>Fast, dependency free string literals</p>
 </blockquote>
-<p>So what do we mean when we say that glue is fast? This does not mean glue is the fastest thing to use in all cases, however for the features it provides we can confidently say it is fast.</p>
-<p>A good way to determine this is to compare it’s speed of execution to some alternatives.</p>
+<p>So what do we mean when we say that glue is fast? This does not mean
+glue is the fastest thing to use in all cases, however for the features
+it provides we can confidently say it is fast.</p>
+<p>A good way to determine this is to compare it’s speed of execution to
+some alternatives.</p>
 <ul>
-<li><code>base::paste0()</code>, <code>base::sprintf()</code> - Functions in base R implemented in C that provide variable insertion (but not interpolation).</li>
-<li><code>R.utils::gstring()</code>, <code>stringr::str_interp()</code> - Provides a similar interface as glue, but using <code>${}</code> to delimit blocks to interpolate.</li>
-<li><code>pystr::pystr_format()</code><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, <code>rprintf::rprintf()</code> - Provide a interfaces similar to python string formatters with variable replacement, but not arbitrary interpolation.</li>
+<li><code>base::paste0()</code>, <code>base::sprintf()</code> -
+Functions in base R implemented in C that provide variable insertion
+(but not interpolation).</li>
+<li><code>R.utils::gstring()</code>, <code>stringr::str_interp()</code>
+- Provides a similar interface as glue, but using <code>${}</code> to
+delimit blocks to interpolate.</li>
+<li><code>pystr::pystr_format()</code><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>,
+<code>rprintf::rprintf()</code> - Provide a interfaces similar to python
+string formatters with variable replacement, but not arbitrary
+interpolation.</li>
 </ul>
 <div id="simple-concatenation" class="section level2">
 <h2>Simple concatenation</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>bar &lt;-<span class="st"> &quot;baz&quot;</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a>simple &lt;-</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="st">  </span>microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="dt">glue =</span> glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;foo{bar}&quot;</span>),</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">gstring =</span> R.utils<span class="op">::</span><span class="kw">gstring</span>(<span class="st">&quot;foo${bar}&quot;</span>),</span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">paste0 =</span> <span class="kw">paste0</span>(<span class="st">&quot;foo&quot;</span>, bar),</span>
-<span id="cb1-8"><a href="#cb1-8"></a>  <span class="dt">sprintf =</span> <span class="kw">sprintf</span>(<span class="st">&quot;foo%s&quot;</span>, bar),</span>
-<span id="cb1-9"><a href="#cb1-9"></a>  <span class="dt">str_interp =</span> stringr<span class="op">::</span><span class="kw">str_interp</span>(<span class="st">&quot;foo${bar}&quot;</span>),</span>
-<span id="cb1-10"><a href="#cb1-10"></a>  <span class="dt">rprintf =</span> rprintf<span class="op">::</span><span class="kw">rprintf</span>(<span class="st">&quot;foo$bar&quot;</span>, <span class="dt">bar =</span> bar)</span>
-<span id="cb1-11"><a href="#cb1-11"></a>)</span>
-<span id="cb1-12"><a href="#cb1-12"></a></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="kw">print</span>(<span class="dt">unit =</span> <span class="st">&quot;eps&quot;</span>, <span class="dt">order =</span> <span class="st">&quot;median&quot;</span>, <span class="dt">signif =</span> <span class="dv">4</span>, simple)</span>
-<span id="cb1-14"><a href="#cb1-14"></a></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="kw">plot_comparison</span>(simple)</span></code></pre></div>
-<p>While <code>glue()</code> is slower than <code>paste0</code>,<code>sprintf()</code> it is twice as fast as <code>str_interp()</code> and <code>gstring()</code>, and on par with <code>rprintf()</code>.</p>
-<p>Although <code>paste0()</code>, <code>sprintf()</code> don’t do string interpolation and will likely always be significantly faster than glue, glue was never meant to be a direct replacement for them.</p>
-<p><code>rprintf()</code> does only variable interpolation, not arbitrary expressions, which was one of the explicit goals of writing glue.</p>
-<p>So glue is ~2x as fast as the two functions (<code>str_interp()</code>, <code>gstring()</code>), which do have roughly equivalent functionality.</p>
-<p>It also is still quite fast, with over 6000 evaluations per second on this machine.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bar <span class="ot">&lt;-</span> <span class="st">&quot;baz&quot;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>simple <span class="ot">&lt;-</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">glue =</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;foo{bar}&quot;</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">gstring =</span> R.utils<span class="sc">::</span><span class="fu">gstring</span>(<span class="st">&quot;foo${bar}&quot;</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">paste0 =</span> <span class="fu">paste0</span>(<span class="st">&quot;foo&quot;</span>, bar),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sprintf =</span> <span class="fu">sprintf</span>(<span class="st">&quot;foo%s&quot;</span>, bar),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">str_interp =</span> stringr<span class="sc">::</span><span class="fu">str_interp</span>(<span class="st">&quot;foo${bar}&quot;</span>),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">rprintf =</span> rprintf<span class="sc">::</span><span class="fu">rprintf</span>(<span class="st">&quot;foo$bar&quot;</span>, <span class="at">bar =</span> bar)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="at">unit =</span> <span class="st">&quot;eps&quot;</span>, <span class="at">order =</span> <span class="st">&quot;median&quot;</span>, <span class="at">signif =</span> <span class="dv">4</span>, simple)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_comparison</span>(simple)</span></code></pre></div>
+<p>While <code>glue()</code> is slower than
+<code>paste0</code>,<code>sprintf()</code> it is twice as fast as
+<code>str_interp()</code> and <code>gstring()</code>, and on par with
+<code>rprintf()</code>.</p>
+<p>Although <code>paste0()</code>, <code>sprintf()</code> don’t do
+string interpolation and will likely always be significantly faster than
+glue, glue was never meant to be a direct replacement for them.</p>
+<p><code>rprintf()</code> does only variable interpolation, not
+arbitrary expressions, which was one of the explicit goals of writing
+glue.</p>
+<p>So glue is ~2x as fast as the two functions
+(<code>str_interp()</code>, <code>gstring()</code>), which do have
+roughly equivalent functionality.</p>
+<p>It also is still quite fast, with over 6000 evaluations per second on
+this machine.</p>
 </div>
 <div id="vectorized-performance" class="section level2">
 <h2>Vectorized performance</h2>
-<p>Taking advantage of glue’s vectorization is the best way to avoid performance. For instance the vectorized form of the previous benchmark is able to generate 100,000 strings in only 22ms with performance much closer to that of <code>paste0()</code> and <code>sprintf()</code>. NB: <code>str_interp()</code> does not support vectorization, and so was removed.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>bar &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;bar&quot;</span>, <span class="fl">1e5</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a>vectorized &lt;-</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="st">  </span>microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</span>
-<span id="cb2-5"><a href="#cb2-5"></a>  <span class="dt">glue =</span> glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;foo{bar}&quot;</span>),</span>
-<span id="cb2-6"><a href="#cb2-6"></a>  <span class="dt">gstring =</span> R.utils<span class="op">::</span><span class="kw">gstring</span>(<span class="st">&quot;foo${bar}&quot;</span>),</span>
-<span id="cb2-7"><a href="#cb2-7"></a>  <span class="dt">paste0 =</span> <span class="kw">paste0</span>(<span class="st">&quot;foo&quot;</span>, bar),</span>
-<span id="cb2-8"><a href="#cb2-8"></a>  <span class="dt">sprintf =</span> <span class="kw">sprintf</span>(<span class="st">&quot;foo%s&quot;</span>, bar),</span>
-<span id="cb2-9"><a href="#cb2-9"></a>  <span class="dt">rprintf =</span> rprintf<span class="op">::</span><span class="kw">rprintf</span>(<span class="st">&quot;foo$bar&quot;</span>, <span class="dt">bar =</span> bar)</span>
-<span id="cb2-10"><a href="#cb2-10"></a>)</span>
-<span id="cb2-11"><a href="#cb2-11"></a></span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="kw">print</span>(<span class="dt">unit =</span> <span class="st">&quot;ms&quot;</span>, <span class="dt">order =</span> <span class="st">&quot;median&quot;</span>, <span class="dt">signif =</span> <span class="dv">4</span>, vectorized)</span>
-<span id="cb2-13"><a href="#cb2-13"></a></span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="kw">plot_comparison</span>(vectorized, <span class="dt">log =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p>Taking advantage of glue’s vectorization is the best way to avoid
+performance. For instance the vectorized form of the previous benchmark
+is able to generate 100,000 strings in only 22ms with performance much
+closer to that of <code>paste0()</code> and <code>sprintf()</code>. NB:
+<code>str_interp()</code> does not support vectorization, and so was
+removed.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bar <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;bar&quot;</span>, <span class="fl">1e5</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>vectorized <span class="ot">&lt;-</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">glue =</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;foo{bar}&quot;</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">gstring =</span> R.utils<span class="sc">::</span><span class="fu">gstring</span>(<span class="st">&quot;foo${bar}&quot;</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">paste0 =</span> <span class="fu">paste0</span>(<span class="st">&quot;foo&quot;</span>, bar),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sprintf =</span> <span class="fu">sprintf</span>(<span class="st">&quot;foo%s&quot;</span>, bar),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">rprintf =</span> rprintf<span class="sc">::</span><span class="fu">rprintf</span>(<span class="st">&quot;foo$bar&quot;</span>, <span class="at">bar =</span> bar)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="at">unit =</span> <span class="st">&quot;ms&quot;</span>, <span class="at">order =</span> <span class="st">&quot;median&quot;</span>, <span class="at">signif =</span> <span class="dv">4</span>, vectorized)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_comparison</span>(vectorized, <span class="at">log =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr />
 <ol>
-<li id="fn1"><p>pystr is no longer available from CRAN due to failure to correct installation errors and was therefore removed from further testing.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>pystr is no longer available from CRAN due to failure to
+correct installation errors and was therefore removed from further
+testing.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 

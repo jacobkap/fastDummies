@@ -10,4 +10,5 @@ faq-pipe-gender         FAQ: What is the gender of the pipe?
 freduce                 Apply a list of functions sequentially
 functions               Extract the function list from a functional
                         sequence.
+pipe-eager              Eager pipe
 print.fseq              Print method for functional sequence.

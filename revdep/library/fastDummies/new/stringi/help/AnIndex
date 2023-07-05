@@ -200,9 +200,11 @@ stri_pad_left	stri_pad
 stri_pad_right	stri_pad
 stri_paste	stri_join
 stri_paste_list	stri_join_list
+stri_printf	stri_sprintf
 stri_rand_lipsum	stri_rand_lipsum
 stri_rand_shuffle	stri_rand_shuffle
 stri_rand_strings	stri_rand_strings
+stri_rank	stri_rank
 stri_read_lines	stri_read_lines
 stri_read_raw	stri_read_raw
 stri_remove_empty	stri_remove_empty
@@ -225,6 +227,7 @@ stri_replace_last_coll	stri_replace
 stri_replace_last_fixed	stri_replace
 stri_replace_last_regex	stri_replace
 stri_replace_na	stri_replace_na
+stri_replace_rstr	stri_replace_rstr
 stri_reverse	stri_reverse
 stri_sort	stri_sort
 stri_sort_key	stri_sort_key
@@ -236,12 +239,14 @@ stri_split_fixed	stri_split
 stri_split_lines	stri_split_lines
 stri_split_lines1	stri_split_lines
 stri_split_regex	stri_split
+stri_sprintf	stri_sprintf
 stri_startswith	stri_startsendswith
 stri_startswith_charclass	stri_startsendswith
 stri_startswith_coll	stri_startsendswith
 stri_startswith_fixed	stri_startsendswith
 stri_stats_general	stri_stats_general
 stri_stats_latex	stri_stats_latex
+stri_string_format	stri_sprintf
 stri_sub	stri_sub
 stri_sub<-	stri_sub
 stri_subset	stri_subset
@@ -263,6 +268,7 @@ stri_timezone_get	stri_timezone_set
 stri_timezone_info	stri_timezone_info
 stri_timezone_list	stri_timezone_list
 stri_timezone_set	stri_timezone_set
+stri_trans_casefold	stri_trans_casemap
 stri_trans_char	stri_trans_char
 stri_trans_general	stri_trans_general
 stri_trans_isnfc	stri_trans_nf

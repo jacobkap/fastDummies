@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 library(stringr)
 ```
 
-Regular expressions are a concise and flexible tool for describing patterns in strings. This vignette describes the key features of stringr's regular expressions, as implemented by [stringi](https://github.com/gagolews/stringi). It is not a tutorial, so if you're unfamiliar regular expressions, I'd recommend starting at <http://r4ds.had.co.nz/strings.html>. If you want to master the details, I'd recommend reading the classic [_Mastering Regular Expressions_](https://amzn.com/0596528124) by Jeffrey E. F. Friedl. 
+Regular expressions are a concise and flexible tool for describing patterns in strings. This vignette describes the key features of stringr's regular expressions, as implemented by [stringi](https://github.com/gagolews/stringi). It is not a tutorial, so if you're unfamiliar regular expressions, I'd recommend starting at <https://r4ds.had.co.nz/strings.html>. If you want to master the details, I'd recommend reading the classic [_Mastering Regular Expressions_](https://www.amazon.com/Mastering-Regular-Expressions-Jeffrey-Friedl/dp/0596528124) by Jeffrey E. F. Friedl. 
 
 Regular expressions are the default pattern engine in stringr. That means when you use a pattern matching function with a bare string, it's equivalent to wrapping it in a call to `regex()`:
 
@@ -229,13 +229,13 @@ You can also using Unicode properties, like `[\p{Letter}]`, and various set oper
 
 ## Alternation
 
-`|` is the __alternation__ operator, which will pick between one or more possible matches. For example, `abc|def` will match `abc` or `def`. 
+`|` is the __alternation__ operator, which will pick between one or more possible matches. For example, `abc|def` will match `abc` or `def`:
 
 ```{r}
 str_detect(c("abc", "def", "ghi"), "abc|def")
 ```
 
-Note that the precedence for `|` is low, so that `abc|def` matches `abc` or `def` not `abcyz` or `abxyz`. 
+Note that the precedence for `|` is low: `abc|def` is equivalent to `(abc)|(def)` not `ab(c|d)ef`.
 
 ## Grouping
 
@@ -403,13 +403,14 @@ The second is to use `regex(comments = TRUE)`. This form ignores spaces and newl
 
 ```{r}
 phone <- regex("
-  \\(?     # optional opening parens
-  (\\d{3}) # area code
-  [)- ]?   # optional closing parens, dash, or space
-  (\\d{3}) # another three numbers
-  [ -]?    # optional space or dash
-  (\\d{3}) # three more numbers
+  \\(?       # optional opening parens
+  (\\d{3})   # area code
+  \\)?       # optional closing parens
+  (?:-|\\ )? # optional dash or space
+  (\\d{3})   # another three numbers
+  (?:-|\\ )? # optional dash or space
+  (\\d{3})   # three more numbers
   ", comments = TRUE)
 
-str_match("514-791-8141", phone)
+str_match(c("514-791-8141", "(514) 791 8141"), phone)
 ```

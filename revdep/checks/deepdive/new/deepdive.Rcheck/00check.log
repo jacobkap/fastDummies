@@ -1,11 +1,15 @@
-* using log directory 'C:/Users/user/Dropbox/R_project/fastDummies/revdep/checks/deepdive/new/deepdive.Rcheck'
-* using R version 4.0.2 (2020-06-22)
+* using log directory 'E:/Dropbox/R_project/fastDummies/revdep/checks/deepdive/new/deepdive.Rcheck'
+* using R version 4.3.1 (2023-06-16 ucrt)
 * using platform: x86_64-w64-mingw32 (64-bit)
-* using session charset: ISO8859-1
+* R was compiled by
+    gcc.exe (GCC) 12.2.0
+    GNU Fortran (GCC) 12.2.0
+* running under: Windows 10 x64 (build 19045)
+* using session charset: UTF-8
 * using options '--no-manual --no-build-vignettes'
 * checking for file 'deepdive/DESCRIPTION' ... OK
 * checking extension type ... Package
-* this is package 'deepdive' version '1.0.1'
+* this is package 'deepdive' version '1.0.4'
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK

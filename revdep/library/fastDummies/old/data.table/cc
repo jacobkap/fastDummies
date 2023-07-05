@@ -1,2 +1,2 @@
-CC=gcc -std=gnu99
-CFLAGS=-O3
+CC=gcc
+CFLAGS=-O2
