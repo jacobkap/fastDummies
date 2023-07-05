@@ -1,4 +1,8 @@
-# fastDummies 1.7.1
+# fastDummies 1.7.3
+
+* Fix .onAttach message.
+
+# fastDummies 1.7.2
 
 * Adds onattach message.
 
