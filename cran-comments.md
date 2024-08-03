@@ -1,6 +1,6 @@
 ## Test environments
 
-* local Windows install, R 4.3.1
+* local Windows install, R 4.3.2
 * AppVeyor, R 4.3.1
 * Rhub
     + Windows Server 2022, R-devel, 64 bit

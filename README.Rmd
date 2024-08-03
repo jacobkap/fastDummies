@@ -5,8 +5,8 @@ output: github_document
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/fastDummies)](https://cran.r-project.org/package=fastDummies)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/jacobkap/fastDummies?branch=master&svg=true)](https://ci.appveyor.com/project/jacobkap/fastDummies) 
-[![Build Status](https://travis-ci.org/jacobkap/fastDummies.svg?branch=master)](https://travis-ci.org/jacobkap/fastDummies)
-[![Coverage status](https://codecov.io/gh/jacobkap/fastDummies/branch/master/graph/badge.svg)](https://codecov.io/github/jacobkap/fastDummies?branch=master)
+[![Build Status](https://travis-ci.org/jacobkap/fastDummies.svg?branch=master)](https://app.travis-ci.com/jacobkap/fastDummies)
+[![Coverage status](https://codecov.io/gh/jacobkap/fastDummies/branch/master/graph/badge.svg)](https://app.codecov.io/github/jacobkap/fastDummies?branch=master)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/fastDummies?color=blue)](https://cran.r-project.org/package=fastDummies)
 
 ## Overview
