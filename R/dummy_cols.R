@@ -36,21 +36,29 @@
 #' If TRUE (not default) and `length(select_columns) == 1`, omit pre-pending the
 #' name of `select_columns` to the names of the newly generated dummy columns
 #'
+#' @param return_generated_variables
+#' If TRUE (not default), returns a vector of the names of the variables that
+#' would be generated. Does not modify the inputted data.
+#'
 #' @return
 #' A data.frame (or tibble or data.table, depending on input data type) with
 #' same number of rows as inputted data and original columns plus the newly
 #' created dummy columns.
 #' @export
 #' @examples
-#' crime <- data.frame(city = c("SF", "SF", "NYC"),
-#'     year = c(1990, 2000, 1990),
-#'     crime = 1:3)
+#' crime <- data.frame(
+#'   city = c("SF", "SF", "NYC"),
+#'   year = c(1990, 2000, 1990),
+#'   crime = 1:3
+#' )
 #' dummy_cols(crime)
 #' # Include year column
 #' dummy_cols(crime, select_columns = c("city", "year"))
 #' # Remove first dummy for each pair of dummy columns made
-#' dummy_cols(crime, select_columns = c("city", "year"),
-#'     remove_first_dummy = TRUE)
+#' dummy_cols(crime,
+#'   select_columns = c("city", "year"),
+#'   remove_first_dummy = TRUE
+#' )
 dummy_cols <- function(.data,
                        select_columns = NULL,
                        remove_first_dummy = FALSE,
@@ -58,12 +66,16 @@ dummy_cols <- function(.data,
                        ignore_na = FALSE,
                        split = NULL,
                        remove_selected_columns = FALSE,
-                       omit_colname_prefix = FALSE) {
+                       omit_colname_prefix = FALSE,
+                       return_generated_variables = FALSE) {
+  old_columns <- names(.data)
 
-  stopifnot(is.null(select_columns) || is.character(select_columns),
-            select_columns != "",
-            is.logical(remove_first_dummy), length(remove_first_dummy) == 1,
-            is.logical(remove_selected_columns))
+  stopifnot(
+    is.null(select_columns) || is.character(select_columns),
+    select_columns != "",
+    is.logical(remove_first_dummy), length(remove_first_dummy) == 1,
+    is.logical(remove_selected_columns)
+  )
 
   if (remove_first_dummy == TRUE & remove_most_frequent_dummy == TRUE) {
     stop("Select either 'remove_first_dummy' or 'remove_most_frequent_dummy'
@@ -82,35 +94,48 @@ dummy_cols <- function(.data,
 
   # Grabs column names that are character or factor class -------------------
   if (!is.null(select_columns)) {
-    char_cols        <- select_columns
+    char_cols <- select_columns
     cols_not_in_data <- char_cols[!char_cols %in% names(.data)]
-    char_cols        <- char_cols[!char_cols %in% cols_not_in_data]
+    char_cols <- char_cols[!char_cols %in% cols_not_in_data]
     if (length(char_cols) == 0) {
       stop("select_columns is/are not in data. Please check data and spelling.")
     }
   } else if (ncol(.data) == 1) {
     char_cols <- names(.data)
   } else {
-    char_cols <- sapply(.data, class)
-    char_cols <- char_cols[char_cols %in% c("factor", "character")]
-    char_cols <- names(char_cols)
+    char_cols_class <- sapply(.data, class)
+    char_cols <- c()
+    for (i in 1:length(char_cols_class)) {
+      char_col_i <- char_cols_class[[i]]
+
+      if (any(char_col_i %in% c("character", "factor", "ordered"))) {
+        char_cols <- c(char_cols, names(.data)[i])
+      }
+    }
+    #  char_cols <- char_cols[char_cols %in% c("factor", "character")]
+    #  char_cols <- names(char_cols)
   }
 
   if (length(char_cols) == 0 && is.null(select_columns)) {
-    stop(paste0("No character or factor columns found. ",
-                "Please use select_columns to choose columns."))
+    stop(paste0(
+      "No character or factor columns found. ",
+      "Please use select_columns to choose columns."
+    ))
   }
 
   if (!is.null(select_columns) && length(cols_not_in_data) > 0) {
-    warning(paste0("NOTE: The following select_columns input(s) ",
-                   "is not a column in data.\n"),
-            paste0(names(cols_not_in_data), "\t"))
+    warning(
+      paste0(
+        "NOTE: The following select_columns input(s) ",
+        "is not a column in data.\n"
+      ),
+      paste0(names(cols_not_in_data), "\t")
+    )
   }
-
 
   for (col_name in char_cols) {
     # If factor type, order by assigned levels
-    if (is.factor(.data[[col_name]])) {
+    if (is.factor(.data[[col_name]]) | is.ordered(.data[[col_name]])) {
       unique_vals <- levels(.data[[col_name]])
       if (any(is.na(.data[[col_name]]))) {
         unique_vals <- c(unique_vals, NA)
@@ -119,9 +144,10 @@ dummy_cols <- function(.data,
     } else {
       unique_vals <- unique(.data[[col_name]])
       unique_vals <- stringr::str_sort(unique_vals,
-                                       na_last = TRUE,
-                                       locale = "en_US",
-                                       numeric = TRUE)
+        na_last = TRUE,
+        locale = "en_US",
+        numeric = TRUE
+      )
     }
     unique_vals <- as.character(unique_vals)
 
@@ -138,16 +164,18 @@ dummy_cols <- function(.data,
     if (remove_most_frequent_dummy) {
       vals <- as.character(.data[[col_name]])
       vals <- data.frame(sort(table(vals), decreasing = TRUE),
-                         stringsAsFactors = FALSE)
+        stringsAsFactors = FALSE
+      )
       # If there is a actual most frequent value, drop that value. Else,
       # if there is a tie, drop the one that's first alphabetically.
       top_vals <- vals[vals$Freq %in% max(vals$Freq), ]
       other_vals <- vals$vals[!vals$Freq %in% max(vals$Freq)]
       other_vals <- as.character(other_vals)
       top_vals <- top_vals[stringr::str_order(top_vals$vals,
-                                              na_last = TRUE,
-                                              locale = "en_US",
-                                              numeric = TRUE), ]
+        na_last = TRUE,
+        locale = "en_US",
+        numeric = TRUE
+      ), ]
       if (nrow(top_vals) == 1) {
         top_vals <- NULL
       } else {
@@ -156,61 +184,62 @@ dummy_cols <- function(.data,
 
       unique_vals <- c(top_vals, other_vals)
       unique_vals <- stringr::str_sort(unique_vals,
-                                       na_last = TRUE,
-                                       locale = "en_US",
-                                       numeric = TRUE)
-      #    unique_vals <- vals[order(match(vals, unique_vals))]
-      # if (vals$Freq[1] > vals$Freq[2]) {
-      #   vals <- as.character(vals$vals[2:nrow(vals)])
-      #   unique_vals <- unique_vals[which(unique_vals %in% vals)]
-      #   unique_vals <- vals[order(match(vals, unique_vals))]
-      # } else {
-      #   vals <- vals[vals$Freq %in% max(vals$Freq), ]
-      #   vals <- vals[stringr::str_order(vals$vals,
-      #                                   na_last = TRUE,
-      #                                   locale = "en_US",
-      #                                   numeric = TRUE)]
-      #   vals <- as.character(vals$vals[2:nrow(vals)])
-      #   unique_vals <- unique_vals[which(unique_vals %in% vals)]
-      #   unique_vals <- vals[order(match(vals, unique_vals))]
-      # }
+        na_last = TRUE,
+        locale = "en_US",
+        numeric = TRUE
+      )
     }
 
     if (remove_first_dummy) {
       unique_vals <- unique_vals[-1]
     }
 
+
+
+
     data.table::alloc.col(.data, ncol(.data) + length(unique_vals))
 
-    #   data.table::set(.data, j = paste0(col_name, "_", unique_vals), value = 0L)
     .data[, paste0(col_name, "_", unique_vals)] <- 0L
     for (unique_value in unique_vals) {
-      data.table::set(.data, i =
-                        which(data.table::chmatch(
-                          as.character(.data[[col_name]]),
-                          unique_value, nomatch = 0) == 1L),
-                      j = paste0(col_name, "_", unique_value), value = 1L)
+      data.table::set(.data,
+        i =
+          which(data.table::chmatch(
+            as.character(.data[[col_name]]),
+            unique_value,
+            nomatch = 0
+          ) == 1L),
+        j = paste0(col_name, "_", unique_value), value = 1L
+      )
 
 
       # Sets NA values to NA, only for columns that are not the NA columns
       if (!is.na(unique_value)) {
-        data.table::set(.data, i =
-                          which(is.na(.data[[col_name]])),
-                        j = paste0(col_name, "_", unique_value), value = NA)
+        data.table::set(.data,
+          i =
+            which(is.na(.data[[col_name]])),
+          j = paste0(col_name, "_", unique_value), value = NA
+        )
       }
 
       if (!is.null(split)) {
         max_split_length <- max(sapply(strsplit(as.character(.data[[col_name]]),
-                                                split = split), length))
+          split = split
+        ), length))
         for (split_length in 1:max_split_length) {
-          data.table::set(.data, i =
-                            which(data.table::chmatch(
-                              as.character(trimws(sapply(strsplit(as.character(.data[[col_name]]),
-                                                                  split = split),
-                                                         `[`, split_length))),
-                              unique_value, nomatch = 0) == 1L),
-                          j = paste0(col_name, "_", unique_value), value = 1L)
-
+          data.table::set(.data,
+            i =
+              which(data.table::chmatch(
+                as.character(trimws(sapply(
+                  strsplit(as.character(.data[[col_name]]),
+                    split = split
+                  ),
+                  `[`, split_length
+                ))),
+                unique_value,
+                nomatch = 0
+              ) == 1L),
+            j = paste0(col_name, "_", unique_value), value = 1L
+          )
         }
         if (is.na(unique_value)) {
           .data[[paste0(col_name, "_", unique_value)]][which(!is.na(.data[[col_name]]))] <- 0
@@ -226,17 +255,22 @@ dummy_cols <- function(.data,
   .data <- fix_data_type(.data, data_type)
   if (omit_colname_prefix) {
     if (length(select_columns) == 1) {
-
       new_col_index <-
-        as.logical(rowSums(sapply(unique_vals, function(x)
-          grepl(paste0(select_columns, "_", x), names(.data)))))
+        as.logical(rowSums(sapply(unique_vals, function(x) {
+          grepl(paste0(select_columns, "_", x), names(.data))
+        })))
       names(.data)[new_col_index] <-
         gsub(paste0(select_columns, "_"), "", names(.data)[new_col_index])
-
     } else {
       message("Can't omit the colname prefix when recoding more than one column.")
       message("Returning prefixed dummy columns.")
     }
+  }
+
+  if (return_generated_variables) {
+    new_columns <- names(.data)
+    new_columns <- new_columns[!new_columns %in% old_columns]
+    return(new_columns)
   }
 
   return(.data)
@@ -257,13 +291,17 @@ dummy_cols <- function(.data,
 #' @inheritParams dummy_cols
 #' @export
 #' @examples
-#' crime <- data.frame(city = c("SF", "SF", "NYC"),
-#'     year = c(1990, 2000, 1990),
-#'     crime = 1:3)
+#' crime <- data.frame(
+#'   city = c("SF", "SF", "NYC"),
+#'   year = c(1990, 2000, 1990),
+#'   crime = 1:3
+#' )
 #' dummy_cols(crime)
 #' # Include year column
 #' dummy_cols(crime, select_columns = c("city", "year"))
 #' # Remove first dummy for each pair of dummy columns made
-#' dummy_cols(crime, select_columns = c("city", "year"),
-#'     remove_first_dummy = TRUE)
+#' dummy_cols(crime,
+#'   select_columns = c("city", "year"),
+#'   remove_first_dummy = TRUE
+#' )
 dummy_columns <- dummy_cols

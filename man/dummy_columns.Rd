@@ -12,7 +12,8 @@ dummy_columns(
   ignore_na = FALSE,
   split = NULL,
   remove_selected_columns = FALSE,
-  omit_colname_prefix = FALSE
+  omit_colname_prefix = FALSE,
+  return_generated_variables = FALSE
 )
 }
 \arguments{
@@ -42,6 +43,9 @@ and dog dummy columns.}
 
 \item{omit_colname_prefix}{If TRUE (not default) and `length(select_columns) == 1`, omit pre-pending the
 name of `select_columns` to the names of the newly generated dummy columns}
+
+\item{return_generated_variables}{If TRUE (not default), returns a vector of the names of the variables that
+would be generated. Does not modify the inputted data.}
 }
 \description{
 dummy_columns() quickly creates dummy (binary) columns from character and
@@ -50,15 +54,19 @@ statistical analysis when you want binary columns rather than
 character columns.
 }
 \examples{
-crime <- data.frame(city = c("SF", "SF", "NYC"),
-    year = c(1990, 2000, 1990),
-    crime = 1:3)
+crime <- data.frame(
+  city = c("SF", "SF", "NYC"),
+  year = c(1990, 2000, 1990),
+  crime = 1:3
+)
 dummy_cols(crime)
 # Include year column
 dummy_cols(crime, select_columns = c("city", "year"))
 # Remove first dummy for each pair of dummy columns made
-dummy_cols(crime, select_columns = c("city", "year"),
-    remove_first_dummy = TRUE)
+dummy_cols(crime,
+  select_columns = c("city", "year"),
+  remove_first_dummy = TRUE
+)
 }
 \seealso{
 \code{\link{dummy_rows}} For creating dummy rows

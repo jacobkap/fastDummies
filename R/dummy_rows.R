@@ -45,7 +45,6 @@ dummy_rows <- function(.data,
                        select_columns = NULL,
                        dummy_value = NA,
                        dummy_indicator = FALSE) {
-
   stopifnot(is.null(select_columns) || is.character(select_columns),
             select_columns != "",
             is.logical(dummy_indicator), length(dummy_indicator) == 1,
@@ -61,11 +60,21 @@ dummy_rows <- function(.data,
     .data <- data.table::as.data.table(.data)
   }
 
+
+
   # Finds class of every column and keeps character, factor, and Date --------
   if (is.null(select_columns)) {
-    char_cols <- sapply(.data, class)
-    char_cols <- names(.data)[char_cols %in%
-                               c("character", "factor", "Date")]
+    char_cols_class <- sapply(.data, class)
+    char_cols <- c()
+    for (i in 1:length(char_cols_class)) {
+      char_col_i <- char_cols_class[[i]]
+
+      if (any(char_col_i %in% c("character", "factor", "Date", "ordered"))) {
+        char_cols <- c(char_cols, names(.data)[i])
+      }
+    }
+    # char_cols <- names(.data)[char_cols %in%
+    #                            c("character", "factor", "Date", "ordered")]
     if (length(char_cols) == 0) {
       stop("No character, factor, or Date columns found. Please use select_columns")
     }
@@ -87,13 +96,13 @@ dummy_rows <- function(.data,
   names(temp_table) <- names(.data)
 
   # Fills in all possible combination rows ----------------------------------
-    for (i in char_cols) {
-        data.table::set(temp_table, j = i,
-                      value = rep(unique(.data[[i]]), times =
+  for (i in char_cols) {
+    data.table::set(temp_table, j = i,
+                    value = rep(unique(.data[[i]]), times =
                                   total_length /
                                   data.table::uniqueN(.data[[i]])))
-     temp_table <- data.table::setorderv(temp_table, i)
-    }
+    temp_table <- data.table::setorderv(temp_table, i)
+  }
 
   # Adds the dummy variable columns (and indicator) -------------------------
   for (i in other_cols) {
@@ -113,15 +122,15 @@ dummy_rows <- function(.data,
 
   # Removes rows that were in original data. --------------------------------
   data_temp_pasting <- do.call(paste0, .data[, char_cols, with = FALSE,
-                                            drop = FALSE])
+                                             drop = FALSE])
   temp_temp_pasting <- do.call(paste0, temp_table[, char_cols, with = FALSE,
-                                            drop = FALSE])
+                                                  drop = FALSE])
   temp_table <- subset(temp_table, !temp_temp_pasting %in% data_temp_pasting)
 
   # Stacks new data on old data
   if (nrow(temp_table) > 0) {
-  .data <- data.table::rbindlist(list(.data, temp_table), use.names = TRUE,
-                                fill = TRUE)
+    .data <- data.table::rbindlist(list(.data, temp_table), use.names = TRUE,
+                                   fill = TRUE)
   }
 
   .data <- fix_data_type(.data, data_type)
