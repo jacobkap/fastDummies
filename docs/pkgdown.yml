@@ -1,8 +1,10 @@
-pandoc: 3.1.1
-pkgdown: 2.0.7
+pandoc: '3.2'
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   making-dummy-rows: making-dummy-rows.html
   making-dummy-variables: making-dummy-variables.html
-last_built: 2023-07-05T13:35Z
-
+last_built: 2025-01-17T16:18Z
+urls:
+  reference: https://jacobkap.github.io/fastDummies/reference
+  article: https://jacobkap.github.io/fastDummies/articles
