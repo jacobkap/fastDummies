@@ -37,6 +37,22 @@ test_that("data.frame input returns data.frame", {
 
 })
 
+test_that("grouped_df input returns grouped_df with same groups", {
+  skip_if_not_installed("dplyr")
+  crime_grouped <- dplyr::group_by(
+    data.frame(city = c("SF", "SF", "NYC"), year = c(1990, 2000, 1990), crime = 1:3),
+    city
+  )
+
+  result_cols <- dummy_cols(crime_grouped, select_columns = "year")
+  expect_true(dplyr::is_grouped_df(result_cols))
+  expect_equal(dplyr::group_vars(result_cols), "city")
+
+  result_rows <- dummy_rows(crime_grouped, select_columns = "year")
+  expect_true(dplyr::is_grouped_df(result_rows))
+  expect_equal(dplyr::group_vars(result_rows), "city")
+})
+
 test_that("data.table input returns data.table", {
   expect_is(dummy_cols(data.table::as.data.table(crime)),               "data.table")
   expect_is(dummy_cols(data.table::as.data.table(crime$city)),          "data.table")

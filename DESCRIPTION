@@ -19,11 +19,12 @@ LazyData: true
 URL: https://github.com/jacobkap/fastDummies, https://jacobkap.github.io/fastDummies/
 BugReports: https://github.com/jacobkap/fastDummies/issues
 RoxygenNote: 7.3.2
-Suggests: 
+Suggests:
     testthat (>= 2.1.0),
     knitr,
     rmarkdown,
     covr,
-    spelling
+    spelling,
+    dplyr
 VignetteBuilder: knitr
 Language: en-US

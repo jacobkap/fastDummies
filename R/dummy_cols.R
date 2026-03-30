@@ -86,6 +86,8 @@ dummy_cols <- function(.data,
     .data <- data.frame(.data = .data, stringsAsFactors = FALSE)
   }
 
+  group_vars <- if (inherits(.data, "grouped_df")) dplyr::group_vars(.data) else NULL
+
   data_type <- check_type(.data)
 
   if (!data.table::is.data.table(.data)) {
@@ -253,6 +255,9 @@ dummy_cols <- function(.data,
   }
 
   .data <- fix_data_type(.data, data_type)
+  if (!is.null(group_vars)) {
+    .data <- dplyr::group_by(.data, dplyr::across(dplyr::all_of(group_vars)))
+  }
   if (omit_colname_prefix) {
     if (length(select_columns) == 1) {
       new_col_index <-
