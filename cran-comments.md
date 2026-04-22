@@ -1,6 +1,6 @@
 ## Test environments
 
-* local Windows install, R 4.4.2
+* local Windows install, R 4.5.1
 * Rhub
     + linux (R-devel)
     + macos-arm64 (R-devel)

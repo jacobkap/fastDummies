@@ -116,11 +116,11 @@ results <- fastDummies::dummy_cols(fastDummies_example)
 knitr::kable(results)
 ```
 
-| numbers | gender | animals | dates      | gender_female | gender_male | animals_cat | animals_dog |
-|--------:|:-------|:--------|:-----------|--------------:|------------:|------------:|------------:|
-|       1 | male   | dog     | 2012-01-01 |             0 |           1 |           0 |           1 |
-|       2 | male   | dog     | 2011-12-31 |             0 |           1 |           0 |           1 |
-|       3 | female | cat     | 2012-01-01 |             1 |           0 |           1 |           0 |
+| numbers | gender | animals | dates | gender_female | gender_male | animals_cat | animals_dog |
+|---:|:---|:---|:---|---:|---:|---:|---:|
+| 1 | male | dog | 2012-01-01 | 0 | 1 | 0 | 1 |
+| 2 | male | dog | 2011-12-31 | 0 | 1 | 0 | 1 |
+| 3 | female | cat | 2012-01-01 | 1 | 0 | 1 | 0 |
 
 # Dummy Rows
 
