@@ -1,3 +1,6 @@
+# fastDummies 1.7.6
+* Preserve dplyr groups
+
 # fastDummies 1.7.5
 
 * Now includes ordered factors in dummy_cols() by default.
